@@ -1,0 +1,203 @@
+<?php 
+
+
+/**
+ * Implement hook_menu
+ */
+function export_content_menu () {
+
+	$items['export'] = array(
+		'page callback' => 'list_nodequeues',
+		//permissions required to view page
+    'access arguments' => array('export content'),
+    );
+	$items['export/content'] = array(
+		'page callback' => 'export_nodequeue_content',
+		//permissions required to view page
+    'access arguments' => array('export content'),
+    );
+    return $items;
+}
+
+
+/*
+ * Implements hook_permission
+ */
+function export_content_permission() {
+	
+	//return an array of permissions
+	return array(
+		'export content' => array(
+			'title' => t('Export Content'),
+			'description' => t('Export content to zip'),
+		),
+	);
+}
+
+
+/**
+ * Display a list of queues with an export link for each nodequeue
+ */
+function list_nodequeues() {
+
+	$output = '';
+	
+	// Fetch all of the queues.
+	$queues = nodequeue_load_queues(nodequeue_get_all_qids(25));
+	
+	foreach ($queues as $queue) {
+	if (!nodequeue_queue_access($queue)) {
+	  unset($queues[$queue->qid]);
+	}
+	}
+	
+	if (empty($queues)) {
+	return $output . t('No nodequeues exist.');
+	}
+	
+	$header = array(
+	array('data' => t('Title'), 'field' => 'title', 'sort' => 'asc'),
+	array('data' => t('Max nodes'), 'field' => 'size'),
+	array('data' => t('Subqueues'), 'field' => 'subqueues'),
+	array('data' => t('Export content')), //no sort
+	);
+	$table_sort = tablesort_init($header);
+	
+	$qids = array();
+	$sort_primary = array();
+	$sort_secondary = array();
+	$sort_direction_regular = array('asc' => SORT_ASC, 'desc' => SORT_DESC);
+	$sort_direction_reverse = array('asc' => SORT_DESC, 'desc' => SORT_ASC);
+	foreach ($queues as $queue) {
+		// If a queue has only one subqueue, store the qid so we can display
+		// the number of nodes in the subqueue.
+		if ($queue->subqueues == 1) {
+		  $qids[] = $queue->qid;
+		}
+		$sort_secondary[] = drupal_strtolower($queue->title);
+		switch ($table_sort['sql']) {
+		  case 'title':
+		  default:
+		    $sort_primary[] = drupal_strtolower($queue->title);
+		    $sort_direction = $sort_direction_regular;
+		    break;
+		  case 'size':
+		    $sort_primary[] = $queue->size;
+		    $sort_direction = $sort_direction_reverse;
+		    break;
+		  case 'subqueues':
+		    $sort_primary[] = $queue->subqueues;
+		    $sort_direction = $sort_direction_regular;
+		    break;
+		}
+	}
+	
+	$subqueues = nodequeue_load_subqueues_by_queue($qids);
+	// Relate all the subqueues we loaded back to our queues.
+	foreach ($subqueues as $subqueue) {
+		if (nodequeue_api_subqueue_access($subqueue, NULL, $queues[$subqueue->qid])) {
+		  $queues[$subqueue->qid]->subqueue = $subqueue;
+		}
+	}
+	
+	if (!empty($table_sort)) {
+		if (strtolower($table_sort['sort']) == 'desc') {
+		  array_multisort($sort_primary, $sort_direction['desc'], $sort_secondary, $queues); // Re-indexes array keys; key no longer equals qid.
+		}
+		else {
+		  array_multisort($sort_primary, $sort_direction['asc'], $sort_secondary, $queues); // Re-indexes array keys; key no longer equals qid.
+		}
+	}
+	
+	$rows = array();
+	foreach ($queues as $queue) {
+		$sub_text = $queue->subqueues;
+		
+		// If this queue has only one subqueue.
+		if ($sub_text == 1) {
+		  $sub_text .= " (" . nodequeue_subqueue_size_text($queue->size, $queue->subqueue->count) . ")";
+		}
+		
+		$rows[] = array(
+		  array('class' => array('nodequeue-title'), 'data' => check_plain($queue->title)),
+		  array('class' => array('nodequeue-max-nodes'), 'data' => $queue->size == 0 ? t('Infinite') : $queue->size),
+		  array('class' => array('nodequeue-subqueues'), 'data' => $sub_text),
+		  array('class' => array('nodequeue-export'), 'data' => l('Export', 'export/content/'.$queue->qid)),
+		);
+	}
+	
+	$output .= theme('table', array('header' => $header, 'rows' => $rows));
+	$output .= theme('pager', array('tags' => NULL));
+	
+	return $output;
+}
+
+
+/*
+ * Export the specified nodequeue's content to a zip file containing a JSON file and images
+ */
+function export_nodequeue_content($queue_id = 0) {
+		
+	//get the specified node queue as an array containing its nodes
+	$nodes = nodequeue_load_nodes($queue_id, FALSE, NULL, NULL); 
+	
+	//DEBUG
+	dsm($nodes);
+	//print "<pre>";
+	//print_r($nodes);
+	//print "</pre>";
+	
+	//convert the node queue array to JSON
+	$json = drupal_json_encode($nodes);
+	//print $json; //DEBUG
+	
+	//create an archive filename (other options temporary:// & private://)
+	$archive_uri = 'public://download_' . REQUEST_TIME . '.zip';
+	
+  //create a Zip Archive 
+	$zip = new ZipArchive;
+	
+	//if we successfully create the archive start populating it
+	if ($zip->open(drupal_realpath($archive_uri), ZipArchive::CREATE) === TRUE) {
+	
+		//write the manifest directly from the $JSON string
+		$zip->addFromString('manifest.json', $json);	
+	
+		//check for images in each node within the nodequeue
+		foreach ($nodes as $node) {
+		
+			//get the nodes keys to check if they are images
+			foreach ($node as $key => $value) {
+				
+				//check if there is a key that begins with field_image and it is not empty
+				//checks the string for the reg expression but checks that the array is not null
+				if(preg_match('/^field_image/', $key) && $node->$key != NULL) {
+				
+					//save the array ready to access its elements
+					$image = $node->$key;
+				
+					//get the image's uri
+					$image_uri = $image['und']['0']['uri'];
+					//echo '</br> node is: ' . $node->vid;	//DEBUG
+					//echo '</br> image uri is: ' . $image_uri;	//DEBUG
+					
+					//add the image to the zip file and name it its existing filename
+					$zip->addFile(drupal_realpath($image_uri), $image['und']['0']['filename']);
+				}	
+			}
+		}   		
+		
+		$zip->close();
+		
+		drupal_set_message(t('Zip archive successfully created. !link', array('!link' => l(file_create_url($archive_uri), file_create_url($archive_uri)))));
+	
+	} else {
+		drupal_set_message(t('Error creating Zip archive.'), 'error');
+	}
+	
+	//redirect back to the export page, which lists all the nodequeues, and message will be displayed to user
+	drupal_goto('export');
+}
+
+
+?>
