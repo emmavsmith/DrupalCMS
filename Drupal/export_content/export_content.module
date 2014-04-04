@@ -7,14 +7,17 @@
 function export_content_menu () {
 
 	$items['export'] = array(
+		'title' => 'Export Content',
 		'page callback' => 'list_nodequeues',
 		//permissions required to view page
     'access arguments' => array('export content'),
+    'type' => MENU_NORMAL_ITEM,
     );
 	$items['export/content'] = array(
 		'page callback' => 'export_nodequeue_content',
 		//permissions required to view page
     'access arguments' => array('export content'),
+    'type' => MENU_CALLBACK,
     );
     return $items;
 }
@@ -153,8 +156,7 @@ function export_nodequeue_content($queue_id = 0) {
 	
 	//create an archive filename (other options temporary:// & private://)
 	$archive_uri = 'public://download_' . REQUEST_TIME . '.zip';
-	
-  //create a Zip Archive 
+	//create a Zip Archive 
 	$zip = new ZipArchive;
 	
 	//if we successfully create the archive start populating it
