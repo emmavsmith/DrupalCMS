@@ -1,0 +1,35 @@
+<?php
+
+
+/**
+ * Implements hook_schema
+ */
+function content_packager_schema() {
+	
+	$schema['content_packager'] = array(
+	  'description' => 'The content packager table to store the version number and path to the nodequeues content',
+	  'fields' => array(
+	    'nodequeue_id' => array(
+	      'description' => 'Nodequeue id of the nodequeue whos content is being updated',
+	      'type' => 'int',
+	      'not null' => TRUE,
+	    ),
+	    'version' => array(
+	      'description' => 'Version number of the nodequeue content',
+	      'type' => 'int',
+	      'not null' => TRUE,
+	    ),
+	    'file_path' => array(
+	      'description' => 'Path to the nodequeue content',
+	      'type' => 'varchar',
+	      'length' => '100',
+	      'not null' => TRUE,
+	    ),
+	  ),
+	);
+	
+	return $schema;
+	
+}
+
+?>

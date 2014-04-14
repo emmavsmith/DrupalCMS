@@ -4,19 +4,19 @@
 /**
  * Implement hook_menu
  */
-function export_content_menu () {
+function content_packager_menu () {
 
-	$items['export'] = array(
-		'title' => 'Export Content',
+	$items['content'] = array(
+		'title' => 'Update Content',
 		'page callback' => 'list_nodequeues',
 		//permissions required to view page
-    'access arguments' => array('export content'),
+    'access arguments' => array('content packager'),
     'type' => MENU_NORMAL_ITEM,
     );
-	$items['export/content'] = array(
-		'page callback' => 'export_nodequeue_content',
+	$items['content/packager'] = array(
+		'page callback' => 'update_nodequeue_content',
 		//permissions required to view page
-    'access arguments' => array('export content'),
+    'access arguments' => array('content packager'),
     'type' => MENU_CALLBACK,
     );
     return $items;
@@ -26,20 +26,20 @@ function export_content_menu () {
 /*
  * Implements hook_permission
  */
-function export_content_permission() {
+function content_packager_permission() {
 	
 	//return an array of permissions
 	return array(
-		'export content' => array(
-			'title' => t('Export Content'),
-			'description' => t('Export content to zip'),
+		'content packager' => array(
+			'title' => t('Content Packager'),
+			'description' => t('Packages content to zip'),
 		),
 	);
 }
 
 
 /**
- * Display a list of queues with an export link for each nodequeue
+ * Display a list of queues with an update link for each nodequeue
  */
 function list_nodequeues() {
 
@@ -62,7 +62,7 @@ function list_nodequeues() {
 	array('data' => t('Title'), 'field' => 'title', 'sort' => 'asc'),
 	array('data' => t('Max nodes'), 'field' => 'size'),
 	array('data' => t('Subqueues'), 'field' => 'subqueues'),
-	array('data' => t('Export content')), //no sort
+	array('data' => t('Update content')), //no sort
 	);
 	$table_sort = tablesort_init($header);
 	
@@ -125,7 +125,7 @@ function list_nodequeues() {
 		  array('class' => array('nodequeue-title'), 'data' => check_plain($queue->title)),
 		  array('class' => array('nodequeue-max-nodes'), 'data' => $queue->size == 0 ? t('Infinite') : $queue->size),
 		  array('class' => array('nodequeue-subqueues'), 'data' => $sub_text),
-		  array('class' => array('nodequeue-export'), 'data' => l('Export', 'export/content/'.$queue->qid)),
+		  array('class' => array('nodequeue-update'), 'data' => l('Update', 'content/packager/'.$queue->qid)),
 		);
 	}
 	
@@ -137,22 +137,21 @@ function list_nodequeues() {
 
 
 /*
- * Export the specified nodequeue's content to a zip file containing a JSON file and images
+ * Update the specified nodequeue's content by exporting it to a zip file containing a JSON file and images
  */
-function export_nodequeue_content($queue_id = 0) {
+function update_nodequeue_content($queue_id = 0) {
 		
 	//get the specified node queue as an array containing its nodes
 	$nodes = nodequeue_load_nodes($queue_id, FALSE, NULL, NULL); 
 	
 	//DEBUG
-	dsm($nodes);
+	//dsm($nodes);
 	//print "<pre>";
 	//print_r($nodes);
 	//print "</pre>";
 	
 	//convert the node queue array to JSON
 	$json = drupal_json_encode($nodes);
-	//print $json; //DEBUG
 	
 	//create an archive filename (other options temporary:// & private://)
 	$archive_uri = 'public://download_' . REQUEST_TIME . '.zip';
@@ -192,14 +191,91 @@ function export_nodequeue_content($queue_id = 0) {
 		$zip->close();
 		
 		drupal_set_message(t('Zip archive successfully created. !link', array('!link' => l(file_create_url($archive_uri), file_create_url($archive_uri)))));
-	
+		
+		//check if the nodequeue already has an entry in the database
+		if (nodequeue_exists_in_database($queue_id)) {
+			
+			//retrieve the version number of the existing entry in the database
+			$version = get_nodequeue_version($queue_id);
+			$version += 1;
+			//update the existing entry in the database
+			update_database_row($queue_id, $version, file_create_url($archive_uri));
+			
+		} else {
+				
+				//insert new entry for a nodequeue into the database
+				insert_into_database($queue_id, 1, file_create_url($archive_uri));
+		}
+
 	} else {
 		drupal_set_message(t('Error creating Zip archive.'), 'error');
 	}
 	
-	//redirect back to the export page, which lists all the nodequeues, and message will be displayed to user
-	drupal_goto('export');
+	//redirect back to the content page, which lists all the nodequeues, and message will be displayed to user
+	drupal_goto('content');
 }
 
+
+/*
+ *	Inserts a new row into the content packager database table
+ */
+function insert_into_database($nodequeue_id, $version, $file_path){
+	
+	$query = db_insert('content_packager')
+	  ->fields(array(
+	    'nodequeue_id' => $nodequeue_id,
+	    'version' => $version,
+	    'file_path' => $file_path,
+	  ))
+	  ->execute();
+}
+
+
+/*
+ *	Checks if there is already a database entry for a particular node id
+ */
+function nodequeue_exists_in_database($nodequeue_id) {
+
+	$result = db_query('SELECT * FROM {content_packager} WHERE nodequeue_id = :nodequeue_id', array(
+		':nodequeue_id' => $nodequeue_id,
+	));
+	
+	if (($result->rowCount()) > 0) {
+		return true;
+	}
+	return false;
+}
+
+
+/*
+ *	Gets the version of a particular nodequeue out of the database
+ */
+function get_nodequeue_version($nodequeue_id){
+	
+	$results = db_query('SELECT version FROM {content_packager} WHERE nodequeue_id = :nodequeue_id', array(
+		':nodequeue_id' => $nodequeue_id,
+	));
+
+	foreach($results as $record){
+		
+		$version = $record->version; 
+	}
+	return $version;
+}
+
+
+/*
+ *	Updates a database row for a particular nodequeue
+ */
+function update_database_row($nodequeue_id, $version, $file_path){
+	 
+ $query = db_update('content_packager')
+	->fields(array(
+    'version' => $version,
+    'file_path' => $file_path,
+  ))
+  ->condition('nodequeue_id', $nodequeue_id, '=')
+  ->execute();
+}
 
 ?>
