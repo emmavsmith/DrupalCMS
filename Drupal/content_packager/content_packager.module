@@ -19,6 +19,12 @@ function content_packager_menu () {
     'access arguments' => array('content packager'),
     'type' => MENU_CALLBACK,
     );
+    //cannot be content/packager/json as it navigates to the method above using 'json' as the argument
+   $items['contentpackagerjson'] = array(
+   	'access callback' => true,
+   	'page callback' => 'get_version_path',
+   	'delivery callback' => 'drupal_json_output',
+   );
     return $items;
 }
 
@@ -187,25 +193,11 @@ function update_nodequeue_content($queue_id = 0) {
 				}	
 			}
 		}   		
-		
 		$zip->close();
 		
 		drupal_set_message(t('Zip archive successfully created. !link', array('!link' => l(file_create_url($archive_uri), file_create_url($archive_uri)))));
 		
-		//check if the nodequeue already has an entry in the database
-		if (nodequeue_exists_in_database($queue_id)) {
-			
-			//retrieve the version number of the existing entry in the database
-			$version = get_nodequeue_version($queue_id);
-			$version += 1;
-			//update the existing entry in the database
-			update_database_row($queue_id, $version, file_create_url($archive_uri));
-			
-		} else {
-				
-				//insert new entry for a nodequeue into the database
-				insert_into_database($queue_id, 1, file_create_url($archive_uri));
-		}
+		enter_db_details($queue_id, $archive_uri);
 
 	} else {
 		drupal_set_message(t('Error creating Zip archive.'), 'error');
@@ -217,9 +209,27 @@ function update_nodequeue_content($queue_id = 0) {
 
 
 /*
+ *	Either inserts or updates a row in the database for a particular nodequeue id
+ */
+function enter_db_details($nodequeue_id, $archive_uri){
+
+	if (nodequeue_exists_in_database($nodequeue_id)) {
+		
+		$version = get_version($nodequeue_id);
+		$version += 1;
+		update_database_row($nodequeue_id, $version, file_create_url($archive_uri));
+		
+	} else {
+	
+		insert_database_row($nodequeue_id, 1, file_create_url($archive_uri));
+	}
+}
+
+
+/*
  *	Inserts a new row into the content packager database table
  */
-function insert_into_database($nodequeue_id, $version, $file_path){
+function insert_database_row($nodequeue_id, $version, $file_path){
 	
 	$query = db_insert('content_packager')
 	  ->fields(array(
@@ -232,40 +242,7 @@ function insert_into_database($nodequeue_id, $version, $file_path){
 
 
 /*
- *	Checks if there is already a database entry for a particular node id
- */
-function nodequeue_exists_in_database($nodequeue_id) {
-
-	$result = db_query('SELECT * FROM {content_packager} WHERE nodequeue_id = :nodequeue_id', array(
-		':nodequeue_id' => $nodequeue_id,
-	));
-	
-	if (($result->rowCount()) > 0) {
-		return true;
-	}
-	return false;
-}
-
-
-/*
- *	Gets the version of a particular nodequeue out of the database
- */
-function get_nodequeue_version($nodequeue_id){
-	
-	$results = db_query('SELECT version FROM {content_packager} WHERE nodequeue_id = :nodequeue_id', array(
-		':nodequeue_id' => $nodequeue_id,
-	));
-
-	foreach($results as $record){
-		
-		$version = $record->version; 
-	}
-	return $version;
-}
-
-
-/*
- *	Updates a database row for a particular nodequeue
+ *	Updates a database row for a particular nodequeue id
  */
 function update_database_row($nodequeue_id, $version, $file_path){
 	 
@@ -278,4 +255,70 @@ function update_database_row($nodequeue_id, $version, $file_path){
   ->execute();
 }
 
+
+/*
+ *	Checks if there is already a database entry for a particular nodequeue id
+ */
+function nodequeue_exists_in_database($nodequeue_id) {
+
+	$result = select_db_row($nodequeue_id);
+	
+	if (($result->rowCount()) > 0) {
+		return true;
+	}
+	return false;
+}
+
+
+/*
+ *	Gets the version number of a particular nodequeue id
+ */
+function get_version($nodequeue_id){
+	
+	$result = select_db_row($nodequeue_id);
+
+	foreach($result as $record){
+		$version = $record->version; 
+	}
+	return $version;
+}
+
+
+/*
+ * Gets the version number and file path for a particular nodequeue id
+ */
+function get_version_path($nodequeue_id){
+	
+	$result = select_db_row($nodequeue_id);
+
+	foreach($result as $record){
+		$db_row = array(
+			'version' => $record->version,
+			'file_path' => $record->file_path
+		);
+	}
+	return $db_row;
+}
+
+
+/*
+ * Select a row fromm the db using the nodequeue id
+ */
+function select_db_row($nodequeue_id){
+	
+	$result = db_query('SELECT * FROM {content_packager} WHERE nodequeue_id = :nodequeue_id', array(
+		':nodequeue_id' => $nodequeue_id,
+	));
+	return $result;
+}
+
+
 ?>
+
+
+
+
+
+
+
+
