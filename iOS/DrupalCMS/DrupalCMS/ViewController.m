@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "AFNetworking.h"
 
 @interface ViewController ()
 
@@ -18,7 +19,22 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    NSURL *url = [NSURL URLWithString:@"http://itunes.apple.com/search?term=harry&country=us&entity=movie"];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    operation.responseSerializer = [AFJSONResponseSerializer serializer];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"Response: %@", responseObject);
+    }
+                                     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                         
+                                         NSLog(@"The error was: %@", error);
+                                     }];
+    [operation start];
 }
+
 
 - (void)didReceiveMemoryWarning
 {
