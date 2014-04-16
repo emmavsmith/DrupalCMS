@@ -21,12 +21,12 @@
     [super viewDidLoad];
     
     nodequeueid = @1;
+    //[self saveVersionToUserDefaults: @1];
     //url to download the drupal db info for a particular nodequeue as json
     urlString = [NSString stringWithFormat:@"%@%@", @"http://cmstest.digitallabsmmu.com/contentpackagerjson/", nodequeueid];
     documentsDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
     
-    [self getVersionPath];
-
+    [self getVersionPathFromDrupal];
 }
 
 
@@ -37,10 +37,10 @@
 }
 
 
-/* Retrieves the version and path for the content of a particular nodequeueid from Drupal
- *
+/*
+ * Retrieves the version and path for the content of a particular nodequeueid from Drupal
  */
--(void)getVersionPath
+-(void)getVersionPathFromDrupal
 {
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -51,10 +51,24 @@
         NSLog(@"Response: %@", responseObject);
         
         //check version number here
+        NSNumber *currentVersion = [self getVersionFromUserDefaults];
+        NSNumber *newVersion = [NSNumber numberWithInt:[[responseObject objectForKey:@"version"] intValue]];
+        NSComparisonResult result = [currentVersion compare:newVersion];
         
-        NSString *downloadUrl = [responseObject valueForKey:@"file_path"];
-        [self downloadZip:downloadUrl];
+        //TODO check this nil check works
+        if(currentVersion == nil || result == NSOrderedAscending){
+            
+            //TODO move this to after downloads, copys, deletes have been performed
+            [self saveVersionToUserDefaults: [responseObject valueForKey:@"version"]];
+            
+            //download new content
+            NSString *downloadUrl = [responseObject valueForKey:@"file_path"];
+            [self downloadZip:downloadUrl];
+        } else {
         
+            NSLog(@"current version is latest version");
+            
+        }
     }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                          
@@ -63,6 +77,26 @@
                                          
                                      }];
     [operation start];
+}
+
+
+/*
+ *
+ */
+-(void)saveVersionToUserDefaults:(NSNumber *)version
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setValue:version forKey:[NSString stringWithFormat:@"%@", nodequeueid]];
+}
+
+
+/*
+ *
+ */
+-(NSNumber *)getVersionFromUserDefaults
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    return [defaults objectForKey:[NSString stringWithFormat:@"%@", nodequeueid]];
 }
 
 
@@ -100,12 +134,13 @@
 
 
 /*
- *
+ * Copys downloaded files from the download folder to the permanent content folder
+ * Deletes the download zip and unzipped folder as it is no longer needed
  */
 -(void)copyAndDeleteFiles:(NSString *)outputPath
 {
-    //copy download folder contents to content folder
     NSString *currentPath = [NSString stringWithFormat:@"%@%@%@", [documentsDirectory stringByAppendingString:@"/download_nqid_"], nodequeueid, @"/"];
+    //copying to this directory as this will be the name to overwrite if content is already on the phone to begin with
     NSString *newPath = [NSString stringWithFormat:@"%@%@%@", [documentsDirectory stringByAppendingString:@"/content_nqid_"], nodequeueid, @"/"];
     
     if([[NSFileManager defaultManager] copyItemAtPath:currentPath toPath:newPath error:nil]){
