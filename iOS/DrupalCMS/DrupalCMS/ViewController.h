@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController {
+
+    NSString *urlString;
+    NSInteger nodequeueid;
+}
+
+-(void)getVersionPath;
+-(void)downloadZip:(NSString *)downloadUrl;
 
 @end
