@@ -11,10 +11,12 @@
 @interface ViewController : UIViewController {
 
     NSString *urlString;
-    NSInteger nodequeueid;
+    NSNumber *nodequeueid;
+    NSString *documentsDirectory;
 }
 
 -(void)getVersionPath;
 -(void)downloadZip:(NSString *)downloadUrl;
+-(void)copyAndDeleteFiles:(NSString *)outputPath;
 
 @end

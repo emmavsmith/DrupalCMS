@@ -20,11 +20,10 @@
 {
     [super viewDidLoad];
     
-    //urlString = @"http://itunes.apple.com/search?term=harry&country=us&entity=movie";
-    
-    nodequeueid = 1;
+    nodequeueid = @1;
     //url to download the drupal db info for a particular nodequeue as json
-    urlString = [NSString stringWithFormat:@"%@%d", @"http://cmstest.digitallabsmmu.com/contentpackagerjson/", nodequeueid];
+    urlString = [NSString stringWithFormat:@"%@%@", @"http://cmstest.digitallabsmmu.com/contentpackagerjson/", nodequeueid];
+    documentsDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
     
     [self getVersionPath];
 
@@ -60,6 +59,8 @@
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                          
                                          NSLog(@"The error was: %@", error);
+                                         //If passed a nodequeueid that is not in the Drupal db then will hit here
+                                         
                                      }];
     [operation start];
 }
@@ -70,21 +71,53 @@
  */
 -(void)downloadZip:(NSString *)downloadUrl
 {
+    BOOL zipSuccessFlag = NO;
+    
     NSURL *url = [NSURL URLWithString:downloadUrl];
     NSData *data = [[NSData alloc] initWithContentsOfURL: url];
-    NSString *documentsDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
-    NSString *outputPath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@%d%@", @"content_nqid_", nodequeueid, @".zip"]];
+    NSString *outputPath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@%@%@", @"download_nqid_", nodequeueid, @".zip"]];
     [data writeToFile:outputPath atomically:YES];
     ZipArchive *zipArchive = [[ZipArchive alloc] init];
-    NSString *zipDirectory = [NSString stringWithFormat:@"%@%d%@", [documentsDirectory stringByAppendingString:@"/content_nqid_"], nodequeueid, @"/"];
+    NSString *zipDirectory = [NSString stringWithFormat:@"%@%@%@", [documentsDirectory stringByAppendingString:@"/download_nqid_"], nodequeueid, @"/"];
     
     if ([zipArchive UnzipOpenFile: outputPath]){
-        BOOL ret = [zipArchive UnzipFileTo:zipDirectory overWrite: YES];
-        if (NO == ret){}[zipArchive UnzipCloseFile];
+        
+        if([zipArchive UnzipFileTo:zipDirectory overWrite: YES]){
+            zipSuccessFlag = YES;
+            NSLog(@"Unzipping successful");
+        } else {
+            zipSuccessFlag = NO;
+            NSLog(@"Unzipping not successful");
+        }
+        
+        [zipArchive UnzipCloseFile];
     }
     
-    NSLog(@"Download and unzipping complete");
+    if(zipSuccessFlag){
+        [self copyAndDeleteFiles:outputPath];
+    }
 }
 
+
+/*
+ *
+ */
+-(void)copyAndDeleteFiles:(NSString *)outputPath
+{
+    //copy download folder contents to content folder
+    NSString *currentPath = [NSString stringWithFormat:@"%@%@%@", [documentsDirectory stringByAppendingString:@"/download_nqid_"], nodequeueid, @"/"];
+    NSString *newPath = [NSString stringWithFormat:@"%@%@%@", [documentsDirectory stringByAppendingString:@"/content_nqid_"], nodequeueid, @"/"];
+    
+    if([[NSFileManager defaultManager] copyItemAtPath:currentPath toPath:newPath error:nil]){
+        
+        NSLog(@"Copying successful");
+        
+        //delete zip and download folder
+        [[NSFileManager defaultManager] removeItemAtPath:currentPath error:nil];
+        [[NSFileManager defaultManager] removeItemAtPath:outputPath error:nil];
+        
+        NSLog(@"Deleting successful");
+    }
+}
 
 @end
