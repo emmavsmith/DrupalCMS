@@ -20,8 +20,8 @@
 {
     [super viewDidLoad];
     
+    //TODO this will be called from somewhere
     nodequeueid = @1;
-    //[self saveVersionToUserDefaults: @1];
     //url to download the drupal db info for a particular nodequeue as json
     urlString = [NSString stringWithFormat:@"%@%@", @"http://cmstest.digitallabsmmu.com/contentpackagerjson/", nodequeueid];
     documentsDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
@@ -50,30 +50,32 @@
         
         NSLog(@"Response: %@", responseObject);
         
-        //check version number here
         NSNumber *currentVersion = [self getVersionFromUserDefaults];
-        NSNumber *newVersion = [NSNumber numberWithInt:[[responseObject objectForKey:@"version"] intValue]];
+        NSNumber *newVersion = [NSNumber numberWithInt:[[responseObject valueForKey:@"version"] intValue]];
         NSComparisonResult result = [currentVersion compare:newVersion];
         
-        //TODO check this nil check works
         if(currentVersion == nil || result == NSOrderedAscending){
             
-            //TODO move this to after downloads, copys, deletes have been performed
-            [self saveVersionToUserDefaults: [responseObject valueForKey:@"version"]];
-            
-            //download new content
             NSString *downloadUrl = [responseObject valueForKey:@"file_path"];
             [self downloadZip:downloadUrl];
+            
+            //TODO checking downloading, unzipping, deleting has worked before saving new version
+            [self saveVersionToUserDefaults: newVersion];
+            
+            NSLog(@"Process complete");
+            
         } else {
         
-            NSLog(@"current version is latest version");
+            NSLog(@"Current version is latest version. No new content.");
+            NSLog(@"Process complete");
             
         }
     }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                          
                                          NSLog(@"The error was: %@", error);
-                                         //If passed a nodequeueid that is not in the Drupal db then will hit here
+                                         
+                                         //TODO If passed a nodequeueid that is not in the Drupal db then will hit here
                                          
                                      }];
     [operation start];
@@ -85,8 +87,10 @@
  */
 -(void)saveVersionToUserDefaults:(NSNumber *)version
 {
+    NSString *key = [NSString stringWithFormat:@"nqid_%@", nodequeueid];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setValue:version forKey:[NSString stringWithFormat:@"%@", nodequeueid]];
+    NSLog(@"Setting user defaults successful with version: %@", version);
+    [defaults setValue:version forKey:key];
 }
 
 
@@ -95,8 +99,10 @@
  */
 -(NSNumber *)getVersionFromUserDefaults
 {
+    NSString *key = [NSString stringWithFormat:@"nqid_%@", nodequeueid];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    return [defaults objectForKey:[NSString stringWithFormat:@"%@", nodequeueid]];
+    NSLog(@"Retrieving version from NSdefaults successful with version: %@", [defaults valueForKey:key]);
+    return [defaults valueForKey:key];
 }
 
 
