@@ -18,7 +18,7 @@
 -(void)getVersionPathFromDrupal;
 -(void)saveVersionToUserDefaults:(NSNumber *)version;
 -(NSNumber *)getVersionFromUserDefaults;
--(void)downloadZip:(NSString *)downloadUrl;
--(void)copyAndDeleteFiles:(NSString *)outputPath;
+-(BOOL)downloadZip:(NSString *)downloadUrl;
+-(BOOL)copyAndDeleteFiles:(NSString *)outputPath;
 
 @end

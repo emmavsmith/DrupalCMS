@@ -57,33 +57,31 @@
         if(currentVersion == nil || result == NSOrderedAscending){
             
             NSString *downloadUrl = [responseObject valueForKey:@"file_path"];
-            [self downloadZip:downloadUrl];
             
-            //TODO checking downloading, unzipping, deleting has worked before saving new version
-            [self saveVersionToUserDefaults: newVersion];
-            
+            //check downloading, unzipping, copying and deleting was successful before amending the version number in user defaults
+            if ([self downloadZip:downloadUrl]){
+                
+                [self saveVersionToUserDefaults: newVersion];
+            }
             NSLog(@"Process complete");
             
         } else {
-        
             NSLog(@"Current version is latest version. No new content.");
             NSLog(@"Process complete");
-            
         }
     }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                          
                                          NSLog(@"The error was: %@", error);
-                                         
                                          //TODO If passed a nodequeueid that is not in the Drupal db then will hit here
-                                         
+                                         NSLog(@"This could be because there is not a db entry in the Drupal db for the nodequeue id: %@", nodequeueid);
                                      }];
     [operation start];
 }
 
 
 /*
- *
+ * Save the version number for a particular nodequeue id in user defaults
  */
 -(void)saveVersionToUserDefaults:(NSNumber *)version
 {
@@ -95,7 +93,7 @@
 
 
 /*
- *
+ * Get the version number for a particular nodequeue id from user defaults
  */
 -(NSNumber *)getVersionFromUserDefaults
 {
@@ -109,7 +107,7 @@
 /*
  * Downloads and unzips a zip file from a particular URL
  */
--(void)downloadZip:(NSString *)downloadUrl
+-(BOOL)downloadZip:(NSString *)downloadUrl
 {
     BOOL zipSuccessFlag = NO;
     
@@ -134,8 +132,12 @@
     }
     
     if(zipSuccessFlag){
-        [self copyAndDeleteFiles:outputPath];
+        
+        if([self copyAndDeleteFiles:outputPath]){
+            return YES;
+        }
     }
+    return NO;
 }
 
 
@@ -143,7 +145,7 @@
  * Copys downloaded files from the download folder to the permanent content folder
  * Deletes the download zip and unzipped folder as it is no longer needed
  */
--(void)copyAndDeleteFiles:(NSString *)outputPath
+-(BOOL)copyAndDeleteFiles:(NSString *)outputPath
 {
     NSString *currentPath = [NSString stringWithFormat:@"%@%@%@", [documentsDirectory stringByAppendingString:@"/download_nqid_"], nodequeueid, @"/"];
     //copying to this directory as this will be the name to overwrite if content is already on the phone to begin with
@@ -154,11 +156,19 @@
         NSLog(@"Copying successful");
         
         //delete zip and download folder
-        [[NSFileManager defaultManager] removeItemAtPath:currentPath error:nil];
-        [[NSFileManager defaultManager] removeItemAtPath:outputPath error:nil];
+        if ([[NSFileManager defaultManager] removeItemAtPath:currentPath error:nil] && [[NSFileManager defaultManager] removeItemAtPath:outputPath error:nil]){
         
-        NSLog(@"Deleting successful");
+            NSLog(@"Deleting successful");
+            return YES;
+        } else {
+            NSLog(@"Deleting unsuccessful");
+        }
+    } else {
+    
+        NSLog(@"Copying unsuccessful");
+        NSLog(@"Deleting unsuccessful");
     }
+    return NO;
 }
 
 @end
