@@ -11,6 +11,10 @@
 @interface Node : NSObject
 
 @property NSString *title;
+@property NSString *type;
 @property NSString *content;
+
+
+-(id)initWithDictionary:(NSDictionary *)dictionary;
 
 @end

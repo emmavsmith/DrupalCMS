@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "AFNetworking.h"
 #import "ZipArchive.h"
+#import "NodeDataProvider.h"
 
 @interface ViewController ()
 
@@ -64,6 +65,9 @@
                 [self saveVersionToUserDefaults: newVersion];
             }
             NSLog(@"Process complete");
+            
+            NodeDataProvider *nodeDataProvider = [[NodeDataProvider alloc] init];
+            [nodeDataProvider retrieveJSONFile:nodequeueid];
             
         } else {
             NSLog(@"Current version is latest version. No new content.");
