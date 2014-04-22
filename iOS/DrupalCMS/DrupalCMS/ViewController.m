@@ -85,10 +85,11 @@
  */
 -(void)saveVersionToUserDefaults:(NSNumber *)version
 {
-    NSString *key = [NSString stringWithFormat:@"nqid_%@", nodequeueid];
+    NSString *key = [NSString stringWithFormat:@"%@", nodequeueid];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSLog(@"Setting user defaults successful with version: %@", version);
     [defaults setValue:version forKey:key];
+    [defaults synchronize];
 }
 
 
@@ -97,7 +98,7 @@
  */
 -(NSNumber *)getVersionFromUserDefaults
 {
-    NSString *key = [NSString stringWithFormat:@"nqid_%@", nodequeueid];
+    NSString *key = [NSString stringWithFormat:@"%@", nodequeueid];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSLog(@"Retrieving version from NSdefaults successful with version: %@", [defaults valueForKey:key]);
     return [defaults valueForKey:key];
@@ -127,7 +128,6 @@
             zipSuccessFlag = NO;
             NSLog(@"Unzipping not successful");
         }
-        
         [zipArchive UnzipCloseFile];
     }
     

@@ -23,6 +23,7 @@
 		B5AA79C118FD654800BB9542 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5AA79A018FD654800BB9542 /* UIKit.framework */; };
 		B5AA79C918FD654800BB9542 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B5AA79C718FD654800BB9542 /* InfoPlist.strings */; };
 		B5AA79CB18FD654800BB9542 /* DrupalCMSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B5AA79CA18FD654800BB9542 /* DrupalCMSTests.m */; };
+		B5E0739519000DB90059B746 /* Node.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E0739419000DB90059B746 /* Node.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,8 @@
 		B5AA79C618FD654800BB9542 /* DrupalCMSTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DrupalCMSTests-Info.plist"; sourceTree = "<group>"; };
 		B5AA79C818FD654800BB9542 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B5AA79CA18FD654800BB9542 /* DrupalCMSTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DrupalCMSTests.m; sourceTree = "<group>"; };
+		B5E0739319000DB90059B746 /* Node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Node.h; sourceTree = "<group>"; };
+		B5E0739419000DB90059B746 /* Node.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Node.m; sourceTree = "<group>"; };
 		CEC8318A5B1E428E8A4EDC51 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -120,6 +123,9 @@
 		B5AA79A218FD654800BB9542 /* DrupalCMS */ = {
 			isa = PBXGroup;
 			children = (
+				B5E0739219000D8F0059B746 /* Views */,
+				B5E0739119000D090059B746 /* Controllers */,
+				B5E0739019000CD00059B746 /* Models */,
 				B5AA79AB18FD654800BB9542 /* AppDelegate.h */,
 				B5AA79AC18FD654800BB9542 /* AppDelegate.m */,
 				B5AA79AE18FD654800BB9542 /* Main_iPhone.storyboard */,
@@ -159,6 +165,29 @@
 				B5AA79C718FD654800BB9542 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B5E0739019000CD00059B746 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B5E0739319000DB90059B746 /* Node.h */,
+				B5E0739419000DB90059B746 /* Node.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B5E0739119000D090059B746 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		B5E0739219000D8F0059B746 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -297,6 +326,7 @@
 				B5AA79B618FD654800BB9542 /* ViewController.m in Sources */,
 				B5AA79AD18FD654800BB9542 /* AppDelegate.m in Sources */,
 				B5AA79A918FD654800BB9542 /* main.m in Sources */,
+				B5E0739519000DB90059B746 /* Node.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
