@@ -14,7 +14,6 @@
 @property NSString *type;
 @property NSString *content;
 
-
 -(id)initWithDictionary:(NSDictionary *)dictionary;
 
 @end

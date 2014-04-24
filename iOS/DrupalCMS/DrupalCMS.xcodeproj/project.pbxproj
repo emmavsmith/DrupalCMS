@@ -10,6 +10,7 @@
 		06347A378B104902BD549A7D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC8318A5B1E428E8A4EDC51 /* libPods.a */; };
 		B5195A6A1907BEFA001F2111 /* NodesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5195A691907BEFA001F2111 /* NodesTableViewController.m */; };
 		B5195A6D1907C5D5001F2111 /* NodesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B5195A6C1907C5D5001F2111 /* NodesTableViewCell.m */; };
+		B583E1F019090D9100B87480 /* DownloadZipController.m in Sources */ = {isa = PBXBuildFile; fileRef = B583E1EF19090D9100B87480 /* DownloadZipController.m */; };
 		B5AA799D18FD654800BB9542 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5AA799C18FD654800BB9542 /* Foundation.framework */; };
 		B5AA799F18FD654800BB9542 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5AA799E18FD654800BB9542 /* CoreGraphics.framework */; };
 		B5AA79A118FD654800BB9542 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5AA79A018FD654800BB9542 /* UIKit.framework */; };
@@ -18,7 +19,6 @@
 		B5AA79AD18FD654800BB9542 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5AA79AC18FD654800BB9542 /* AppDelegate.m */; };
 		B5AA79B018FD654800BB9542 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5AA79AE18FD654800BB9542 /* Main_iPhone.storyboard */; };
 		B5AA79B318FD654800BB9542 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5AA79B118FD654800BB9542 /* Main_iPad.storyboard */; };
-		B5AA79B618FD654800BB9542 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5AA79B518FD654800BB9542 /* ViewController.m */; };
 		B5AA79B818FD654800BB9542 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5AA79B718FD654800BB9542 /* Images.xcassets */; };
 		B5AA79BF18FD654800BB9542 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5AA79BE18FD654800BB9542 /* XCTest.framework */; };
 		B5AA79C018FD654800BB9542 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5AA799C18FD654800BB9542 /* Foundation.framework */; };
@@ -45,6 +45,8 @@
 		B5195A691907BEFA001F2111 /* NodesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NodesTableViewController.m; sourceTree = "<group>"; };
 		B5195A6B1907C5D5001F2111 /* NodesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodesTableViewCell.h; sourceTree = "<group>"; };
 		B5195A6C1907C5D5001F2111 /* NodesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NodesTableViewCell.m; sourceTree = "<group>"; };
+		B583E1EE19090D9100B87480 /* DownloadZipController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadZipController.h; sourceTree = "<group>"; };
+		B583E1EF19090D9100B87480 /* DownloadZipController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadZipController.m; sourceTree = "<group>"; };
 		B5AA799918FD654800BB9542 /* DrupalCMS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrupalCMS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5AA799C18FD654800BB9542 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B5AA799E18FD654800BB9542 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -57,8 +59,6 @@
 		B5AA79AC18FD654800BB9542 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		B5AA79AF18FD654800BB9542 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		B5AA79B218FD654800BB9542 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
-		B5AA79B418FD654800BB9542 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		B5AA79B518FD654800BB9542 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		B5AA79B718FD654800BB9542 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B5AA79BD18FD654800BB9542 /* DrupalCMSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DrupalCMSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5AA79BE18FD654800BB9542 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -139,8 +139,6 @@
 				B5AA79AC18FD654800BB9542 /* AppDelegate.m */,
 				B5AA79AE18FD654800BB9542 /* Main_iPhone.storyboard */,
 				B5AA79B118FD654800BB9542 /* Main_iPad.storyboard */,
-				B5AA79B418FD654800BB9542 /* ViewController.h */,
-				B5AA79B518FD654800BB9542 /* ViewController.m */,
 				B5AA79B718FD654800BB9542 /* Images.xcassets */,
 				B5AA79A318FD654800BB9542 /* Supporting Files */,
 			);
@@ -192,6 +190,8 @@
 				B5C1D05419066D9B00D723F1 /* NodeDataProvider.m */,
 				B5195A681907BEFA001F2111 /* NodesTableViewController.h */,
 				B5195A691907BEFA001F2111 /* NodesTableViewController.m */,
+				B583E1EE19090D9100B87480 /* DownloadZipController.h */,
+				B583E1EF19090D9100B87480 /* DownloadZipController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -338,9 +338,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B5AA79B618FD654800BB9542 /* ViewController.m in Sources */,
 				B5195A6A1907BEFA001F2111 /* NodesTableViewController.m in Sources */,
 				B5AA79AD18FD654800BB9542 /* AppDelegate.m in Sources */,
+				B583E1F019090D9100B87480 /* DownloadZipController.m in Sources */,
 				B5AA79A918FD654800BB9542 /* main.m in Sources */,
 				B5C1D05519066D9B00D723F1 /* NodeDataProvider.m in Sources */,
 				B5E0739519000DB90059B746 /* Node.m in Sources */,

@@ -13,6 +13,5 @@
 @property NSMutableArray *nodesArray;
 
 -(void)retrieveJSONFile:(NSNumber *)nodequeueid;
--(void)parseNodesFromJSON:(NSArray *)nodesFromJSON toArray:(NSMutableArray *)nodesArray;
 
 @end

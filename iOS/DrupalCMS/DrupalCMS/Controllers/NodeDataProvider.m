@@ -46,7 +46,6 @@
         Node *node = [[Node alloc] initWithDictionary:item];
         [nodesArray addObject:node];
     }
-    NSLog(@"nodesArray: %@", nodesArray);
 }
 
 @end

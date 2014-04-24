@@ -7,12 +7,19 @@
 //
 
 #import "AppDelegate.h"
+#import "DownloadZipController.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
+    //Fire off download of zip
+    //TODO potentially pass in nodequeueID here
+    DownloadZipController *downloadZipController = [[DownloadZipController alloc] init];
+    [downloadZipController getVersionPathFromDrupal];
+    
     return YES;
 }
 							
