@@ -9,6 +9,7 @@
 #import "DownloadZipController.h"
 #import "AFNetworking.h"
 #import "ZipArchive.h"
+#import "NodesTableViewController.h"
 
 @interface DownloadZipController () {
     
@@ -27,9 +28,9 @@
 -(id) init
 {
     self = [super init];
-    if (self){
+    if (self){`
         
-        //TODO this will be called from somewhere
+        //TODO: this will be called from somewhere
         nodequeueID = @1;
         
         //url to download the drupal db info for a particular nodequeue as json
@@ -77,8 +78,10 @@
             }
             
         } else {
+            
             NSLog(@"Current version is latest version. No new content.");
-            NSLog(@"Download, unzipping, copying, deleting process complete");
+            NodesTableViewController *nodesTableViewController = [[NodesTableViewController alloc] init];
+            [nodesTableViewController retrieveAndReloadNodes:nodequeueID];
         }
     }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
