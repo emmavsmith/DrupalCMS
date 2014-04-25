@@ -10,8 +10,7 @@
 
 @interface NodeDataProvider : NSObject
 
-@property NSMutableArray *nodesArray;
-
--(void)retrieveJSONFile:(NSNumber *)nodequeueid;
++(NSMutableArray *)getNodesWithNodequeueId:(NSNumber *)nodequeueid;
++(NSString *)getPathToJSONFile:(NSNumber *)nodequeueid;
 
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "DownloadZipController.h"
+#import "ContentManager.h"
 
 @implementation AppDelegate
 
@@ -16,9 +16,9 @@
     // Override point for customization after application launch.
     
     //Fire off download of zip
-    //TODO potentially pass in nodequeueID here
-    DownloadZipController *downloadZipController = [[DownloadZipController alloc] init];
-    [downloadZipController getVersionPathFromDrupal];
+    ContentManager *downloadZipController = [[ContentManager alloc] init];
+    [downloadZipController checkExistingContent];
+    [downloadZipController checkForUpdate];
     
     return YES;
 }

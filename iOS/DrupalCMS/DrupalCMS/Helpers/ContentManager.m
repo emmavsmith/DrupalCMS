@@ -6,12 +6,13 @@
 //  Copyright (c) 2014 mmu. All rights reserved.
 //
 
-#import "DownloadZipController.h"
+#import "ContentManager.h"
 #import "AFNetworking.h"
 #import "ZipArchive.h"
 #import "NodesTableViewController.h"
+#import "NodeDataProvider.h"
 
-@interface DownloadZipController () {
+@interface ContentManager () {
     
     NSString *drupalDownloadURL;
     NSNumber *nodequeueID;
@@ -23,12 +24,15 @@
 
 @end
 
-@implementation DownloadZipController
+@implementation ContentManager
+
+//TODO: change content in bundle to zip file
+//TODO: Refactor this class - need a method that just unzips a file
 
 -(id) init
 {
     self = [super init];
-    if (self){`
+    if (self){
         
         //TODO: this will be called from somewhere
         nodequeueID = @1;
@@ -40,12 +44,46 @@
     return self;
 }
 
-#pragma mark - Accessing and downloading of zip file from Drupal
+#pragma mark - Existing content
+
+-(void)checkExistingContent
+{
+    NSLog(@"Checking existing content");
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    //check if there is content in the documents on the phone
+    NSString *JSONPath = [NodeDataProvider getPathToJSONFile:nodequeueID];
+    
+    if(![fileManager fileExistsAtPath:JSONPath]) {
+        
+        //check if there is content in the bundle issued with app and if there is copy it to documents on phone
+        [self copyContent];
+    }
+}
+
+- (void) copyContent
+{
+    NSLog(@"Copying existing content");
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *error;
+    NSString *newPath = [NSString stringWithFormat:@"%@%@%@", [documentsDirectory stringByAppendingString:@"/content_nqid_"], nodequeueID, @"/"];
+    NSString *path =[[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"content_nqid_%@", nodequeueID] ofType:nil];
+    
+    NSLog(@"copy content with newPath = %@", newPath);
+    NSLog(@"copy content with path = %@", path);
+    
+    BOOL success = [fileManager copyItemAtPath:path toPath:newPath error:&error];
+    if (!success){
+            NSAssert1(0, @"Failed to create writable file with message '%@'.", [error localizedDescription]);
+    }
+}
+
+#pragma mark - Content update
 
 /*
  * Retrieves the version and path for the content of a particular nodequeueid from Drupal
  */
--(void)getVersionPathFromDrupal
+-(void)checkForUpdate
 {
     NSURL *url = [NSURL URLWithString:drupalDownloadURL];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -76,12 +114,8 @@
             } else {
                 NSLog(@"Download, unzipping, copying, deleting process unsuccessful");
             }
-            
         } else {
-            
             NSLog(@"Current version is latest version. No new content.");
-            NodesTableViewController *nodesTableViewController = [[NodesTableViewController alloc] init];
-            [nodesTableViewController retrieveAndReloadNodes:nodequeueID];
         }
     }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -92,6 +126,8 @@
                                      }];
     [operation start];
 }
+
+#pragma mark - User defaults
 
 /*
  * Save the version number for a particular nodequeue id in user defaults
@@ -115,6 +151,8 @@
     NSLog(@"Retrieving version from NSdefaults successful with version: %@", [defaults valueForKey:key]);
     return [defaults valueForKey:key];
 }
+
+#pragma mark - Zip file
 
 /*
  * Downloads and unzips a zip file from a particular URL

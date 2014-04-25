@@ -8,9 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		06347A378B104902BD549A7D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC8318A5B1E428E8A4EDC51 /* libPods.a */; };
+		B501EF8C190AAF9500EAF233 /* content_nqid_1 in Resources */ = {isa = PBXBuildFile; fileRef = B501EF8B190AAF9500EAF233 /* content_nqid_1 */; };
 		B5195A6A1907BEFA001F2111 /* NodesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5195A691907BEFA001F2111 /* NodesTableViewController.m */; };
 		B5195A6D1907C5D5001F2111 /* NodesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B5195A6C1907C5D5001F2111 /* NodesTableViewCell.m */; };
-		B583E1F019090D9100B87480 /* DownloadZipController.m in Sources */ = {isa = PBXBuildFile; fileRef = B583E1EF19090D9100B87480 /* DownloadZipController.m */; };
+		B583E1F019090D9100B87480 /* ContentManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B583E1EF19090D9100B87480 /* ContentManager.m */; };
 		B5AA799D18FD654800BB9542 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5AA799C18FD654800BB9542 /* Foundation.framework */; };
 		B5AA799F18FD654800BB9542 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5AA799E18FD654800BB9542 /* CoreGraphics.framework */; };
 		B5AA79A118FD654800BB9542 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5AA79A018FD654800BB9542 /* UIKit.framework */; };
@@ -41,12 +42,13 @@
 
 /* Begin PBXFileReference section */
 		2342EDD38DCB49F5B0F7562E /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		B501EF8B190AAF9500EAF233 /* content_nqid_1 */ = {isa = PBXFileReference; lastKnownFileType = folder; name = content_nqid_1; path = ../../../../../../Downloads/content_nqid_1; sourceTree = "<group>"; };
 		B5195A681907BEFA001F2111 /* NodesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodesTableViewController.h; sourceTree = "<group>"; };
 		B5195A691907BEFA001F2111 /* NodesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NodesTableViewController.m; sourceTree = "<group>"; };
 		B5195A6B1907C5D5001F2111 /* NodesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodesTableViewCell.h; sourceTree = "<group>"; };
 		B5195A6C1907C5D5001F2111 /* NodesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NodesTableViewCell.m; sourceTree = "<group>"; };
-		B583E1EE19090D9100B87480 /* DownloadZipController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadZipController.h; sourceTree = "<group>"; };
-		B583E1EF19090D9100B87480 /* DownloadZipController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadZipController.m; sourceTree = "<group>"; };
+		B583E1EE19090D9100B87480 /* ContentManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentManager.h; sourceTree = "<group>"; };
+		B583E1EF19090D9100B87480 /* ContentManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentManager.m; sourceTree = "<group>"; };
 		B5AA799918FD654800BB9542 /* DrupalCMS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrupalCMS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5AA799C18FD654800BB9542 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B5AA799E18FD654800BB9542 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -97,6 +99,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B501EF81190AA71000EAF233 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				B583E1EE19090D9100B87480 /* ContentManager.h */,
+				B583E1EF19090D9100B87480 /* ContentManager.m */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		B5AA799018FD654800BB9542 = {
 			isa = PBXGroup;
 			children = (
@@ -132,6 +143,8 @@
 		B5AA79A218FD654800BB9542 /* DrupalCMS */ = {
 			isa = PBXGroup;
 			children = (
+				B501EF8B190AAF9500EAF233 /* content_nqid_1 */,
+				B501EF81190AA71000EAF233 /* Helpers */,
 				B5E0739219000D8F0059B746 /* Views */,
 				B5E0739119000D090059B746 /* Controllers */,
 				B5E0739019000CD00059B746 /* Models */,
@@ -177,6 +190,8 @@
 		B5E0739019000CD00059B746 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				B5C1D05319066D9B00D723F1 /* NodeDataProvider.h */,
+				B5C1D05419066D9B00D723F1 /* NodeDataProvider.m */,
 				B5E0739319000DB90059B746 /* Node.h */,
 				B5E0739419000DB90059B746 /* Node.m */,
 			);
@@ -186,12 +201,8 @@
 		B5E0739119000D090059B746 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				B5C1D05319066D9B00D723F1 /* NodeDataProvider.h */,
-				B5C1D05419066D9B00D723F1 /* NodeDataProvider.m */,
 				B5195A681907BEFA001F2111 /* NodesTableViewController.h */,
 				B5195A691907BEFA001F2111 /* NodesTableViewController.m */,
-				B583E1EE19090D9100B87480 /* DownloadZipController.h */,
-				B583E1EF19090D9100B87480 /* DownloadZipController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -284,6 +295,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5AA79B318FD654800BB9542 /* Main_iPad.storyboard in Resources */,
+				B501EF8C190AAF9500EAF233 /* content_nqid_1 in Resources */,
 				B5AA79B818FD654800BB9542 /* Images.xcassets in Resources */,
 				B5AA79B018FD654800BB9542 /* Main_iPhone.storyboard in Resources */,
 				B5AA79A718FD654800BB9542 /* InfoPlist.strings in Resources */,
@@ -340,7 +352,7 @@
 			files = (
 				B5195A6A1907BEFA001F2111 /* NodesTableViewController.m in Sources */,
 				B5AA79AD18FD654800BB9542 /* AppDelegate.m in Sources */,
-				B583E1F019090D9100B87480 /* DownloadZipController.m in Sources */,
+				B583E1F019090D9100B87480 /* ContentManager.m in Sources */,
 				B5AA79A918FD654800BB9542 /* main.m in Sources */,
 				B5C1D05519066D9B00D723F1 /* NodeDataProvider.m in Sources */,
 				B5E0739519000DB90059B746 /* Node.m in Sources */,

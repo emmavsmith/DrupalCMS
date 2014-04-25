@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface DownloadZipController : NSObject
+@interface ContentManager : NSObject
 
--(void)getVersionPathFromDrupal;
+-(void)checkExistingContent;
+-(void)checkForUpdate;
 
 @end

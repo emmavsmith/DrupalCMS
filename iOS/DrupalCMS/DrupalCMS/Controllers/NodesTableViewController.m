@@ -35,6 +35,9 @@
 {
     [super viewDidLoad];
     
+    //TODO: change nodequeueid
+    _nodeObjectsArray = [NodeDataProvider getNodesWithNodequeueId:@1];
+    
     //listen for when a zip file has been downloaded and unzipped
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(downloadZipComplete:)
@@ -67,9 +70,9 @@
 {
     NodesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NodesTableViewCell"];
     
-    if (cell == nil) {
+    /*if (cell == nil) {
         cell = [[NodesTableViewCell alloc] init];
-    }
+    }*/
     
     Node *node = [_nodeObjectsArray objectAtIndex:indexPath.row];
     cell.nodeTitleLabel.text = node.title;
@@ -78,7 +81,6 @@
 
 #pragma mark - Nodequeues nodes
 
-
 /*
  * Called when a zip folder has been downloaded and unzipped where it retrieves a nodequeueID
  */
@@ -86,18 +88,15 @@
 {
     NSDictionary *userInfo = [notification userInfo];
     NSNumber *nodequeueID = [userInfo objectForKey:@"nodequeueID"];
-    [self retrieveAndReloadNodes:nodequeueID];
+    [self getAndReloadNodes:nodequeueID];
 }
 
 /*
  * Retrieves an array of node objects and reloads the tableView so it can be populated with the retrieved nodes
  */
--(void)retrieveAndReloadNodes:(NSNumber *)nodequeueID
+-(void)getAndReloadNodes:(NSNumber *)nodequeueID
 {
-    NodeDataProvider *nodeDataProvider = [[NodeDataProvider alloc] init];
-    [nodeDataProvider retrieveJSONFile:nodequeueID];
-    _nodeObjectsArray = nodeDataProvider.nodesArray;
-    
+    _nodeObjectsArray = [NodeDataProvider getNodesWithNodequeueId:nodequeueID];
     [self.tableView reloadData];
 }
 

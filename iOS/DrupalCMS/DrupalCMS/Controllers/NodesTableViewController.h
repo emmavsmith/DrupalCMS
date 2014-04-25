@@ -10,6 +10,6 @@
 
 @interface NodesTableViewController : UITableViewController 
 
--(void)retrieveAndReloadNodes:(NSNumber *)nodequeueID;
+-(void)getAndReloadNodes:(NSNumber *)nodequeueID;
 
 @end
