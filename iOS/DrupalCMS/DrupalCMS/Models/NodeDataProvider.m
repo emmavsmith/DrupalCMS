@@ -46,6 +46,15 @@
     NSString *path = [NSString stringWithFormat:@"%@%@%@", [documentsDirectory stringByAppendingString:@"/content_nqid_"], nodequeueid, @"/"];
     path = [path stringByAppendingPathComponent:@"manifest"];
     path = [path stringByAppendingPathExtension:@"JSON"];
+    
+    // CJW: this should do the same as the 3 lines above
+    //NSString *path = [NSString stringWithFormat:@"%@/content_nqid_%@/manifest.JSON",documentsDirectory, nodequeueid];
+    
+    // CJW: This method should probably be part of the Content Manager, the hardwired string 'content_nqid_' occurs in both this Class and
+    // the Content Manager which makes it a bit fragile. We can include a reference to the overridden ContentManager class here and ask it for the path
+    // when needed. At the moment the ContentManager needs to know about the NodeDataProvider class and not the other way around which seems a bit
+    // backward.
+    
     return path;
 }
 
