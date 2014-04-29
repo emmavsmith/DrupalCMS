@@ -47,13 +47,13 @@ NSString * const ContentUpdateDidComplete = @"ContentUpdateDidComplete";
     NSLog(@"Checking existing content");
     NSFileManager *fileManager = [NSFileManager defaultManager];
     //check if there is content in the documents on the phone
-    NSString *JSONPath = [[ContentManager getContentPathForNodequeueId:nodequeueID] stringByAppendingPathComponent:@"manifest.JSON"];
+    NSString *JSONPath = [ContentManager contentPathForNodequeueId:nodequeueID];
     
     if(![fileManager fileExistsAtPath:JSONPath]) {
         
         //check if there is content in the bundle issued with app and if there is copy it to documents on phone
         NSString *path =[[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"content_nqid_%@", nodequeueID] ofType:@"zip"];
-        NSString *newPath = [ContentManager getContentPathForNodequeueId:nodequeueID];
+        NSString *newPath = [ContentManager contentPathForNodequeueId:nodequeueID];
         
         if([self unzipZipFileFromPath:path toPath:newPath]) {
             //returns yes if existing content has been unzipped from the bundle to new directory
@@ -151,7 +151,7 @@ NSString * const ContentUpdateDidComplete = @"ContentUpdateDidComplete";
 {
     NSURL *url = [NSURL URLWithString:downloadUrl];
     NSData *data = [[NSData alloc] initWithContentsOfURL: url];
-    NSString *zipFilePath = [[ContentManager getDownloadPathForNodequeueId:nodequeueID]stringByAppendingPathComponent:@"zip"];
+    NSString *zipFilePath = [[ContentManager downloadPathForNodequeueId:nodequeueID]stringByAppendingPathComponent:@"zip"];
     
     return [data writeToFile:zipFilePath atomically:YES];
 }
@@ -159,8 +159,8 @@ NSString * const ContentUpdateDidComplete = @"ContentUpdateDidComplete";
 //TODO: rename method
 -(BOOL) unzipAndProcessFile
 {
-    NSString *zipFilePath = [[ContentManager getDownloadPathForNodequeueId:nodequeueID]stringByAppendingPathComponent:@"zip"];
-    NSString *newZipDirectory = [ContentManager getDownloadPathForNodequeueId:nodequeueID];
+    NSString *zipFilePath = [[ContentManager downloadPathForNodequeueId:nodequeueID]stringByAppendingPathComponent:@"zip"];
+    NSString *newZipDirectory = [ContentManager downloadPathForNodequeueId:nodequeueID];
     if([self unzipZipFileFromPath:zipFilePath toPath:newZipDirectory]) {
         
         //downloading and unzipping successful so process files
@@ -201,9 +201,9 @@ NSString * const ContentUpdateDidComplete = @"ContentUpdateDidComplete";
 //TODO: rename method
 -(BOOL)processFilesWithZipFilePath:(NSString *)zipFilePath
 {
-    NSString *currentPath = [ContentManager getDownloadPathForNodequeueId:nodequeueID];
+    NSString *currentPath = [ContentManager downloadPathForNodequeueId:nodequeueID];
     //copying to this directory as this will be the name to overwrite if content is already on the phone to begin with
-    NSString *newPath = [ContentManager getContentPathForNodequeueId:nodequeueID];
+    NSString *newPath = [ContentManager contentPathForNodequeueId:nodequeueID];
     
     if([self copyFilesFromPath:currentPath toPath:newPath]){
         
@@ -253,21 +253,19 @@ NSString * const ContentUpdateDidComplete = @"ContentUpdateDidComplete";
 
 #pragma mark - Paths
 
-+(NSString *)getDocumentsDirectory
++(NSString *)documentsDirectory
 {
     return NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
 }
 
-+(NSString *)getContentPathForNodequeueId:(NSNumber *)nodequeueID
++(NSString *)contentPathForNodequeueId:(NSNumber *)nodequeueID
 {
-    NSString *path = [NSString stringWithFormat:@"%@/content_nqid_%@",[ContentManager getDocumentsDirectory], nodequeueID];
-    return path;
+    return [NSString stringWithFormat:@"%@/content_nqid_%@",[ContentManager documentsDirectory], nodequeueID];
 }
 
-+(NSString *)getDownloadPathForNodequeueId:(NSNumber *)nodequeueID
++(NSString *)downloadPathForNodequeueId:(NSNumber *)nodequeueID
 {
-    NSString *path = [NSString stringWithFormat:@"%@%@%@", [[ContentManager getDocumentsDirectory] stringByAppendingString:@"/download_nqid_"], nodequeueID, @"/"];
-    return path;
+    return [NSString stringWithFormat:@"%@/download_nqid_%@",[ContentManager documentsDirectory], nodequeueID];
 }
 
 @end
