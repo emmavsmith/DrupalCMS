@@ -12,7 +12,7 @@ extern NSString * const ContentUpdateDidComplete;
 
 @interface ContentManager : NSObject
 
--(BOOL)checkExistingContent;
+-(void)checkExistingContent;
 -(void)checkForUpdate;
 +(NSString *)contentPathForNodequeueId:(NSNumber *)nodequeueID;
 

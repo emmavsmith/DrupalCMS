@@ -42,25 +42,26 @@ NSString * const ContentUpdateDidComplete = @"ContentUpdateDidComplete";
 
 #pragma mark - Existing Content
 
--(BOOL)checkExistingContent
+-(void)checkExistingContent
 {
     NSLog(@"Checking existing content");
     NSFileManager *fileManager = [NSFileManager defaultManager];
     //check if there is content in the documents on the phone
-    NSString *JSONPath = [ContentManager contentPathForNodequeueId:nodequeueID];
+    NSString *nodequeuePath = [ContentManager contentPathForNodequeueId:nodequeueID];
+    NSLog(@"checkExistingContent, JSONPath = %@", nodequeuePath);
     
-    if(![fileManager fileExistsAtPath:JSONPath]) {
+    if(![fileManager fileExistsAtPath:nodequeuePath]) {
         
         //check if there is content in the bundle issued with app and if there is copy it to documents on phone
-        NSString *path =[[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"content_nqid_%@", nodequeueID] ofType:@"zip"];
-        NSString *newPath = [ContentManager contentPathForNodequeueId:nodequeueID];
+        NSString *nodequeueZipPath =[[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"content_nqid_%@", nodequeueID] ofType:@"zip"];
+        NSLog(@"checkExistingContent, path = %@", nodequeueZipPath);
+        NSLog(@"checkExistingContent, newPath = %@", nodequeuePath);
         
-        if([self unzipZipFileFromPath:path toPath:newPath]) {
-            //returns yes if existing content has been unzipped from the bundle to new directory
-            return YES;
+        if([self unzipZipFileFromPath:nodequeueZipPath toPath:nodequeuePath]) {
+            //TODO: this will not be hardcoded
+            [self saveToUserDefaultsWithVersion:@1];
         }
     }
-    return NO;
 }
 
 #pragma mark - Content Update

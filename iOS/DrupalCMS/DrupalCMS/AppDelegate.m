@@ -17,12 +17,7 @@
     
     //Fire off download of zip
     ContentManager *contentManager = [[ContentManager alloc] init];
-    
-    if([contentManager checkExistingContent]){
-    
-        //TODO: save version to user defaults
-        NSLog(@"In appDelegate, will save user defaults here");
-    }
+    [contentManager checkExistingContent];
     
     return YES;
 }
