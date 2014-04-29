@@ -10,12 +10,11 @@
 #import "NodeDataProvider.h"
 #import "NodesTableViewCell.h"
 #import "Node.h"
+#import "ContentManager.h"
 
 @interface NodesTableViewController ()
 
 @property (nonatomic)  NSMutableArray *nodeObjects;
-
-#define ZIP_FILE_FINISHED_DOWNLOAD @"ContentZipFileFinishedDownload"
 
 @end
 
@@ -24,7 +23,6 @@
 /*
  * Lazy instantiation of nodeObjects
  */
-
 - (NSMutableArray *)nodeObjects
 {
     if(!_nodeObjects){
@@ -37,8 +35,6 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        
-        self.nodeObjects = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -48,12 +44,12 @@
     [super viewDidLoad];
     
     //TODO: change nodequeueid
-    self.nodeObjects = [NodeDataProvider getNodesWithNodequeueId:@1];
+    [self getAndReloadNodes:@1];
     
     //listen for when a zip file has been downloaded and unzipped
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(downloadZipComplete:)
-                                                 name:ZIP_FILE_FINISHED_DOWNLOAD
+                                             selector:@selector(updateContent:)
+                                                 name:ContentUpdateDidComplete
                                                object:nil];
 }
 
@@ -92,7 +88,7 @@
 /*
  * Called when a zip folder has been downloaded and unzipped where it retrieves a nodequeueID
  */
--(void)downloadZipComplete:(NSNotification *)notification
+-(void)updateContent:(NSNotification *)notification
 {
     NSDictionary *userInfo = [notification userInfo];
     NSNumber *nodequeueID = [userInfo objectForKey:@"nodequeueID"];

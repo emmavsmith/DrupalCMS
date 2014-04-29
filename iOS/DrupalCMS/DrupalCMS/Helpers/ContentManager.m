@@ -12,6 +12,8 @@
 #import "NodesTableViewController.h"
 #import "NodeDataProvider.h"
 
+NSString * const ContentUpdateDidComplete = @"ContentUpdateDidComplete";
+
 @interface ContentManager () {
     
     NSString *drupalDownloadURL;
@@ -20,7 +22,6 @@
 }
 
 #define  DRUPAL_URL @"http://cmstest.digitallabsmmu.com/contentpackagerjson/"
-#define ZIP_FILE_FINISHED_DOWNLOAD @"ContentZipFileFinishedDownload"
 
 @end
 
@@ -96,7 +97,7 @@
                 
                 //Post a notification and pass the nodequeueID
                 NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:nodequeueID, @"nodequeueID", nil];
-                [[NSNotificationCenter defaultCenter] postNotificationName:ZIP_FILE_FINISHED_DOWNLOAD object:self userInfo:userInfo];
+                [[NSNotificationCenter defaultCenter] postNotificationName:ContentUpdateDidComplete object:self userInfo:userInfo];
                 
                 NSLog(@"Download, unzipping, copying, deleting process complete");
             } else {

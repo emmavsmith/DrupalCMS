@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString * const ContentUpdateDidComplete;
+
 @interface ContentManager : NSObject
 
 -(BOOL)checkExistingContent;
