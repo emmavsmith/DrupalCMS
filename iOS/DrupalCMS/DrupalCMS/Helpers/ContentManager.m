@@ -31,7 +31,7 @@ NSString * const ContentUpdateDidCompleteNotification = @"ContentUpdateDidComple
     self = [super init];
     if (self){
         
-        //TODO: this will be called from somewhere
+        //TODO: this will not be hardcoded
         nodequeueID = @1;
         
         //url to download the drupal db info for a particular nodequeue as json
@@ -108,9 +108,8 @@ NSString * const ContentUpdateDidCompleteNotification = @"ContentUpdateDidComple
     }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                          
-                                         NSLog(@"The error was: %@", error);
                                          //If passed a nodequeueid that is not in the Drupal db then will hit here
-                                         NSLog(@"This could be because there is not a db entry in the Drupal db for the nodequeue id: %@", nodequeueID);
+                                         NSLog(@"The error was: %@", error);
                                      }];
     [operation start];
 }
@@ -150,12 +149,10 @@ NSString * const ContentUpdateDidCompleteNotification = @"ContentUpdateDidComple
     NSURL *url = [NSURL URLWithString:downloadUrl];
     NSData *data = [[NSData alloc] initWithContentsOfURL: url];
     NSString *zipFilePath = [[ContentManager downloadPathForNodequeueId:nodequeueID] stringByAppendingPathExtension:@"zip"];
-    NSLog(@"downloadZipFromURL, zipFilePath = %@", zipFilePath);
-    
     return [data writeToFile:zipFilePath atomically:YES];
 }
 
-//TODO: rename method
+//TODO: rename method once merged with processFilesWithZipFilePath
 -(BOOL) unzipAndProcessFile
 {
     NSString *zipFilePath = [[ContentManager downloadPathForNodequeueId:nodequeueID] stringByAppendingPathExtension:@"zip"];
@@ -197,7 +194,7 @@ NSString * const ContentUpdateDidCompleteNotification = @"ContentUpdateDidComple
 
 #pragma mark - Process Files
 
-//TODO: rename method
+//TODO: merge this method with unzipAndProcessFile and remove duplication
 -(BOOL)processFilesWithZipFilePath:(NSString *)zipFilePath
 {
     NSString *currentPath = [ContentManager downloadPathForNodequeueId:nodequeueID];
@@ -222,6 +219,8 @@ NSString * const ContentUpdateDidCompleteNotification = @"ContentUpdateDidComple
  */
 -(BOOL)copyFilesFromPath:(NSString *)fromPath toPath:(NSString *)toPath
 {
+    //TODO: this does not need to be a method when debugs removed, shrinks down to one line of code
+    //TODO: delete existing files in toPath before copying
     NSError *error;
     if([[NSFileManager defaultManager] copyItemAtPath:fromPath toPath:toPath error:&error]){
         
@@ -230,7 +229,7 @@ NSString * const ContentUpdateDidCompleteNotification = @"ContentUpdateDidComple
     } else {
         
         NSLog(@"Copying unsuccessful");
-        NSLog(@"Error: %@", error);
+        //NSLog(@"Error: %@", error);
         return NO;
     }
 }
@@ -240,6 +239,7 @@ NSString * const ContentUpdateDidCompleteNotification = @"ContentUpdateDidComple
  */
 -(BOOL)deleteFileAtPath:(NSString *)path
 {
+    //TODO: this does not need to be a method when debugs removed, shrinks down to one line of code
     if ([[NSFileManager defaultManager] removeItemAtPath:path error:nil]) {
         
         NSLog(@"Deleting successful");

@@ -22,7 +22,7 @@
         
         NSLog(@"Creating node with; title: %@, type: %@, content: %@", self.title, self.type, self.content);
         
-        //TODO: images??
+        //TODO: images?
     }
     return self;
 }
