@@ -12,7 +12,7 @@
 #import "NodesTableViewController.h"
 #import "NodeDataProvider.h"
 
-NSString * const ContentUpdateDidComplete = @"ContentUpdateDidComplete";
+NSString * const ContentUpdateDidCompleteNotification = @"ContentUpdateDidCompleteNotification";
 
 @interface ContentManager () {
     
@@ -48,14 +48,11 @@ NSString * const ContentUpdateDidComplete = @"ContentUpdateDidComplete";
     NSFileManager *fileManager = [NSFileManager defaultManager];
     //check if there is content in the documents on the phone
     NSString *nodequeuePath = [ContentManager contentPathForNodequeueId:nodequeueID];
-    NSLog(@"checkExistingContent, JSONPath = %@", nodequeuePath);
     
     if(![fileManager fileExistsAtPath:nodequeuePath]) {
         
         //check if there is content in the bundle issued with app and if there is copy it to documents on phone
         NSString *nodequeueZipPath =[[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"content_nqid_%@", nodequeueID] ofType:@"zip"];
-        NSLog(@"checkExistingContent, path = %@", nodequeueZipPath);
-        NSLog(@"checkExistingContent, newPath = %@", nodequeuePath);
         
         if([self unzipZipFileFromPath:nodequeueZipPath toPath:nodequeuePath]) {
             //TODO: this will not be hardcoded
@@ -96,7 +93,7 @@ NSString * const ContentUpdateDidComplete = @"ContentUpdateDidComplete";
                 
                     //Post a notification and pass the nodequeueID
                     NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:nodequeueID, @"nodequeueID", nil];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:ContentUpdateDidComplete object:self userInfo:userInfo];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:ContentUpdateDidCompleteNotification object:self userInfo:userInfo];
                     
                     NSLog(@"Download, unzipping, copying, deleting process complete");
                 } else {
@@ -152,7 +149,8 @@ NSString * const ContentUpdateDidComplete = @"ContentUpdateDidComplete";
 {
     NSURL *url = [NSURL URLWithString:downloadUrl];
     NSData *data = [[NSData alloc] initWithContentsOfURL: url];
-    NSString *zipFilePath = [[ContentManager downloadPathForNodequeueId:nodequeueID]stringByAppendingPathComponent:@"zip"];
+    NSString *zipFilePath = [[ContentManager downloadPathForNodequeueId:nodequeueID] stringByAppendingPathExtension:@"zip"];
+    NSLog(@"downloadZipFromURL, zipFilePath = %@", zipFilePath);
     
     return [data writeToFile:zipFilePath atomically:YES];
 }
@@ -160,7 +158,7 @@ NSString * const ContentUpdateDidComplete = @"ContentUpdateDidComplete";
 //TODO: rename method
 -(BOOL) unzipAndProcessFile
 {
-    NSString *zipFilePath = [[ContentManager downloadPathForNodequeueId:nodequeueID]stringByAppendingPathComponent:@"zip"];
+    NSString *zipFilePath = [[ContentManager downloadPathForNodequeueId:nodequeueID] stringByAppendingPathExtension:@"zip"];
     NSString *newZipDirectory = [ContentManager downloadPathForNodequeueId:nodequeueID];
     if([self unzipZipFileFromPath:zipFilePath toPath:newZipDirectory]) {
         

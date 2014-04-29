@@ -32,9 +32,6 @@
     NSLog(@"Extracting JSON");
 
     NSString *path = [[ContentManager contentPathForNodequeueId:nodequeueid] stringByAppendingPathComponent:@"manifest.JSON"];
-    
-    NSLog(@"PATH = %@", path);
-    
     NSString *myJSON = [[NSString alloc] initWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
     //TODO: handle error when there is no content
     NSArray *json = [NSJSONSerialization JSONObjectWithData:[myJSON dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];

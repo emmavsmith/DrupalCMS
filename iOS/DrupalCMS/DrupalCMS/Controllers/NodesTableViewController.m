@@ -49,7 +49,7 @@
     //listen for when content has been updated
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateContent:)
-                                                 name:ContentUpdateDidComplete
+                                                 name:ContentUpdateDidCompleteNotification
                                                object:nil];
 }
 

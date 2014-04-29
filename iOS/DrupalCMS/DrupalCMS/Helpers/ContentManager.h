@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString * const ContentUpdateDidComplete;
+extern NSString * const ContentUpdateDidCompleteNotification;
 
 @interface ContentManager : NSObject
 
