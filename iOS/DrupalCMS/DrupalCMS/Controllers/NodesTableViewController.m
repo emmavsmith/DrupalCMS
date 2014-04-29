@@ -46,7 +46,7 @@
     //TODO: change nodequeueid
     [self getAndReloadNodes:@1];
     
-    //listen for when a zip file has been downloaded and unzipped
+    //listen for when content has been updated
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(updateContent:)
                                                  name:ContentUpdateDidComplete
@@ -86,7 +86,7 @@
 #pragma mark - Nodequeues nodes
 
 /*
- * Called when a zip folder has been downloaded and unzipped where it retrieves a nodequeueID
+ * Retrieves information passed over from observer when content has been updated
  */
 -(void)updateContent:(NSNotification *)notification
 {
