@@ -26,8 +26,7 @@
 
 @implementation ContentManager
 
-//TODO: change content in bundle to zip file
-//TODO: Refactor this class - need a method that just unzips a file
+//TODO: move method from nodeDataProvider in here
 
 -(id) init
 {
@@ -44,9 +43,9 @@
     return self;
 }
 
-#pragma mark - Existing content
+#pragma mark - Existing Content
 
--(void)checkExistingContent
+-(BOOL)checkExistingContent
 {
     NSLog(@"Checking existing content");
     NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -56,29 +55,18 @@
     if(![fileManager fileExistsAtPath:JSONPath]) {
         
         //check if there is content in the bundle issued with app and if there is copy it to documents on phone
-        [self copyContent];
+        NSString *path =[[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"content_nqid_%@", nodequeueID] ofType:@"zip"];
+        NSString *newPath = [NSString stringWithFormat:@"%@%@%@", [documentsDirectory stringByAppendingString:@"/content_nqid_"], nodequeueID, @"/"];
+        
+        if([self unzipZipFileFromPath:path toPath:newPath]) {
+            //returns yes if existing content has been unzipped from the bundle to new directory
+            return YES;
+        }
     }
+    return NO;
 }
 
-- (void) copyContent
-{
-    NSLog(@"Copying existing content");
-    
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSError *error;
-    NSString *newPath = [NSString stringWithFormat:@"%@%@%@", [documentsDirectory stringByAppendingString:@"/content_nqid_"], nodequeueID, @"/"];
-    NSString *path =[[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"content_nqid_%@", nodequeueID] ofType:nil];
-    
-    NSLog(@"copy content with newPath = %@", newPath);
-    NSLog(@"copy content with path = %@", path);
-    
-    BOOL success = [fileManager copyItemAtPath:path toPath:newPath error:&error];
-    if (!success){
-            NSAssert1(0, @"Failed to create writable file with message '%@'.", [error localizedDescription]);
-    }
-}
-
-#pragma mark - Content update
+#pragma mark - Content Update
 
 /*
  * Retrieves the version and path for the content of a particular nodequeueid from Drupal
@@ -102,9 +90,9 @@
             NSString *downloadUrl = [responseObject valueForKey:@"file_path"];
             
             //Check downloading, unzipping, copying and deleting was successful before amending the version number in user defaults
-            if ([self downloadZip:downloadUrl]){
+            if ([self downloadZipFromURL:downloadUrl]){
                 
-                [self saveVersionToUserDefaults: newVersion];
+                [self saveToUserDefaultsWithVersion: newVersion];
                 
                 //Post a notification and pass the nodequeueID
                 NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:nodequeueID, @"nodequeueID", nil];
@@ -127,12 +115,12 @@
     [operation start];
 }
 
-#pragma mark - User defaults
+#pragma mark - User Defaults
 
 /*
  * Save the version number for a particular nodequeue id in user defaults
  */
--(void)saveVersionToUserDefaults:(NSNumber *)version
+-(void)saveToUserDefaultsWithVersion:(NSNumber *)version
 {
     NSString *key = [NSString stringWithFormat:@"%@", nodequeueID];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -152,25 +140,45 @@
     return [defaults valueForKey:key];
 }
 
-#pragma mark - Zip file
+#pragma mark - Zip File
 
 /*
- * Downloads and unzips a zip file from a particular URL
+ * Downloads a zip file from a particular URL
  */
--(BOOL)downloadZip:(NSString *)downloadUrl
+-(BOOL)downloadZipFromURL:(NSString *)downloadUrl
 {
-    BOOL zipSuccessFlag = NO;
-    
     NSURL *url = [NSURL URLWithString:downloadUrl];
     NSData *data = [[NSData alloc] initWithContentsOfURL: url];
-    NSString *outputPath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@%@%@", @"download_nqid_", nodequeueID, @".zip"]];
-    [data writeToFile:outputPath atomically:YES];
-    ZipArchive *zipArchive = [[ZipArchive alloc] init];
-    NSString *zipDirectory = [NSString stringWithFormat:@"%@%@%@", [documentsDirectory stringByAppendingString:@"/download_nqid_"], nodequeueID, @"/"];
+    NSString *zipFilePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@%@%@", @"download_nqid_", nodequeueID, @".zip"]];
+    NSString *newZipDirectory = [NSString stringWithFormat:@"%@%@%@", [documentsDirectory stringByAppendingString:@"/download_nqid_"], nodequeueID, @"/"];
     
-    if ([zipArchive UnzipOpenFile: outputPath]){
+    [data writeToFile:zipFilePath atomically:YES];
+    
+    //TODO: should this if statement be in a separate function or performed somewhere else e.g. once this method has returned it's bool from where it was called from?
+    if([self unzipZipFileFromPath:zipFilePath toPath:newZipDirectory]) {
         
-        if([zipArchive UnzipFileTo:zipDirectory overWrite: YES]){
+        //downloading and unzipping successful so process files
+        if([self processFilesWithZipFilePath:zipFilePath]){
+            
+            //both unzipping and processing of files successful
+            return YES;
+        }
+    }
+    //either unzipping or processing of files unsuccessful
+    return NO;
+}
+
+/*
+ * Unzips a zip file from a particular directory
+ */
+-(BOOL)unzipZipFileFromPath:(NSString *)fromPath toPath:(NSString *)toPath
+{
+    BOOL zipSuccessFlag = NO;
+    ZipArchive *zipArchive = [[ZipArchive alloc] init];
+    
+    if ([zipArchive UnzipOpenFile: fromPath]){
+        
+        if([zipArchive UnzipFileTo:toPath overWrite: YES]){
             zipSuccessFlag = YES;
             NSLog(@"Unzipping successful");
         } else {
@@ -180,43 +188,65 @@
         [zipArchive UnzipCloseFile];
     }
     
-    if(zipSuccessFlag){
-        
-        if([self copyAndDeleteFiles:outputPath]){
-            return YES;
-        }
-    }
-    return NO;
+    return zipSuccessFlag;
 }
 
-/*
- * Copys downloaded files from the download folder to the permanent content folder
- * Deletes the download zip and unzipped folder as it is no longer needed
- */
--(BOOL)copyAndDeleteFiles:(NSString *)outputPath
+#pragma mark - Process Files
+
+//TODO: need better method name
+-(BOOL)processFilesWithZipFilePath:(NSString *)zipFilePath
 {
     NSString *currentPath = [NSString stringWithFormat:@"%@%@%@", [documentsDirectory stringByAppendingString:@"/download_nqid_"], nodequeueID, @"/"];
     //copying to this directory as this will be the name to overwrite if content is already on the phone to begin with
     NSString *newPath = [NSString stringWithFormat:@"%@%@%@", [documentsDirectory stringByAppendingString:@"/content_nqid_"], nodequeueID, @"/"];
     
-    if([[NSFileManager defaultManager] copyItemAtPath:currentPath toPath:newPath error:nil]){
+    if([self copyFilesFromPath:currentPath toPath:newPath]){
+        
+        //copying files successful so delete files
+        if([self deleteFileAtPath:zipFilePath] && [self deleteFileAtPath:currentPath]) {
+            
+            //both copying and deleting successful
+            return YES;
+        }
+    }
+    //either copying or deleting unsuccessful
+    return NO;
+}
+
+/*
+ * Copies files from one path to a new path
+ */
+-(BOOL)copyFilesFromPath:(NSString *)fromPath toPath:(NSString *)toPath
+{
+    NSError *error;
+    if([[NSFileManager defaultManager] copyItemAtPath:fromPath toPath:toPath error:&error]){
         
         NSLog(@"Copying successful");
-        
-        //delete zip and download folder
-        if ([[NSFileManager defaultManager] removeItemAtPath:currentPath error:nil] && [[NSFileManager defaultManager] removeItemAtPath:outputPath error:nil]){
-            
-            NSLog(@"Deleting successful");
-            return YES;
-        } else {
-            NSLog(@"Deleting unsuccessful");
-        }
+        return YES;
     } else {
         
         NSLog(@"Copying unsuccessful");
-        NSLog(@"Deleting unsuccessful");
+        NSLog(@"Error: %@", error);
+        return NO;
     }
-    return NO;
+}
+
+/*
+ * Deletes a file at a specific path
+ */
+-(BOOL)deleteFileAtPath:(NSString *)path
+{
+    //delete zip and download folder
+    if ([[NSFileManager defaultManager] removeItemAtPath:path error:nil]) {
+        
+        NSLog(@"Deleting successful");
+        return YES;
+        
+    } else {
+        
+        NSLog(@"Deleting unsuccessful");
+        return NO;
+    }
 }
 
 @end

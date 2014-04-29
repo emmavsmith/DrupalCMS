@@ -10,7 +10,7 @@
 
 @interface ContentManager : NSObject
 
--(void)checkExistingContent;
+-(BOOL)checkExistingContent;
 -(void)checkForUpdate;
 
 @end

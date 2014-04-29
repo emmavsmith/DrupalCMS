@@ -16,9 +16,15 @@
     // Override point for customization after application launch.
     
     //Fire off download of zip
-    ContentManager *downloadZipController = [[ContentManager alloc] init];
-    [downloadZipController checkExistingContent];
-    [downloadZipController checkForUpdate];
+    ContentManager *contentManager = [[ContentManager alloc] init];
+    
+    if([contentManager checkExistingContent]){
+    
+        //TODO: save version to user defaults
+        NSLog(@"In appDelegate, will save user defaults here");
+    }
+    
+    [contentManager checkForUpdate];
     
     return YES;
 }
