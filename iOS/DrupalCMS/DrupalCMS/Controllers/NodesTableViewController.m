@@ -13,7 +13,7 @@
 
 @interface NodesTableViewController ()
 
-@property NSMutableArray *nodeObjectsArray;
+@property (nonatomic)  NSMutableArray *nodeObjects;
 
 #define ZIP_FILE_FINISHED_DOWNLOAD @"ContentZipFileFinishedDownload"
 
@@ -21,12 +21,24 @@
 
 @implementation NodesTableViewController
 
+/*
+ * Lazy instantiation of nodeObjects
+ */
+
+- (NSMutableArray *)nodeObjects
+{
+    if(!_nodeObjects){
+        _nodeObjects = [[NSMutableArray alloc] init];
+    }
+    return _nodeObjects;
+}
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
         
-        self.nodeObjectsArray = [[NSMutableArray alloc] init];
+        self.nodeObjects = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -36,7 +48,7 @@
     [super viewDidLoad];
     
     //TODO: change nodequeueid
-    _nodeObjectsArray = [NodeDataProvider getNodesWithNodequeueId:@1];
+    self.nodeObjects = [NodeDataProvider getNodesWithNodequeueId:@1];
     
     //listen for when a zip file has been downloaded and unzipped
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -62,7 +74,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [_nodeObjectsArray count];
+    return [self.nodeObjects count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
@@ -70,11 +82,7 @@
 {
     NodesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NodesTableViewCell"];
     
-    /*if (cell == nil) {
-        cell = [[NodesTableViewCell alloc] init];
-    }*/
-    
-    Node *node = [_nodeObjectsArray objectAtIndex:indexPath.row];
+    Node *node = [self.nodeObjects objectAtIndex:indexPath.row];
     cell.nodeTitleLabel.text = node.title;
     return cell;
 }
@@ -96,7 +104,7 @@
  */
 -(void)getAndReloadNodes:(NSNumber *)nodequeueID
 {
-    _nodeObjectsArray = [NodeDataProvider getNodesWithNodequeueId:nodequeueID];
+    self.nodeObjects = [NodeDataProvider getNodesWithNodequeueId:nodequeueID];
     [self.tableView reloadData];
 }
 
