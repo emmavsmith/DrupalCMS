@@ -14,6 +14,6 @@ extern NSString * const ContentUpdateDidComplete;
 
 -(BOOL)checkExistingContent;
 -(void)checkForUpdate;
-+(NSString *)getContentPathForNodequeueID:(NSNumber *)nodequeueID;
++(NSString *)getContentPathForNodequeueId:(NSNumber *)nodequeueID;
 
 @end

@@ -27,8 +27,6 @@ NSString * const ContentUpdateDidComplete = @"ContentUpdateDidComplete";
 
 @implementation ContentManager
 
-//TODO: move method from nodeDataProvider in here
-
 -(id) init
 {
     self = [super init];
@@ -51,7 +49,7 @@ NSString * const ContentUpdateDidComplete = @"ContentUpdateDidComplete";
     NSLog(@"Checking existing content");
     NSFileManager *fileManager = [NSFileManager defaultManager];
     //check if there is content in the documents on the phone
-    NSString *JSONPath = [[ContentManager getContentPathForNodequeueID:nodequeueID] stringByAppendingPathComponent:@"manifest.JSON"];
+    NSString *JSONPath = [[ContentManager getContentPathForNodequeueId:nodequeueID] stringByAppendingPathComponent:@"manifest.JSON"];
     
     if(![fileManager fileExistsAtPath:JSONPath]) {
         
@@ -93,15 +91,20 @@ NSString * const ContentUpdateDidComplete = @"ContentUpdateDidComplete";
             //Check downloading, unzipping, copying and deleting was successful before amending the version number in user defaults
             if ([self downloadZipFromURL:downloadUrl]){
                 
-                [self saveToUserDefaultsWithVersion: newVersion];
+                if([self unzipAndProcessFile]) {
                 
-                //Post a notification and pass the nodequeueID
-                NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:nodequeueID, @"nodequeueID", nil];
-                [[NSNotificationCenter defaultCenter] postNotificationName:ContentUpdateDidComplete object:self userInfo:userInfo];
+                    [self saveToUserDefaultsWithVersion: newVersion];
                 
-                NSLog(@"Download, unzipping, copying, deleting process complete");
+                    //Post a notification and pass the nodequeueID
+                    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:nodequeueID, @"nodequeueID", nil];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:ContentUpdateDidComplete object:self userInfo:userInfo];
+                    
+                    NSLog(@"Download, unzipping, copying, deleting process complete");
+                } else {
+                    NSLog(@"Download, unzipping, copying, deleting process unsuccessful");
+                }
             } else {
-                NSLog(@"Download, unzipping, copying, deleting process unsuccessful");
+                NSLog(@"Downloading unsuccessful");
             }
         } else {
             NSLog(@"Current version is latest version. No new content.");
@@ -151,11 +154,15 @@ NSString * const ContentUpdateDidComplete = @"ContentUpdateDidComplete";
     NSURL *url = [NSURL URLWithString:downloadUrl];
     NSData *data = [[NSData alloc] initWithContentsOfURL: url];
     NSString *zipFilePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@%@%@", @"download_nqid_", nodequeueID, @".zip"]];
+    
+    return [data writeToFile:zipFilePath atomically:YES];
+}
+
+//TODO: rename method
+-(BOOL) unzipAndProcessFile
+{
+    NSString *zipFilePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@%@%@", @"download_nqid_", nodequeueID, @".zip"]];
     NSString *newZipDirectory = [NSString stringWithFormat:@"%@%@%@", [documentsDirectory stringByAppendingString:@"/download_nqid_"], nodequeueID, @"/"];
-    
-    [data writeToFile:zipFilePath atomically:YES];
-    
-    //TODO: should this if statement be in a separate function or performed somewhere else e.g. once this method has returned it's bool from where it was called from?
     if([self unzipZipFileFromPath:zipFilePath toPath:newZipDirectory]) {
         
         //downloading and unzipping successful so process files
@@ -188,19 +195,17 @@ NSString * const ContentUpdateDidComplete = @"ContentUpdateDidComplete";
         }
         [zipArchive UnzipCloseFile];
     }
-    
     return zipSuccessFlag;
 }
 
 #pragma mark - Process Files
 
-//TODO: need better method name
+//TODO: rename method
 -(BOOL)processFilesWithZipFilePath:(NSString *)zipFilePath
 {
     NSString *currentPath = [NSString stringWithFormat:@"%@%@%@", [documentsDirectory stringByAppendingString:@"/download_nqid_"], nodequeueID, @"/"];
     //copying to this directory as this will be the name to overwrite if content is already on the phone to begin with
-    NSString *newPath = [ContentManager getContentPathForNodequeueID:nodequeueID];
-    //[NSString stringWithFormat:@"%@%@%@", [documentsDirectory stringByAppendingString:@"/content_nqid_"], nodequeueID, @"/"];
+    NSString *newPath = [ContentManager getContentPathForNodequeueId:nodequeueID];
     
     if([self copyFilesFromPath:currentPath toPath:newPath]){
         
@@ -238,14 +243,11 @@ NSString * const ContentUpdateDidComplete = @"ContentUpdateDidComplete";
  */
 -(BOOL)deleteFileAtPath:(NSString *)path
 {
-    //delete zip and download folder
     if ([[NSFileManager defaultManager] removeItemAtPath:path error:nil]) {
         
         NSLog(@"Deleting successful");
         return YES;
-        
     } else {
-        
         NSLog(@"Deleting unsuccessful");
         return NO;
     }
@@ -253,7 +255,7 @@ NSString * const ContentUpdateDidComplete = @"ContentUpdateDidComplete";
 
 #pragma mark - Paths
 
-+(NSString *)getContentPathForNodequeueID:(NSNumber *)nodequeueID
++(NSString *)getContentPathForNodequeueId:(NSNumber *)nodequeueID
 {
     NSString *documentsDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
     NSString *path = [NSString stringWithFormat:@"%@/content_nqid_%@",documentsDirectory, nodequeueID];

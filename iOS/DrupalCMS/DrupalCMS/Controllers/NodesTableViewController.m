@@ -44,7 +44,7 @@
     [super viewDidLoad];
     
     //TODO: change nodequeueid
-    [self getAndReloadNodes:@1];
+    [self loadNodesForNodequeueId:@1];
     
     //listen for when content has been updated
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -92,13 +92,13 @@
 {
     NSDictionary *userInfo = [notification userInfo];
     NSNumber *nodequeueID = [userInfo objectForKey:@"nodequeueID"];
-    [self getAndReloadNodes:nodequeueID];
+    [self loadNodesForNodequeueId:nodequeueID];
 }
 
 /*
  * Retrieves an array of node objects and reloads the tableView so it can be populated with the retrieved nodes
  */
--(void)getAndReloadNodes:(NSNumber *)nodequeueID
+-(void)loadNodesForNodequeueId:(NSNumber *)nodequeueID
 {
     self.nodeObjects = [NodeDataProvider getNodesWithNodequeueId:nodequeueID];
     [self.tableView reloadData];
