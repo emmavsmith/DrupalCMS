@@ -18,7 +18,6 @@ NSString * const ContentUpdateDidComplete = @"ContentUpdateDidComplete";
     
     NSString *drupalDownloadURL;
     NSNumber *nodequeueID;
-    NSString *documentsDirectory;
 }
 
 #define  DRUPAL_URL @"http://cmstest.digitallabsmmu.com/contentpackagerjson/"
@@ -37,7 +36,6 @@ NSString * const ContentUpdateDidComplete = @"ContentUpdateDidComplete";
         
         //url to download the drupal db info for a particular nodequeue as json
         drupalDownloadURL = [NSString stringWithFormat:@"%@%@", DRUPAL_URL, nodequeueID];
-        documentsDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
     }
     return self;
 }
@@ -55,7 +53,7 @@ NSString * const ContentUpdateDidComplete = @"ContentUpdateDidComplete";
         
         //check if there is content in the bundle issued with app and if there is copy it to documents on phone
         NSString *path =[[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"content_nqid_%@", nodequeueID] ofType:@"zip"];
-        NSString *newPath = [NSString stringWithFormat:@"%@%@%@", [documentsDirectory stringByAppendingString:@"/content_nqid_"], nodequeueID, @"/"];
+        NSString *newPath = [ContentManager getContentPathForNodequeueId:nodequeueID];
         
         if([self unzipZipFileFromPath:path toPath:newPath]) {
             //returns yes if existing content has been unzipped from the bundle to new directory
@@ -153,7 +151,7 @@ NSString * const ContentUpdateDidComplete = @"ContentUpdateDidComplete";
 {
     NSURL *url = [NSURL URLWithString:downloadUrl];
     NSData *data = [[NSData alloc] initWithContentsOfURL: url];
-    NSString *zipFilePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@%@%@", @"download_nqid_", nodequeueID, @".zip"]];
+    NSString *zipFilePath = [[ContentManager getDownloadPathForNodequeueId:nodequeueID]stringByAppendingPathComponent:@"zip"];
     
     return [data writeToFile:zipFilePath atomically:YES];
 }
@@ -161,8 +159,8 @@ NSString * const ContentUpdateDidComplete = @"ContentUpdateDidComplete";
 //TODO: rename method
 -(BOOL) unzipAndProcessFile
 {
-    NSString *zipFilePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@%@%@", @"download_nqid_", nodequeueID, @".zip"]];
-    NSString *newZipDirectory = [NSString stringWithFormat:@"%@%@%@", [documentsDirectory stringByAppendingString:@"/download_nqid_"], nodequeueID, @"/"];
+    NSString *zipFilePath = [[ContentManager getDownloadPathForNodequeueId:nodequeueID]stringByAppendingPathComponent:@"zip"];
+    NSString *newZipDirectory = [ContentManager getDownloadPathForNodequeueId:nodequeueID];
     if([self unzipZipFileFromPath:zipFilePath toPath:newZipDirectory]) {
         
         //downloading and unzipping successful so process files
@@ -203,7 +201,7 @@ NSString * const ContentUpdateDidComplete = @"ContentUpdateDidComplete";
 //TODO: rename method
 -(BOOL)processFilesWithZipFilePath:(NSString *)zipFilePath
 {
-    NSString *currentPath = [NSString stringWithFormat:@"%@%@%@", [documentsDirectory stringByAppendingString:@"/download_nqid_"], nodequeueID, @"/"];
+    NSString *currentPath = [ContentManager getDownloadPathForNodequeueId:nodequeueID];
     //copying to this directory as this will be the name to overwrite if content is already on the phone to begin with
     NSString *newPath = [ContentManager getContentPathForNodequeueId:nodequeueID];
     
@@ -255,19 +253,20 @@ NSString * const ContentUpdateDidComplete = @"ContentUpdateDidComplete";
 
 #pragma mark - Paths
 
++(NSString *)getDocumentsDirectory
+{
+    return NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
+}
+
 +(NSString *)getContentPathForNodequeueId:(NSNumber *)nodequeueID
 {
-    NSString *documentsDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
-    NSString *path = [NSString stringWithFormat:@"%@/content_nqid_%@",documentsDirectory, nodequeueID];
-    
-    // CJW: this should do the same as the 3 lines above
-    //NSString *path = [NSString stringWithFormat:@"%@/content_nqid_%@/manifest.JSON",documentsDirectory, nodequeueid];
-    
-    // CJW: This method should probably be part of the Content Manager, the hardwired string 'content_nqid_' occurs in both this Class and
-    // the Content Manager which makes it a bit fragile. We can include a reference to the overridden ContentManager class here and ask it for the path
-    // when needed. At the moment the ContentManager needs to know about the NodeDataProvider class and not the other way around which seems a bit
-    // backward.
-    
+    NSString *path = [NSString stringWithFormat:@"%@/content_nqid_%@",[ContentManager getDocumentsDirectory], nodequeueID];
+    return path;
+}
+
++(NSString *)getDownloadPathForNodequeueId:(NSNumber *)nodequeueID
+{
+    NSString *path = [NSString stringWithFormat:@"%@%@%@", [[ContentManager getDocumentsDirectory] stringByAppendingString:@"/download_nqid_"], nodequeueID, @"/"];
     return path;
 }
 
