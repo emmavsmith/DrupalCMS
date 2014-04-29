@@ -51,7 +51,7 @@ NSString * const ContentUpdateDidComplete = @"ContentUpdateDidComplete";
     NSLog(@"Checking existing content");
     NSFileManager *fileManager = [NSFileManager defaultManager];
     //check if there is content in the documents on the phone
-    NSString *JSONPath = [NodeDataProvider getPathToJSONFile:nodequeueID];
+    NSString *JSONPath = [[ContentManager getContentPathForNodequeueID:nodequeueID] stringByAppendingPathComponent:@"manifest.JSON"];
     
     if(![fileManager fileExistsAtPath:JSONPath]) {
         
@@ -199,7 +199,8 @@ NSString * const ContentUpdateDidComplete = @"ContentUpdateDidComplete";
 {
     NSString *currentPath = [NSString stringWithFormat:@"%@%@%@", [documentsDirectory stringByAppendingString:@"/download_nqid_"], nodequeueID, @"/"];
     //copying to this directory as this will be the name to overwrite if content is already on the phone to begin with
-    NSString *newPath = [NSString stringWithFormat:@"%@%@%@", [documentsDirectory stringByAppendingString:@"/content_nqid_"], nodequeueID, @"/"];
+    NSString *newPath = [ContentManager getContentPathForNodequeueID:nodequeueID];
+    //[NSString stringWithFormat:@"%@%@%@", [documentsDirectory stringByAppendingString:@"/content_nqid_"], nodequeueID, @"/"];
     
     if([self copyFilesFromPath:currentPath toPath:newPath]){
         
@@ -248,6 +249,24 @@ NSString * const ContentUpdateDidComplete = @"ContentUpdateDidComplete";
         NSLog(@"Deleting unsuccessful");
         return NO;
     }
+}
+
+#pragma mark - Paths
+
++(NSString *)getContentPathForNodequeueID:(NSNumber *)nodequeueID
+{
+    NSString *documentsDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0];
+    NSString *path = [NSString stringWithFormat:@"%@/content_nqid_%@",documentsDirectory, nodequeueID];
+    
+    // CJW: this should do the same as the 3 lines above
+    //NSString *path = [NSString stringWithFormat:@"%@/content_nqid_%@/manifest.JSON",documentsDirectory, nodequeueid];
+    
+    // CJW: This method should probably be part of the Content Manager, the hardwired string 'content_nqid_' occurs in both this Class and
+    // the Content Manager which makes it a bit fragile. We can include a reference to the overridden ContentManager class here and ask it for the path
+    // when needed. At the moment the ContentManager needs to know about the NodeDataProvider class and not the other way around which seems a bit
+    // backward.
+    
+    return path;
 }
 
 @end

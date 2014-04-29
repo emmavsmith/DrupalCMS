@@ -11,6 +11,5 @@
 @interface NodeDataProvider : NSObject
 
 +(NSMutableArray *)getNodesWithNodequeueId:(NSNumber *)nodequeueid;
-+(NSString *)getPathToJSONFile:(NSNumber *)nodequeueid;
 
 @end
