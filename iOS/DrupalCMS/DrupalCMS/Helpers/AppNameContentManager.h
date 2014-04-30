@@ -9,9 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "ContentManager.h"
 
+extern NSInteger const NODEQUEUE_TEST_1;
+extern NSInteger const NODEQUEUE_GLOSSARY;
+
 @interface AppNameContentManager : ContentManager
 
-#define NODEQUEUE_TEST_1 (@1)
-#define NODEQUEUE_GLOSSARY (@2)
+-(void) checkForExistingContent;
+-(void) checkForUpdates;
 
 @end

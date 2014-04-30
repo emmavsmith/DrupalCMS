@@ -8,18 +8,38 @@
 
 #import "AppNameContentManager.h"
 
-@implementation AppNameContentManager
+NSInteger const NODEQUEUE_TEST_1 = 1;
+NSInteger const NODEQUEUE_GLOSSARY = 2;
+
+@implementation AppNameContentManager {
+
+    NSArray *nodequeueIDs;
+}
 
 -(id) init
 {
     self = [super initWithURL: @"http://cmstest.digitallabsmmu.com/contentpackagerjson/"];
     if (self){
+        
+        nodequeueIDs = @[[NSNumber numberWithInteger: NODEQUEUE_TEST_1], [NSNumber numberWithInteger: NODEQUEUE_GLOSSARY]];
     }
     return self;
 }
 
-//TODO: create instance array and populate with defines in init
-//TODO: check for existing content method to loop through array and call appropriate content manager method
-//TODO: check for updates method to loop through array and call appropriate content manager method
+-(void) checkForExistingContent
+{
+    for (NSNumber *nodequeueID in nodequeueIDs) {
+        
+        [self checkExistingContentWithNodequeueID: nodequeueID];
+    }
+}
+
+-(void) checkForUpdates
+{
+    for (NSNumber *nodequeueID in nodequeueIDs) {
+        
+        [self checkForUpdateWithNodequeueID: nodequeueID];
+    }
+}
 
 @end

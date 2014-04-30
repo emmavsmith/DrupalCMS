@@ -16,9 +16,8 @@
     // Override point for customization after application launch.
     
     //Fire off download of zip
-    AppNameContentManager *contentManager = [[AppNameContentManager alloc] init];
-    [contentManager checkExistingContentWithNodequeueID:NODEQUEUE_TEST_1];
-    [contentManager checkExistingContentWithNodequeueID:NODEQUEUE_GLOSSARY];
+    AppNameContentManager *appNameContentManager = [[AppNameContentManager alloc] init];
+    [appNameContentManager checkForExistingContent];
     
     return YES;
 }
@@ -43,9 +42,8 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    AppNameContentManager *contentManager = [[AppNameContentManager alloc] init];
-    [contentManager checkForUpdateWithNodequeueID:NODEQUEUE_TEST_1];
-    [contentManager checkForUpdateWithNodequeueID:NODEQUEUE_GLOSSARY];
+    AppNameContentManager *appNameContentManager = [[AppNameContentManager alloc] init];
+    [appNameContentManager checkForUpdates];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

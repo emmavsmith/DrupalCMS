@@ -38,8 +38,7 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         
-        self.nodequeueID = NODEQUEUE_TEST_1;
-        NSLog(@"nodequeue test = %@", NODEQUEUE_TEST_1);
+        self.nodequeueID = [NSNumber numberWithInteger: NODEQUEUE_TEST_1];
     }
     return self;
 }
@@ -94,7 +93,6 @@
  */
 -(void)updateContent:(NSNotification *)notification
 {
-    NSLog(@"Received notification");
     NSDictionary *userInfo = [notification userInfo];
     
     if ([[userInfo objectForKey:@"nodequeueID"]  compare:self.nodequeueID] == NSOrderedSame){
