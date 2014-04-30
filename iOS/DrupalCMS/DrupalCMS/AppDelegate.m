@@ -18,7 +18,7 @@
     //Fire off download of zip
     AppNameContentManager *contentManager = [[AppNameContentManager alloc] init];
     [contentManager checkExistingContentWithNodequeueID:NODEQUEUE_TEST_1];
-    [contentManager checkForUpdateWithNodequeueID:NODEQUEUE_GLOSSARY];
+    [contentManager checkExistingContentWithNodequeueID:NODEQUEUE_GLOSSARY];
     
     return YES;
 }

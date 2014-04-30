@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="MEG-Ec-x4g">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="WgZ-Rb-pEX">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
-        <!--Nodes Table View Controller-->
+        <!--Nodes Table View Controller - List-->
         <scene sceneID="MUJ-aL-crU">
             <objects>
                 <tableViewController id="MEG-Ec-x4g" customClass="NodesTableViewController" sceneMemberID="viewController">
@@ -46,10 +46,49 @@
                             <outlet property="delegate" destination="MEG-Ec-x4g" id="6Iv-Lm-kJE"/>
                         </connections>
                     </tableView>
+                    <tabBarItem key="tabBarItem" title="List" id="69m-hL-pvN"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZXD-lm-Nku" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="693" y="107"/>
+            <point key="canvasLocation" x="447" y="131"/>
+        </scene>
+        <!--View Controller - Map-->
+        <scene sceneID="OkQ-yd-B1e">
+            <objects>
+                <viewController id="zcC-BA-6LK" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="lgI-eN-7ia"/>
+                        <viewControllerLayoutGuide type="bottom" id="cR5-P7-lsA"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="xTc-Bm-Ab9">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Map" id="GV5-zu-yVW"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KO6-wQ-9p5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="528" y="1005"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="xIR-Sb-4rm">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="WgZ-Rb-pEX" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="qEX-4g-E1L">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="MEG-Ec-x4g" kind="relationship" relationship="viewControllers" id="vkq-8n-n8O"/>
+                        <segue destination="zcC-BA-6LK" kind="relationship" relationship="viewControllers" id="QjV-X3-nlJ"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RCn-xp-0hR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-79" y="131"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

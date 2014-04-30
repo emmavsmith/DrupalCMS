@@ -18,4 +18,8 @@
     return self;
 }
 
+//TODO: create instance array and populate with defines in init
+//TODO: check for existing content method to loop through array and call appropriate content manager method
+//TODO: check for updates method to loop through array and call appropriate content manager method
+
 @end
