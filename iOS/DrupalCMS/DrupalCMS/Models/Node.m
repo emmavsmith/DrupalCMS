@@ -20,8 +20,6 @@
         self.type = [NSString stringWithFormat:@"%@", dictionary[@"type"]];
         self.content = dictionary[@"body"][@"und"][0][@"value"];
         
-        NSLog(@"Creating node with; title: %@, type: %@, content: %@", self.title, self.type, self.content);
-        
         //TODO: images?
     }
     return self;

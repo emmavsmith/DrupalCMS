@@ -15,7 +15,6 @@
 +(NSArray *)getNodesWithNodequeueId:(NSNumber *)nodequeueid
 {
     NSLog(@"Parsing JSON array");
-    
     NSMutableArray *nodesArray = [[NSMutableArray alloc] init];
     NSArray *nodesFromJSON = [self extractJSON:nodequeueid];
     
@@ -30,7 +29,6 @@
 +(NSArray *)extractJSON:(NSNumber *)nodequeueid
 {
     NSLog(@"Extracting JSON");
-
     NSString *path = [[ContentManager contentPathForNodequeueId:nodequeueid] stringByAppendingPathComponent:@"manifest.JSON"];
     NSString *myJSON = [[NSString alloc] initWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
     //TODO: handle error when there is no content?

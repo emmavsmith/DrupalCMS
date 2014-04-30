@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "ContentManager.h"
+#import "AppNameContentManager.h"
 
 @implementation AppDelegate
 
@@ -16,8 +16,9 @@
     // Override point for customization after application launch.
     
     //Fire off download of zip
-    ContentManager *contentManager = [[ContentManager alloc] init];
-    [contentManager checkExistingContent];
+    AppNameContentManager *contentManager = [[AppNameContentManager alloc] init];
+    [contentManager checkExistingContentWithNodequeueID:NODEQUEUE_TEST_1];
+    [contentManager checkForUpdateWithNodequeueID:NODEQUEUE_GLOSSARY];
     
     return YES;
 }
@@ -42,8 +43,9 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    ContentManager *contentManager = [[ContentManager alloc] init];
-    [contentManager checkForUpdate];
+    AppNameContentManager *contentManager = [[AppNameContentManager alloc] init];
+    [contentManager checkForUpdateWithNodequeueID:NODEQUEUE_TEST_1];
+    [contentManager checkForUpdateWithNodequeueID:NODEQUEUE_GLOSSARY];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

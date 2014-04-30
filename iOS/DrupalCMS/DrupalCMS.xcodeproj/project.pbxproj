@@ -28,6 +28,7 @@
 		B5AA79CB18FD654800BB9542 /* DrupalCMSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B5AA79CA18FD654800BB9542 /* DrupalCMSTests.m */; };
 		B5C1D05519066D9B00D723F1 /* NodeDataProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C1D05419066D9B00D723F1 /* NodeDataProvider.m */; };
 		B5E0739519000DB90059B746 /* Node.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E0739419000DB90059B746 /* Node.m */; };
+		B5F78ED51911183600303206 /* AppNameContentManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B5F78ED41911183600303206 /* AppNameContentManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,8 @@
 		B5C1D05419066D9B00D723F1 /* NodeDataProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NodeDataProvider.m; sourceTree = "<group>"; };
 		B5E0739319000DB90059B746 /* Node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Node.h; sourceTree = "<group>"; };
 		B5E0739419000DB90059B746 /* Node.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Node.m; sourceTree = "<group>"; };
+		B5F78ED31911183600303206 /* AppNameContentManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppNameContentManager.h; sourceTree = "<group>"; };
+		B5F78ED41911183600303206 /* AppNameContentManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppNameContentManager.m; sourceTree = "<group>"; };
 		CEC8318A5B1E428E8A4EDC51 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -104,6 +107,8 @@
 			children = (
 				B583E1EE19090D9100B87480 /* ContentManager.h */,
 				B583E1EF19090D9100B87480 /* ContentManager.m */,
+				B5F78ED31911183600303206 /* AppNameContentManager.h */,
+				B5F78ED41911183600303206 /* AppNameContentManager.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -352,6 +357,7 @@
 			files = (
 				B5195A6A1907BEFA001F2111 /* NodesTableViewController.m in Sources */,
 				B5AA79AD18FD654800BB9542 /* AppDelegate.m in Sources */,
+				B5F78ED51911183600303206 /* AppNameContentManager.m in Sources */,
 				B583E1F019090D9100B87480 /* ContentManager.m in Sources */,
 				B5AA79A918FD654800BB9542 /* main.m in Sources */,
 				B5C1D05519066D9B00D723F1 /* NodeDataProvider.m in Sources */,

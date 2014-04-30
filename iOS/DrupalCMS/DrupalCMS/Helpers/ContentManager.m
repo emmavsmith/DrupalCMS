@@ -14,35 +14,26 @@
 
 NSString * const ContentUpdateDidCompleteNotification = @"ContentUpdateDidCompleteNotification";
 
-@interface ContentManager () {
-    
-    NSString *drupalDownloadURL;
-    NSNumber *nodequeueID;
-}
+@interface ContentManager ()
 
-#define  DRUPAL_URL @"http://cmstest.digitallabsmmu.com/contentpackagerjson/"
+@property (nonatomic, copy) NSString *drupalDownloadURL;
 
 @end
 
 @implementation ContentManager
 
--(id) init
+-(id) initWithURL:(NSString *) drupalDownloadURLIn
 {
     self = [super init];
     if (self){
-        
-        //TODO: this will not be hardcoded
-        nodequeueID = @1;
-        
-        //url to download the drupal db info for a particular nodequeue as json
-        drupalDownloadURL = [NSString stringWithFormat:@"%@%@", DRUPAL_URL, nodequeueID];
+        self.drupalDownloadURL = drupalDownloadURLIn;
     }
     return self;
 }
 
 #pragma mark - Existing Content
 
--(void)checkExistingContent
+-(void)checkExistingContentWithNodequeueID:(NSNumber *)nodequeueID
 {
     NSLog(@"Checking existing content");
     NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -56,7 +47,7 @@ NSString * const ContentUpdateDidCompleteNotification = @"ContentUpdateDidComple
         
         if([self unzipZipFileFromPath:nodequeueZipPath toPath:nodequeuePath]) {
             //TODO: this will not be hardcoded
-            [self saveToUserDefaultsWithVersion:@1];
+            [self saveToUserDefaultsWithVersion:@1 WithNodequeueID:nodequeueID];
         }
     }
 }
@@ -66,9 +57,9 @@ NSString * const ContentUpdateDidCompleteNotification = @"ContentUpdateDidComple
 /*
  * Retrieves the version and path for the content of a particular nodequeueid from Drupal
  */
--(void)checkForUpdate
+-(void)checkForUpdateWithNodequeueID:(NSNumber *)nodequeueID
 {
-    NSURL *url = [NSURL URLWithString:drupalDownloadURL];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", self.drupalDownloadURL, nodequeueID]];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     operation.responseSerializer = [AFJSONResponseSerializer serializer];
@@ -76,7 +67,7 @@ NSString * const ContentUpdateDidCompleteNotification = @"ContentUpdateDidComple
         
         NSLog(@"Response: %@", responseObject);
         
-        NSNumber *currentVersion = [self getVersionFromUserDefaults];
+        NSNumber *currentVersion = [self getVersionFromUserDefaultsWithNodequeueID:nodequeueID];
         NSNumber *newVersion = [NSNumber numberWithInt:[[responseObject valueForKey:@"version"] intValue]];
         NSComparisonResult versionComparisonResult = [currentVersion compare:newVersion];
         
@@ -85,11 +76,11 @@ NSString * const ContentUpdateDidCompleteNotification = @"ContentUpdateDidComple
             NSString *downloadUrl = [responseObject valueForKey:@"file_path"];
             
             //Check downloading, unzipping, copying and deleting was successful before amending the version number in user defaults
-            if ([self downloadZipFromURL:downloadUrl]){
+            if ([self downloadZipFromURL:downloadUrl withNodequeueID:nodequeueID]){
                 
-                if([self installContentFromZipFile]) {
+                if([self installContentFromZipFileWithNodequeueID:nodequeueID]) {
                 
-                    [self saveToUserDefaultsWithVersion: newVersion];
+                    [self saveToUserDefaultsWithVersion: newVersion WithNodequeueID:nodequeueID];
                 
                     //Post a notification and pass the nodequeueID
                     NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:nodequeueID, @"nodequeueID", nil];
@@ -119,7 +110,7 @@ NSString * const ContentUpdateDidCompleteNotification = @"ContentUpdateDidComple
 /*
  * Save the version number for a particular nodequeue id in user defaults
  */
--(void)saveToUserDefaultsWithVersion:(NSNumber *)version
+-(void)saveToUserDefaultsWithVersion:(NSNumber *)version WithNodequeueID:(NSNumber *)nodequeueID
 {
     NSString *key = [NSString stringWithFormat:@"%@", nodequeueID];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -131,7 +122,7 @@ NSString * const ContentUpdateDidCompleteNotification = @"ContentUpdateDidComple
 /*
  * Get the version number for a particular nodequeue id from user defaults
  */
--(NSNumber *)getVersionFromUserDefaults
+-(NSNumber *)getVersionFromUserDefaultsWithNodequeueID:(NSNumber *)nodequeueID
 {
     NSString *key = [NSString stringWithFormat:@"%@", nodequeueID];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -144,7 +135,7 @@ NSString * const ContentUpdateDidCompleteNotification = @"ContentUpdateDidComple
 /*
  * Downloads a zip file from a particular URL
  */
--(BOOL)downloadZipFromURL:(NSString *)downloadUrl
+-(BOOL)downloadZipFromURL:(NSString *)downloadUrl withNodequeueID: (NSNumber *)nodequeueID
 {
     NSURL *url = [NSURL URLWithString:downloadUrl];
     NSData *data = [[NSData alloc] initWithContentsOfURL: url];
@@ -152,7 +143,7 @@ NSString * const ContentUpdateDidCompleteNotification = @"ContentUpdateDidComple
     return [data writeToFile:downloadZipFolderFilePath atomically:YES];
 }
 
--(BOOL) installContentFromZipFile
+-(BOOL) installContentFromZipFileWithNodequeueID:(NSNumber *)nodequeueID
 {
     NSString *downloadFolderFilePath = [ContentManager downloadPathForNodequeueId:nodequeueID];
     NSString *downloadZipFolderFilePath = [downloadFolderFilePath stringByAppendingPathExtension:@"zip"];

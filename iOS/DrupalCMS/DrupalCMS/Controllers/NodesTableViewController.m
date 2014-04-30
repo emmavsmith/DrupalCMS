@@ -11,10 +11,12 @@
 #import "NodesTableViewCell.h"
 #import "Node.h"
 #import "ContentManager.h"
+#import "AppNameContentManager.h"
 
 @interface NodesTableViewController ()
 
 @property (nonatomic)  NSMutableArray *nodeObjects;
+@property NSNumber *nodequeueID;
 
 @end
 
@@ -31,10 +33,13 @@
     return _nodeObjects;
 }
 
-- (id)initWithStyle:(UITableViewStyle)style
+-(id)initWithCoder:(NSCoder *)aDecoder
 {
-    self = [super initWithStyle:style];
+    self = [super initWithCoder:aDecoder];
     if (self) {
+        
+        self.nodequeueID = NODEQUEUE_TEST_1;
+        NSLog(@"nodequeue test = %@", NODEQUEUE_TEST_1);
     }
     return self;
 }
@@ -43,8 +48,7 @@
 {
     [super viewDidLoad];
     
-    //TODO: change nodequeueid
-    [self loadNodesForNodequeueId:@1];
+    [self loadNodesForNodequeueId];
     
     //listen for when content has been updated
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -90,17 +94,21 @@
  */
 -(void)updateContent:(NSNotification *)notification
 {
+    NSLog(@"Received notification");
     NSDictionary *userInfo = [notification userInfo];
-    NSNumber *nodequeueID = [userInfo objectForKey:@"nodequeueID"];
-    [self loadNodesForNodequeueId:nodequeueID];
+    
+    if ([[userInfo objectForKey:@"nodequeueID"]  compare:self.nodequeueID] == NSOrderedSame){
+        
+        [self loadNodesForNodequeueId];
+    }
 }
 
 /*
  * Retrieves an array of node objects and reloads the tableView so it can be populated with the retrieved nodes
  */
--(void)loadNodesForNodequeueId:(NSNumber *)nodequeueID
+-(void)loadNodesForNodequeueId
 {
-    self.nodeObjects = [NodeDataProvider getNodesWithNodequeueId:nodequeueID];
+    self.nodeObjects = [NodeDataProvider getNodesWithNodequeueId:self.nodequeueID];
     [self.tableView reloadData];
 }
 

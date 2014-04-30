@@ -12,8 +12,9 @@ extern NSString * const ContentUpdateDidCompleteNotification;
 
 @interface ContentManager : NSObject
 
--(void)checkExistingContent;
--(void)checkForUpdate;
+-(id) initWithURL:(NSString *) drupalDownloadURLIn;
+-(void)checkExistingContentWithNodequeueID:(NSNumber *)nodequeueID;
+-(void)checkForUpdateWithNodequeueID:(NSNumber *)nodequeueID;
 +(NSString *)contentPathForNodequeueId:(NSNumber *)nodequeueID;
 
 @end
