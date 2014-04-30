@@ -220,7 +220,12 @@ NSString * const ContentUpdateDidCompleteNotification = @"ContentUpdateDidComple
 -(BOOL)copyFilesFromPath:(NSString *)fromPath toPath:(NSString *)toPath
 {
     //TODO: this does not need to be a method when debugs removed, shrinks down to one line of code
-    //TODO: delete existing files in toPath before copying
+    
+    //delete existing files in toPath before copying
+    if ([[NSFileManager defaultManager] fileExistsAtPath:toPath]) {
+        [self deleteFileAtPath:toPath];
+    }
+    
     NSError *error;
     if([[NSFileManager defaultManager] copyItemAtPath:fromPath toPath:toPath error:&error]){
         
