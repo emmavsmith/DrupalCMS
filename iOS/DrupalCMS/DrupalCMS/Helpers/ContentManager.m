@@ -87,7 +87,7 @@ NSString * const ContentUpdateDidCompleteNotification = @"ContentUpdateDidComple
             //Check downloading, unzipping, copying and deleting was successful before amending the version number in user defaults
             if ([self downloadZipFromURL:downloadUrl]){
                 
-                if([self processNewContent]) {
+                if([self installContentFromZipFile]) {
                 
                     [self saveToUserDefaultsWithVersion: newVersion];
                 
@@ -152,6 +152,35 @@ NSString * const ContentUpdateDidCompleteNotification = @"ContentUpdateDidComple
     return [data writeToFile:downloadZipFolderFilePath atomically:YES];
 }
 
+-(BOOL) installContentFromZipFile
+{
+    NSString *downloadFolderFilePath = [ContentManager downloadPathForNodequeueId:nodequeueID];
+    NSString *downloadZipFolderFilePath = [downloadFolderFilePath stringByAppendingPathExtension:@"zip"];
+    NSString *contentFolderFilePath = [ContentManager contentPathForNodequeueId:nodequeueID];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    if([self unzipZipFileFromPath:downloadZipFolderFilePath toPath:downloadFolderFilePath]) {
+        
+        //if a file exists already at the path to copy to then remove it
+        if ([fileManager fileExistsAtPath:contentFolderFilePath]) {
+            
+            [fileManager removeItemAtPath:contentFolderFilePath error:nil];
+        }
+        
+        //perform copy then delete unnecessary files
+        if([fileManager copyItemAtPath:downloadFolderFilePath toPath:contentFolderFilePath error:nil]){
+            
+            if([fileManager removeItemAtPath:downloadZipFolderFilePath error:nil] && [fileManager removeItemAtPath:downloadFolderFilePath error:nil]) {
+                
+                //unzipping, copying and deleting successful
+                return YES;
+            }
+        }
+    }
+    //either unzipping, copying or deleting was unsuccessful
+    return NO;
+}
+
 /*
  * Unzips a zip file from a particular directory
  */
@@ -172,68 +201,6 @@ NSString * const ContentUpdateDidCompleteNotification = @"ContentUpdateDidComple
         [zipArchive UnzipCloseFile];
     }
     return zipSuccessFlag;
-}
-
-#pragma mark - Process Files
-
-//TODO: rename method
--(BOOL) processNewContent
-{
-    NSString *downloadZipFolderFilePath = [[ContentManager downloadPathForNodequeueId:nodequeueID] stringByAppendingPathExtension:@"zip"];
-    NSString *downloadFolderFilePath = [ContentManager downloadPathForNodequeueId:nodequeueID];
-    NSString *contentFolderFilePath = [ContentManager contentPathForNodequeueId:nodequeueID];
-    
-    if([self unzipZipFileFromPath:downloadZipFolderFilePath toPath:downloadFolderFilePath]) {
-        
-        if([self copyFilesFromPath:downloadFolderFilePath toPath:contentFolderFilePath]){
-            
-            if([self deleteFileAtPath:downloadZipFolderFilePath] && [self deleteFileAtPath:downloadFolderFilePath]) {
-                
-                //unzipping, copying and deleting successful
-                return YES;
-            }
-        }
-    }
-    //either unzipping, copying or deleting was unsuccessful
-    return NO;
-}
-
-/*
- * Copies files from one path to a new path
- */
--(BOOL)copyFilesFromPath:(NSString *)fromPath toPath:(NSString *)toPath
-{
-    //TODO: this does not need to be a method when debugs removed
-    
-    //delete existing files in toPath before copying
-    if ([[NSFileManager defaultManager] fileExistsAtPath:toPath]) {
-        [self deleteFileAtPath:toPath];
-    }
-    
-    if([[NSFileManager defaultManager] copyItemAtPath:fromPath toPath:toPath error:nil]){
-        
-        NSLog(@"Copying successful");
-        return YES;
-    } else {
-        NSLog(@"Copying unsuccessful");
-        return NO;
-    }
-}
-
-/*
- * Deletes a file at a specific path
- */
--(BOOL)deleteFileAtPath:(NSString *)path
-{
-    //TODO: this does not need to be a method when debugs removed, shrinks down to one line of code
-    if ([[NSFileManager defaultManager] removeItemAtPath:path error:nil]) {
-        
-        NSLog(@"Deleting successful");
-        return YES;
-    } else {
-        NSLog(@"Deleting unsuccessful");
-        return NO;
-    }
 }
 
 #pragma mark - Paths
