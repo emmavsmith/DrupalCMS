@@ -29,6 +29,8 @@
 		B5C1D05519066D9B00D723F1 /* NodeDataProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C1D05419066D9B00D723F1 /* NodeDataProvider.m */; };
 		B5E0739519000DB90059B746 /* Node.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E0739419000DB90059B746 /* Node.m */; };
 		B5F78ED51911183600303206 /* AppNameContentManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B5F78ED41911183600303206 /* AppNameContentManager.m */; };
+		B5F78ED7191149C600303206 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5F78ED6191149C600303206 /* CoreLocation.framework */; };
+		B5F78ED9191149CB00303206 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5F78ED8191149CB00303206 /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +76,8 @@
 		B5E0739419000DB90059B746 /* Node.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Node.m; sourceTree = "<group>"; };
 		B5F78ED31911183600303206 /* AppNameContentManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppNameContentManager.h; sourceTree = "<group>"; };
 		B5F78ED41911183600303206 /* AppNameContentManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppNameContentManager.m; sourceTree = "<group>"; };
+		B5F78ED6191149C600303206 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		B5F78ED8191149CB00303206 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		CEC8318A5B1E428E8A4EDC51 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -82,6 +86,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5F78ED9191149CB00303206 /* MapKit.framework in Frameworks */,
+				B5F78ED7191149C600303206 /* CoreLocation.framework in Frameworks */,
 				B5AA799F18FD654800BB9542 /* CoreGraphics.framework in Frameworks */,
 				B5AA79A118FD654800BB9542 /* UIKit.framework in Frameworks */,
 				B5AA799D18FD654800BB9542 /* Foundation.framework in Frameworks */,
@@ -137,6 +143,8 @@
 		B5AA799B18FD654800BB9542 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B5F78ED8191149CB00303206 /* MapKit.framework */,
+				B5F78ED6191149C600303206 /* CoreLocation.framework */,
 				B5AA799C18FD654800BB9542 /* Foundation.framework */,
 				B5AA799E18FD654800BB9542 /* CoreGraphics.framework */,
 				B5AA79A018FD654800BB9542 /* UIKit.framework */,
