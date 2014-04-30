@@ -78,16 +78,16 @@ NSString * const ContentUpdateDidCompleteNotification = @"ContentUpdateDidComple
         
         NSNumber *currentVersion = [self getVersionFromUserDefaults];
         NSNumber *newVersion = [NSNumber numberWithInt:[[responseObject valueForKey:@"version"] intValue]];
-        NSComparisonResult result = [currentVersion compare:newVersion];
+        NSComparisonResult versionComparisonResult = [currentVersion compare:newVersion];
         
-        if(currentVersion == nil || result == NSOrderedAscending){
+        if(currentVersion == nil || versionComparisonResult == NSOrderedAscending){
             
             NSString *downloadUrl = [responseObject valueForKey:@"file_path"];
             
             //Check downloading, unzipping, copying and deleting was successful before amending the version number in user defaults
             if ([self downloadZipFromURL:downloadUrl]){
                 
-                if([self unzipAndProcessFile]) {
+                if([self processNewContent]) {
                 
                     [self saveToUserDefaultsWithVersion: newVersion];
                 
@@ -148,26 +148,8 @@ NSString * const ContentUpdateDidCompleteNotification = @"ContentUpdateDidComple
 {
     NSURL *url = [NSURL URLWithString:downloadUrl];
     NSData *data = [[NSData alloc] initWithContentsOfURL: url];
-    NSString *zipFilePath = [[ContentManager downloadPathForNodequeueId:nodequeueID] stringByAppendingPathExtension:@"zip"];
-    return [data writeToFile:zipFilePath atomically:YES];
-}
-
-//TODO: rename method once merged with processFilesWithZipFilePath
--(BOOL) unzipAndProcessFile
-{
-    NSString *zipFilePath = [[ContentManager downloadPathForNodequeueId:nodequeueID] stringByAppendingPathExtension:@"zip"];
-    NSString *newZipDirectory = [ContentManager downloadPathForNodequeueId:nodequeueID];
-    if([self unzipZipFileFromPath:zipFilePath toPath:newZipDirectory]) {
-        
-        //downloading and unzipping successful so process files
-        if([self processFilesWithZipFilePath:zipFilePath]){
-            
-            //both unzipping and processing of files successful
-            return YES;
-        }
-    }
-    //either unzipping or processing of files unsuccessful
-    return NO;
+    NSString *downloadZipFolderFilePath = [[ContentManager downloadPathForNodequeueId:nodequeueID] stringByAppendingPathExtension:@"zip"];
+    return [data writeToFile:downloadZipFolderFilePath atomically:YES];
 }
 
 /*
@@ -194,23 +176,25 @@ NSString * const ContentUpdateDidCompleteNotification = @"ContentUpdateDidComple
 
 #pragma mark - Process Files
 
-//TODO: merge this method with unzipAndProcessFile and remove duplication
--(BOOL)processFilesWithZipFilePath:(NSString *)zipFilePath
+//TODO: rename method
+-(BOOL) processNewContent
 {
-    NSString *currentPath = [ContentManager downloadPathForNodequeueId:nodequeueID];
-    //copying to this directory as this will be the name to overwrite if content is already on the phone to begin with
-    NSString *newPath = [ContentManager contentPathForNodequeueId:nodequeueID];
+    NSString *downloadZipFolderFilePath = [[ContentManager downloadPathForNodequeueId:nodequeueID] stringByAppendingPathExtension:@"zip"];
+    NSString *downloadFolderFilePath = [ContentManager downloadPathForNodequeueId:nodequeueID];
+    NSString *contentFolderFilePath = [ContentManager contentPathForNodequeueId:nodequeueID];
     
-    if([self copyFilesFromPath:currentPath toPath:newPath]){
+    if([self unzipZipFileFromPath:downloadZipFolderFilePath toPath:downloadFolderFilePath]) {
         
-        //copying files successful so delete files
-        if([self deleteFileAtPath:zipFilePath] && [self deleteFileAtPath:currentPath]) {
+        if([self copyFilesFromPath:downloadFolderFilePath toPath:contentFolderFilePath]){
             
-            //both copying and deleting successful
-            return YES;
+            if([self deleteFileAtPath:downloadZipFolderFilePath] && [self deleteFileAtPath:downloadFolderFilePath]) {
+                
+                //unzipping, copying and deleting successful
+                return YES;
+            }
         }
     }
-    //either copying or deleting unsuccessful
+    //either unzipping, copying or deleting was unsuccessful
     return NO;
 }
 
@@ -219,22 +203,19 @@ NSString * const ContentUpdateDidCompleteNotification = @"ContentUpdateDidComple
  */
 -(BOOL)copyFilesFromPath:(NSString *)fromPath toPath:(NSString *)toPath
 {
-    //TODO: this does not need to be a method when debugs removed, shrinks down to one line of code
+    //TODO: this does not need to be a method when debugs removed
     
     //delete existing files in toPath before copying
     if ([[NSFileManager defaultManager] fileExistsAtPath:toPath]) {
         [self deleteFileAtPath:toPath];
     }
     
-    NSError *error;
-    if([[NSFileManager defaultManager] copyItemAtPath:fromPath toPath:toPath error:&error]){
+    if([[NSFileManager defaultManager] copyItemAtPath:fromPath toPath:toPath error:nil]){
         
         NSLog(@"Copying successful");
         return YES;
     } else {
-        
         NSLog(@"Copying unsuccessful");
-        //NSLog(@"Error: %@", error);
         return NO;
     }
 }
