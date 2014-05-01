@@ -11,5 +11,6 @@
 @interface NodeDataProvider : NSObject
 
 +(NSMutableArray *)getNodesWithNodequeueId:(NSNumber *)nodequeueid;
++(NSMutableArray *)getLocationNodesWithNodequeueId:(NSNumber *)nodequeueid;
 
 @end

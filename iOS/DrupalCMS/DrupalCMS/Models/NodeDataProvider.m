@@ -7,8 +7,9 @@
 //
 
 #import "NodeDataProvider.h"
-#import "Node.h"
 #import "ContentManager.h"
+#import "Node.h"
+#import "LocationNode.h"
 
 @implementation NodeDataProvider
 
@@ -22,6 +23,22 @@
         
         Node *node = [[Node alloc] initWithDictionary:item];
         [nodesArray addObject:node];
+    }
+    return nodesArray;
+}
+
++(NSArray *)getLocationNodesWithNodequeueId:(NSNumber *)nodequeueid
+{
+    NSLog(@"Parsing JSON array for Locations");
+    NSMutableArray *nodesArray = [[NSMutableArray alloc] init];
+    NSArray *nodesFromJSON = [self extractJSON:nodequeueid];
+    
+    for(NSDictionary *item in nodesFromJSON) {
+        
+        if ([item[@"type"] isEqualToString:@"location"]) {
+            LocationNode *node = [[LocationNode alloc] initWithDictionary:item];
+            [nodesArray addObject:node];
+        }
     }
     return nodesArray;
 }
