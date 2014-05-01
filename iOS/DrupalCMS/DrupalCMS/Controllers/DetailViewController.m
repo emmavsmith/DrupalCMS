@@ -28,7 +28,6 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    NSLog(@"Node %@", self.node);
     
     [self populateNodeDetailView];
 }
@@ -43,6 +42,8 @@
 {
     self.nodeDetailView.nodeTitleLabel.text = self.node.title;
     self.nodeDetailView.nodeContentTextView.text = self.node.content;
+    
+    //TODO: set UIImageView to node image when it has been retrieved from documents directory
 }
 
 @end

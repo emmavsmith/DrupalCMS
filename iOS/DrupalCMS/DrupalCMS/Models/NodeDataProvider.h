@@ -10,7 +10,7 @@
 
 @interface NodeDataProvider : NSObject
 
-+(NSMutableArray *)getNodesWithNodequeueId:(NSNumber *)nodequeueid;
-+(NSMutableArray *)getLocationNodesWithNodequeueId:(NSNumber *)nodequeueid;
++(NSMutableArray *)nodesWithNodequeueId:(NSNumber *)nodequeueid;
++(NSMutableArray *)locationNodesWithNodequeueId:(NSNumber *)nodequeueid;
 
 @end

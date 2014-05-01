@@ -13,7 +13,9 @@
 
 @implementation NodeDataProvider
 
-+(NSArray *)getNodesWithNodequeueId:(NSNumber *)nodequeueid
+#pragma mark - Nodes
+
++(NSArray *)nodesWithNodequeueId:(NSNumber *)nodequeueid
 {
     NSLog(@"Parsing JSON array");
     NSMutableArray *nodesArray = [[NSMutableArray alloc] init];
@@ -21,13 +23,13 @@
     
     for(NSDictionary *item in nodesFromJSON) {
         
-        Node *node = [[Node alloc] initWithDictionary:item];
+        Node *node = [NodeDataProvider createNode:item];
         [nodesArray addObject:node];
     }
     return nodesArray;
 }
 
-+(NSArray *)getLocationNodesWithNodequeueId:(NSNumber *)nodequeueid
++(NSArray *)locationNodesWithNodequeueId:(NSNumber *)nodequeueid
 {
     NSLog(@"Parsing JSON array for Locations");
     NSMutableArray *nodesArray = [[NSMutableArray alloc] init];
@@ -42,6 +44,34 @@
     }
     return nodesArray;
 }
+
++(Node *)createNode:(NSDictionary *)dictionary
+{
+    Node *node = [[Node alloc] init];
+    node.title = dictionary[@"title"];
+    node.content = dictionary[@"body"][@"und"][0][@"value"];
+    
+    //NSLog(@"%@", dictionary);
+    
+    //TODO: image to specific for general node
+    if(![[dictionary objectForKey:@"field_image"] isKindOfClass:[NSArray class]]){
+            
+        //NSLog(@"Contains image key");
+        node.fieldImagePath = dictionary[@"field_image"][@"und"][0][@"filename"];
+            
+    } else {
+        node.fieldImagePath = nil;
+        //NSLog(@"no image key");
+    }
+    
+    //NSLog(@"field_image path = %@", node.fieldImagePath );
+    
+    //TODO: extract images from documents directory and save to node.image
+    node.image = nil;
+    return node;
+}
+
+#pragma mark - JSON
 
 +(NSArray *)extractJSON:(NSNumber *)nodequeueid
 {

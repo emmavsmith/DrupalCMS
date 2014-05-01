@@ -107,7 +107,7 @@
  */
 -(void)loadNodesForNodequeueId
 {
-    self.nodeObjects = [NodeDataProvider getNodesWithNodequeueId:self.nodequeueID];
+    self.nodeObjects = [NodeDataProvider nodesWithNodequeueId:self.nodequeueID];
     [self.tableView reloadData];
 }
 

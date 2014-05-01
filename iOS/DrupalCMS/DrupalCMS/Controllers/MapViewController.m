@@ -90,7 +90,7 @@
  */
 -(void)loadNodesForNodequeueId
 {
-    self.nodeObjects = [NodeDataProvider getLocationNodesWithNodequeueId:self.nodequeueID];
+    self.nodeObjects = [NodeDataProvider locationNodesWithNodequeueId:self.nodequeueID];
 
     // clear existing annotations
     NSMutableArray *annotationsToRemove = [[NSMutableArray alloc] initWithArray: _mapView.annotations];
