@@ -12,6 +12,7 @@
 #import "Node.h"
 #import "ContentManager.h"
 #import "AppNameContentManager.h"
+#import "DetailViewController.h"
 
 @interface NodesTableViewController ()
 
@@ -109,5 +110,16 @@
     self.nodeObjects = [NodeDataProvider getNodesWithNodequeueId:self.nodequeueID];
     [self.tableView reloadData];
 }
+
+#pragma mark - Navigation
+
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+     if ([segue.identifier isEqualToString:@"ViewListItemDetail"]) {
+         
+         DetailViewController *detailViewController = [segue destinationViewController];
+         detailViewController.node = self.nodeObjects[[self.tableView indexPathForSelectedRow].row];
+     }
+ }
 
 @end

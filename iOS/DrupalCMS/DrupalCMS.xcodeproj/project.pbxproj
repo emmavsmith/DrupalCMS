@@ -27,7 +27,11 @@
 		B5AA79C918FD654800BB9542 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B5AA79C718FD654800BB9542 /* InfoPlist.strings */; };
 		B5AA79CB18FD654800BB9542 /* DrupalCMSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B5AA79CA18FD654800BB9542 /* DrupalCMSTests.m */; };
 		B5C1D05519066D9B00D723F1 /* NodeDataProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C1D05419066D9B00D723F1 /* NodeDataProvider.m */; };
+		B5DD6D281912574F00D39A08 /* NodeDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DD6D271912574F00D39A08 /* NodeDetailView.m */; };
 		B5E0739519000DB90059B746 /* Node.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E0739419000DB90059B746 /* Node.m */; };
+		B5E32E0F191242CB00D56A37 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E32E0E191242CB00D56A37 /* MapViewController.m */; };
+		B5E32E12191242DE00D56A37 /* LocationNode.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E32E11191242DE00D56A37 /* LocationNode.m */; };
+		B5E32E15191246A100D56A37 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E32E14191246A100D56A37 /* DetailViewController.m */; };
 		B5F78ED51911183600303206 /* AppNameContentManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B5F78ED41911183600303206 /* AppNameContentManager.m */; };
 		B5F78ED7191149C600303206 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5F78ED6191149C600303206 /* CoreLocation.framework */; };
 		B5F78ED9191149CB00303206 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5F78ED8191149CB00303206 /* MapKit.framework */; };
@@ -72,8 +76,16 @@
 		B5AA79CA18FD654800BB9542 /* DrupalCMSTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DrupalCMSTests.m; sourceTree = "<group>"; };
 		B5C1D05319066D9B00D723F1 /* NodeDataProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeDataProvider.h; sourceTree = "<group>"; };
 		B5C1D05419066D9B00D723F1 /* NodeDataProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NodeDataProvider.m; sourceTree = "<group>"; };
+		B5DD6D261912574F00D39A08 /* NodeDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeDetailView.h; sourceTree = "<group>"; };
+		B5DD6D271912574F00D39A08 /* NodeDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NodeDetailView.m; sourceTree = "<group>"; };
 		B5E0739319000DB90059B746 /* Node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Node.h; sourceTree = "<group>"; };
 		B5E0739419000DB90059B746 /* Node.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Node.m; sourceTree = "<group>"; };
+		B5E32E0D191242CB00D56A37 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		B5E32E0E191242CB00D56A37 /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
+		B5E32E10191242DE00D56A37 /* LocationNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationNode.h; sourceTree = "<group>"; };
+		B5E32E11191242DE00D56A37 /* LocationNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationNode.m; sourceTree = "<group>"; };
+		B5E32E13191246A100D56A37 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		B5E32E14191246A100D56A37 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		B5F78ED31911183600303206 /* AppNameContentManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppNameContentManager.h; sourceTree = "<group>"; };
 		B5F78ED41911183600303206 /* AppNameContentManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppNameContentManager.m; sourceTree = "<group>"; };
 		B5F78ED6191149C600303206 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -203,6 +215,8 @@
 		B5E0739019000CD00059B746 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				B5E32E10191242DE00D56A37 /* LocationNode.h */,
+				B5E32E11191242DE00D56A37 /* LocationNode.m */,
 				B5C1D05319066D9B00D723F1 /* NodeDataProvider.h */,
 				B5C1D05419066D9B00D723F1 /* NodeDataProvider.m */,
 				B5E0739319000DB90059B746 /* Node.h */,
@@ -214,8 +228,12 @@
 		B5E0739119000D090059B746 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				B5E32E0D191242CB00D56A37 /* MapViewController.h */,
+				B5E32E0E191242CB00D56A37 /* MapViewController.m */,
 				B5195A681907BEFA001F2111 /* NodesTableViewController.h */,
 				B5195A691907BEFA001F2111 /* NodesTableViewController.m */,
+				B5E32E13191246A100D56A37 /* DetailViewController.h */,
+				B5E32E14191246A100D56A37 /* DetailViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -225,6 +243,8 @@
 			children = (
 				B5195A6B1907C5D5001F2111 /* NodesTableViewCell.h */,
 				B5195A6C1907C5D5001F2111 /* NodesTableViewCell.m */,
+				B5DD6D261912574F00D39A08 /* NodeDetailView.h */,
+				B5DD6D271912574F00D39A08 /* NodeDetailView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -365,12 +385,16 @@
 			files = (
 				B5195A6A1907BEFA001F2111 /* NodesTableViewController.m in Sources */,
 				B5AA79AD18FD654800BB9542 /* AppDelegate.m in Sources */,
+				B5E32E12191242DE00D56A37 /* LocationNode.m in Sources */,
 				B5F78ED51911183600303206 /* AppNameContentManager.m in Sources */,
+				B5E32E0F191242CB00D56A37 /* MapViewController.m in Sources */,
 				B583E1F019090D9100B87480 /* ContentManager.m in Sources */,
 				B5AA79A918FD654800BB9542 /* main.m in Sources */,
+				B5E32E15191246A100D56A37 /* DetailViewController.m in Sources */,
 				B5C1D05519066D9B00D723F1 /* NodeDataProvider.m in Sources */,
 				B5E0739519000DB90059B746 /* Node.m in Sources */,
 				B5195A6D1907C5D5001F2111 /* NodesTableViewCell.m in Sources */,
+				B5DD6D281912574F00D39A08 /* NodeDetailView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
