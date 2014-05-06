@@ -44,7 +44,7 @@ NSString * const ContentUpdateDidCompleteNotification = @"ContentUpdateDidComple
         
         //check if there is content in the bundle issued with app and if there is copy it to documents on phone
         NSString *nodequeueZipPath =[[NSBundle mainBundle] pathForResource:[NSString stringWithFormat:@"content_nqid_%@", nodequeueID] ofType:@"zip"];
-        
+
         if([self unzipZipFileFromPath:nodequeueZipPath toPath:nodequeuePath]) {
             //TODO: this will not be hardcoded
             [self saveToUserDefaultsWithVersion:@1 WithNodequeueID:nodequeueID];

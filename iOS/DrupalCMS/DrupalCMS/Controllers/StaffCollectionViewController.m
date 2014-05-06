@@ -10,6 +10,9 @@
 
 @interface StaffCollectionViewController ()
 
+@property (nonatomic)  NSMutableArray *nodeObjects;
+@property NSNumber *nodequeueID;
+
 @end
 
 @implementation StaffCollectionViewController

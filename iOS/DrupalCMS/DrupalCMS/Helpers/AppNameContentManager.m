@@ -8,7 +8,7 @@
 
 #import "AppNameContentManager.h"
 
-NSInteger const NODEQUEUE_TEST_1 = 1;
+NSInteger const NODEQUEUE_TEST_1 = 3;
 NSInteger const NODEQUEUE_GLOSSARY = 2;
 
 @implementation AppNameContentManager {
