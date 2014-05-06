@@ -27,6 +27,7 @@
 		B5AA79C918FD654800BB9542 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B5AA79C718FD654800BB9542 /* InfoPlist.strings */; };
 		B5AA79CB18FD654800BB9542 /* DrupalCMSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B5AA79CA18FD654800BB9542 /* DrupalCMSTests.m */; };
 		B5B0AFC31918F3EF003A7F8F /* StaffCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B0AFC21918F3EF003A7F8F /* StaffCollectionViewController.m */; };
+		B5B0AFC61918FF36003A7F8F /* StaffCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B0AFC51918FF36003A7F8F /* StaffCollectionViewCell.m */; };
 		B5C1D05519066D9B00D723F1 /* NodeDataProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C1D05419066D9B00D723F1 /* NodeDataProvider.m */; };
 		B5DD6D281912574F00D39A08 /* NodeDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DD6D271912574F00D39A08 /* NodeDetailView.m */; };
 		B5E0739519000DB90059B746 /* Node.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E0739419000DB90059B746 /* Node.m */; };
@@ -77,6 +78,8 @@
 		B5AA79CA18FD654800BB9542 /* DrupalCMSTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DrupalCMSTests.m; sourceTree = "<group>"; };
 		B5B0AFC11918F3EF003A7F8F /* StaffCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaffCollectionViewController.h; sourceTree = "<group>"; };
 		B5B0AFC21918F3EF003A7F8F /* StaffCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StaffCollectionViewController.m; sourceTree = "<group>"; };
+		B5B0AFC41918FF36003A7F8F /* StaffCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaffCollectionViewCell.h; sourceTree = "<group>"; };
+		B5B0AFC51918FF36003A7F8F /* StaffCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StaffCollectionViewCell.m; sourceTree = "<group>"; };
 		B5C1D05319066D9B00D723F1 /* NodeDataProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeDataProvider.h; sourceTree = "<group>"; };
 		B5C1D05419066D9B00D723F1 /* NodeDataProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NodeDataProvider.m; sourceTree = "<group>"; };
 		B5DD6D261912574F00D39A08 /* NodeDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeDetailView.h; sourceTree = "<group>"; };
@@ -250,6 +253,8 @@
 				B5195A6C1907C5D5001F2111 /* NodesTableViewCell.m */,
 				B5DD6D261912574F00D39A08 /* NodeDetailView.h */,
 				B5DD6D271912574F00D39A08 /* NodeDetailView.m */,
+				B5B0AFC41918FF36003A7F8F /* StaffCollectionViewCell.h */,
+				B5B0AFC51918FF36003A7F8F /* StaffCollectionViewCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -397,6 +402,7 @@
 				B583E1F019090D9100B87480 /* ContentManager.m in Sources */,
 				B5AA79A918FD654800BB9542 /* main.m in Sources */,
 				B5E32E15191246A100D56A37 /* DetailViewController.m in Sources */,
+				B5B0AFC61918FF36003A7F8F /* StaffCollectionViewCell.m in Sources */,
 				B5C1D05519066D9B00D723F1 /* NodeDataProvider.m in Sources */,
 				B5E0739519000DB90059B746 /* Node.m in Sources */,
 				B5195A6D1907C5D5001F2111 /* NodesTableViewCell.m in Sources */,

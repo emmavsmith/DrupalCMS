@@ -83,6 +83,7 @@
     NSString *path = [[ContentManager contentPathForNodequeueId:nodequeueid] stringByAppendingPathComponent:@"manifest.json"];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
+    //check if there is a json file before trying to extract the json
     if([fileManager fileExistsAtPath:path]){
         
         NSString *myJSON = [[NSString alloc] initWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];

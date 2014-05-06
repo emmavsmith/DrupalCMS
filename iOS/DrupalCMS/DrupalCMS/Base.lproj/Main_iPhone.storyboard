@@ -126,23 +126,40 @@
             <objects>
                 <collectionViewController autoresizesArchivedViewToFullSize="NO" id="6Ox-El-aaO" customClass="StaffCollectionViewController" sceneMemberID="viewController">
                     <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="LLr-aN-ZpG">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="kRY-gH-81Y">
-                            <size key="itemSize" width="50" height="50"/>
+                            <size key="itemSize" width="92" height="118"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="00h-jv-pA3">
-                                <rect key="frame" x="0.0" y="64" width="50" height="50"/>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="StaffCollectionViewCell" id="00h-jv-pA3" customClass="StaffCollectionViewCell">
+                                <rect key="frame" x="0.0" y="0.0" width="92" height="118"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="92" height="118"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yrX-kz-uNi">
+                                            <rect key="frame" x="0.0" y="85" width="86" height="33"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HH5-do-Sbj">
+                                            <rect key="frame" x="-1" y="0.0" width="94" height="82"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                    </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
+                                <connections>
+                                    <outlet property="staffImage" destination="HH5-do-Sbj" id="C7J-Sw-hE7"/>
+                                    <outlet property="staffNameLabel" destination="yrX-kz-uNi" id="Leh-qt-Ea9"/>
+                                </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>
@@ -151,6 +168,7 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="Collection" id="SCU-oG-aSB"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wsj-SD-mZ5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
