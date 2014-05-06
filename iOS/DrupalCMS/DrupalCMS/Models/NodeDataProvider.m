@@ -17,7 +17,7 @@
 
 +(NSArray *)nodesWithNodequeueId:(NSNumber *)nodequeueid
 {
-    NSLog(@"Parsing JSON array");
+    NSLog(@"Parsing JSON array for nodequeueid: %@", nodequeueid);
     NSMutableArray *nodesArray = [[NSMutableArray alloc] init];
     NSArray *nodesFromJSON = [self extractJSON:nodequeueid];
     
@@ -31,7 +31,7 @@
 
 +(NSArray *)locationNodesWithNodequeueId:(NSNumber *)nodequeueid
 {
-    NSLog(@"Parsing JSON array for Locations");
+    NSLog(@"Parsing JSON array for Locations for nodequeueid: %@", nodequeueid);
     NSMutableArray *nodesArray = [[NSMutableArray alloc] init];
     NSArray *nodesFromJSON = [self extractJSON:nodequeueid];
     
@@ -53,18 +53,17 @@
     
     //TODO: image to specific for general node
     
-    //get filename of an image
+    //TODO: keeping this array check in here for now as this was crashing before sometimes as it switches between accessing a dictionary and accessing an array, depending on whether the field_image is empty
     if(![[dictionary objectForKey:@"field_image"] isKindOfClass:[NSArray class]]){
         
         node.fieldImageName = dictionary[@"field_image"][@"und"][0][@"filename"];
-        //NSLog(@"Contains image key");
+        //NSLog(@"Contains image key %@", node.fieldImageName);
             
     } else {
         node.fieldImageName = nil;
         //NSLog(@"no image key");
     }
-    
-    //retrieve the image using the filename
+
     if(node.fieldImageName != nil){
 
         NSString *path = [[ContentManager contentPathForNodequeueId:nodequeueid] stringByAppendingPathComponent:node.fieldImageName];
@@ -73,7 +72,6 @@
     } else {
         node.image = nil;
     }
-    
     return node;
 }
 
@@ -81,7 +79,7 @@
 
 +(NSArray *)extractJSON:(NSNumber *)nodequeueid
 {
-    NSLog(@"Extracting JSON");
+    NSLog(@"Extracting JSON for nodequeueid: %@", nodequeueid);
     NSString *path = [[ContentManager contentPathForNodequeueId:nodequeueid] stringByAppendingPathComponent:@"manifest.json"];
     NSString *myJSON = [[NSString alloc] initWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
     //TODO: handle error when there is no content?

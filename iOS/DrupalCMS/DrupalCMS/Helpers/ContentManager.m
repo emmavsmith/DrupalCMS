@@ -35,7 +35,7 @@ NSString * const ContentUpdateDidCompleteNotification = @"ContentUpdateDidComple
 
 -(void)checkExistingContentWithNodequeueID:(NSNumber *)nodequeueID
 {
-    NSLog(@"Checking existing content");
+    NSLog(@"Checking existing content for nodequeueid %@", nodequeueID);
     NSFileManager *fileManager = [NSFileManager defaultManager];
     //check if there is content in the documents on the phone
     NSString *nodequeuePath = [ContentManager contentPathForNodequeueId:nodequeueID];
@@ -73,32 +73,30 @@ NSString * const ContentUpdateDidCompleteNotification = @"ContentUpdateDidComple
             
             NSString *downloadUrl = [responseObject valueForKey:@"file_path"];
             
-            //Check downloading, unzipping, copying and deleting was successful before amending the version number in user defaults
+            //check content update before amending the version number in user defaults
             if ([self downloadZipFromURL:downloadUrl withNodequeueID:nodequeueID]){
                 
                 if([self installContentFromZipFileWithNodequeueID:nodequeueID]) {
                 
                     [self saveToUserDefaultsWithVersion: newVersion WithNodequeueID:nodequeueID];
                 
-                    //Post a notification and pass the nodequeueID
+                    //post a notification and pass the nodequeueID
                     NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:nodequeueID, @"nodequeueID", nil];
                     [[NSNotificationCenter defaultCenter] postNotificationName:ContentUpdateDidCompleteNotification object:self userInfo:userInfo];
                     
-                    NSLog(@"Download, unzipping, copying, deleting process complete");
+                    NSLog(@"Content updated successfully for nodequeueid: %@", nodequeueID);
                 } else {
-                    NSLog(@"Download, unzipping, copying, deleting process unsuccessful");
+                    NSLog(@"Content update failed for nodequeueid: %@", nodequeueID);
                 }
-            } else {
-                NSLog(@"Downloading unsuccessful");
             }
         } else {
-            NSLog(@"Current version is latest version. No new content.");
+            NSLog(@"Current version is latest version. No new content for nodequeueid: %@.", nodequeueID);
         }
     }
                                      failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                                          
-                                         //If passed a nodequeueid that is not in the Drupal db then will hit here
-                                         NSLog(@"The error was: %@", error);
+                                         //if passed a nodequeueid that is not in the Drupal db then will hit here
+                                         NSLog(@"Error for nodequeueid: %@. The error was: %@", nodequeueID, error);
                                      }];
     [operation start];
 }

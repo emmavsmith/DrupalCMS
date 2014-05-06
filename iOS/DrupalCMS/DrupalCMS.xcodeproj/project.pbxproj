@@ -26,6 +26,7 @@
 		B5AA79C118FD654800BB9542 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5AA79A018FD654800BB9542 /* UIKit.framework */; };
 		B5AA79C918FD654800BB9542 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B5AA79C718FD654800BB9542 /* InfoPlist.strings */; };
 		B5AA79CB18FD654800BB9542 /* DrupalCMSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B5AA79CA18FD654800BB9542 /* DrupalCMSTests.m */; };
+		B5B0AFC31918F3EF003A7F8F /* StaffCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B0AFC21918F3EF003A7F8F /* StaffCollectionViewController.m */; };
 		B5C1D05519066D9B00D723F1 /* NodeDataProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C1D05419066D9B00D723F1 /* NodeDataProvider.m */; };
 		B5DD6D281912574F00D39A08 /* NodeDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DD6D271912574F00D39A08 /* NodeDetailView.m */; };
 		B5E0739519000DB90059B746 /* Node.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E0739419000DB90059B746 /* Node.m */; };
@@ -74,6 +75,8 @@
 		B5AA79C618FD654800BB9542 /* DrupalCMSTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DrupalCMSTests-Info.plist"; sourceTree = "<group>"; };
 		B5AA79C818FD654800BB9542 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B5AA79CA18FD654800BB9542 /* DrupalCMSTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DrupalCMSTests.m; sourceTree = "<group>"; };
+		B5B0AFC11918F3EF003A7F8F /* StaffCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaffCollectionViewController.h; sourceTree = "<group>"; };
+		B5B0AFC21918F3EF003A7F8F /* StaffCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StaffCollectionViewController.m; sourceTree = "<group>"; };
 		B5C1D05319066D9B00D723F1 /* NodeDataProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeDataProvider.h; sourceTree = "<group>"; };
 		B5C1D05419066D9B00D723F1 /* NodeDataProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NodeDataProvider.m; sourceTree = "<group>"; };
 		B5DD6D261912574F00D39A08 /* NodeDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeDetailView.h; sourceTree = "<group>"; };
@@ -234,6 +237,8 @@
 				B5195A691907BEFA001F2111 /* NodesTableViewController.m */,
 				B5E32E13191246A100D56A37 /* DetailViewController.h */,
 				B5E32E14191246A100D56A37 /* DetailViewController.m */,
+				B5B0AFC11918F3EF003A7F8F /* StaffCollectionViewController.h */,
+				B5B0AFC21918F3EF003A7F8F /* StaffCollectionViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -384,6 +389,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5195A6A1907BEFA001F2111 /* NodesTableViewController.m in Sources */,
+				B5B0AFC31918F3EF003A7F8F /* StaffCollectionViewController.m in Sources */,
 				B5AA79AD18FD654800BB9542 /* AppDelegate.m in Sources */,
 				B5E32E12191242DE00D56A37 /* LocationNode.m in Sources */,
 				B5F78ED51911183600303206 /* AppNameContentManager.m in Sources */,
