@@ -50,29 +50,40 @@
     Node *node = [[Node alloc] init];
     node.title = dictionary[@"title"];
     node.content = dictionary[@"body"][@"und"][0][@"value"];
-    
-    //TODO: image to specific for general node
-    
-    //TODO: keeping this array check in here for now as this was crashing before sometimes as it switches between accessing a dictionary and accessing an array, depending on whether the field_image is empty
-    if(![[dictionary objectForKey:@"field_image"] isKindOfClass:[NSArray class]]){
-        
-        node.fieldImageName = dictionary[@"field_image"][@"und"][0][@"filename"];
-        //NSLog(@"Contains image key %@", node.fieldImageName);
-            
-    } else {
-        node.fieldImageName = nil;
-        //NSLog(@"no image key");
-    }
-
-    if(node.fieldImageName != nil){
-
-        NSString *path = [[ContentManager contentPathForNodequeueId:nodequeueid] stringByAppendingPathComponent:node.fieldImageName];
-        node.image = [UIImage imageWithContentsOfFile:path];
-        
-    } else {
-        node.image = nil;
-    }
+    node.images = [NodeDataProvider getNodeImagesWithDictionary:dictionary withNodequeueId:nodequeueid];
     return node;
+}
+
+//TODO: image to specific for general node?
++(NSDictionary *)getNodeImagesWithDictionary:(NSDictionary *)dictionary withNodequeueId:(NSNumber *) nodequeueid
+{
+    NSString *fieldImageName;
+    UIImage *image;
+    NSMutableDictionary *images = [[NSMutableDictionary alloc] init];
+    
+    for (id key in dictionary){
+    
+        if (([key length] >= 11) && [[key substringWithRange: NSMakeRange(0, 11)] isEqualToString:@"field_image"]) {
+            
+            NSLog(@"key: %@", key);
+            
+            //TODO: keeping this array check in here for now as this was crashing before sometimes as it switches between accessing a dictionary and accessing an array, depending on whether the field_image is empty
+            if(![[dictionary objectForKey:key] isKindOfClass:[NSArray class]]) {
+            
+                fieldImageName = dictionary[key][@"und"][0][@"filename"];
+                NSLog(@"fieldImageName: %@", fieldImageName);
+                
+                if (fieldImageName != nil) {
+                
+                    NSString *path = [[ContentManager contentPathForNodequeueId:nodequeueid] stringByAppendingPathComponent:fieldImageName];
+                    image = [UIImage imageWithContentsOfFile:path];
+                    
+                    [images setObject:image forKey:key];
+                }
+            }
+        }
+    }
+    return [NSDictionary dictionaryWithDictionary: images];
 }
 
 #pragma mark - JSON

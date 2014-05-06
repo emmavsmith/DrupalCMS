@@ -42,7 +42,8 @@
 {
     self.nodeDetailView.nodeTitleLabel.text = self.node.title;
     self.nodeDetailView.nodeContentTextView.text = self.node.content;
-    self.nodeDetailView.nodeImageView.image = self.node.image;
+    //TODO: will this always be a field_image only?
+    self.nodeDetailView.nodeImageView.image = [self.node.images objectForKey:@"field_image"];
 }
 
 @end
