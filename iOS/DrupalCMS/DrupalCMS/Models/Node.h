@@ -13,9 +13,7 @@
 @property NSString *title;
 @property NSString *type;
 @property NSString *content;
-@property NSString *fieldImagePath;
+@property NSString *fieldImageName;
 @property UIImage *image;
-
--(id)initWithDictionary:(NSDictionary *)dictionary;
 
 @end

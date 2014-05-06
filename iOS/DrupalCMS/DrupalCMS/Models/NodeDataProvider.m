@@ -23,7 +23,7 @@
     
     for(NSDictionary *item in nodesFromJSON) {
         
-        Node *node = [NodeDataProvider createNode:item];
+        Node *node = [NodeDataProvider createNodeWithDictionary:item withNodequeueId:nodequeueid];
         [nodesArray addObject:node];
     }
     return nodesArray;
@@ -45,29 +45,35 @@
     return nodesArray;
 }
 
-+(Node *)createNode:(NSDictionary *)dictionary
++(Node *)createNodeWithDictionary:(NSDictionary *)dictionary withNodequeueId:(NSNumber *) nodequeueid
 {
     Node *node = [[Node alloc] init];
     node.title = dictionary[@"title"];
     node.content = dictionary[@"body"][@"und"][0][@"value"];
     
-    //NSLog(@"%@", dictionary);
-    
     //TODO: image to specific for general node
+    
+    //get filename of an image
     if(![[dictionary objectForKey:@"field_image"] isKindOfClass:[NSArray class]]){
-            
+        
+        node.fieldImageName = dictionary[@"field_image"][@"und"][0][@"filename"];
         //NSLog(@"Contains image key");
-        node.fieldImagePath = dictionary[@"field_image"][@"und"][0][@"filename"];
             
     } else {
-        node.fieldImagePath = nil;
+        node.fieldImageName = nil;
         //NSLog(@"no image key");
     }
     
-    //NSLog(@"field_image path = %@", node.fieldImagePath );
+    //retrieve the image using the filename
+    if(node.fieldImageName != nil){
+
+        NSString *path = [[ContentManager contentPathForNodequeueId:nodequeueid] stringByAppendingPathComponent:node.fieldImageName];
+        node.image = [UIImage imageWithContentsOfFile:path];
+        
+    } else {
+        node.image = nil;
+    }
     
-    //TODO: extract images from documents directory and save to node.image
-    node.image = nil;
     return node;
 }
 

@@ -65,8 +65,6 @@ NSString * const ContentUpdateDidCompleteNotification = @"ContentUpdateDidComple
     operation.responseSerializer = [AFJSONResponseSerializer serializer];
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         
-        NSLog(@"Response: %@", responseObject);
-        
         NSNumber *currentVersion = [self getVersionFromUserDefaultsWithNodequeueID:nodequeueID];
         NSNumber *newVersion = [NSNumber numberWithInt:[[responseObject valueForKey:@"version"] intValue]];
         NSComparisonResult versionComparisonResult = [currentVersion compare:newVersion];
@@ -114,7 +112,7 @@ NSString * const ContentUpdateDidCompleteNotification = @"ContentUpdateDidComple
 {
     NSString *key = [NSString stringWithFormat:@"%@", nodequeueID];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSLog(@"Setting user defaults successful with version: %@", version);
+    NSLog(@"Setting user defaults successful with version: %@ for nodequeueid: %@", version, nodequeueID);
     [defaults setValue:version forKey:key];
     [defaults synchronize];
 }
@@ -126,7 +124,7 @@ NSString * const ContentUpdateDidCompleteNotification = @"ContentUpdateDidComple
 {
     NSString *key = [NSString stringWithFormat:@"%@", nodequeueID];
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSLog(@"Retrieving version from NSdefaults successful with version: %@", [defaults valueForKey:key]);
+    NSLog(@"Retrieving version from NSdefaults successful with version: %@ for nodequeueid: %@", [defaults valueForKey:key], nodequeueID);
     return [defaults valueForKey:key];
 }
 
@@ -184,10 +182,8 @@ NSString * const ContentUpdateDidCompleteNotification = @"ContentUpdateDidComple
         
         if([zipArchive UnzipFileTo:toPath overWrite: YES]){
             zipSuccessFlag = YES;
-            NSLog(@"Unzipping successful");
         } else {
             zipSuccessFlag = NO;
-            NSLog(@"Unzipping not successful");
         }
         [zipArchive UnzipCloseFile];
     }

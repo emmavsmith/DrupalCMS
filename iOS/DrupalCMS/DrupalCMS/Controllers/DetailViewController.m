@@ -42,8 +42,7 @@
 {
     self.nodeDetailView.nodeTitleLabel.text = self.node.title;
     self.nodeDetailView.nodeContentTextView.text = self.node.content;
-    
-    //TODO: set UIImageView to node image when it has been retrieved from documents directory
+    self.nodeDetailView.nodeImageView.image = self.node.image;
 }
 
 @end
