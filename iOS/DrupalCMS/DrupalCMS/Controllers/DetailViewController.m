@@ -42,7 +42,8 @@
 {
     self.nodeDetailView.nodeTitleLabel.text = self.node.title;
     self.nodeDetailView.nodeContentTextView.text = self.node.content;
-    //TODO: will this always be a field_image only?
+    //TODO: will this always be a field_image only? TableView and CollectionView using this DetailView
+    //TableView uses field_image; CollectionView uses field_image_profile
     self.nodeDetailView.nodeImageView.image = [self.node.images objectForKey:@"field_image"];
 }
 

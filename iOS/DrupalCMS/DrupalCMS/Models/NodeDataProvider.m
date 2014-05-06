@@ -54,7 +54,6 @@
     return node;
 }
 
-//TODO: image to specific for general node?
 +(NSDictionary *)getNodeImagesWithDictionary:(NSDictionary *)dictionary withNodequeueId:(NSNumber *) nodequeueid
 {
     NSString *fieldImageName;
@@ -64,14 +63,11 @@
     for (id key in dictionary){
     
         if (([key length] >= 11) && [[key substringWithRange: NSMakeRange(0, 11)] isEqualToString:@"field_image"]) {
-            
-            NSLog(@"key: %@", key);
-            
+
             //TODO: keeping this array check in here for now as this was crashing before sometimes as it switches between accessing a dictionary and accessing an array, depending on whether the field_image is empty
             if(![[dictionary objectForKey:key] isKindOfClass:[NSArray class]]) {
             
                 fieldImageName = dictionary[key][@"und"][0][@"filename"];
-                NSLog(@"fieldImageName: %@", fieldImageName);
                 
                 if (fieldImageName != nil) {
                 

@@ -14,7 +14,6 @@
 @property NSString *type;
 @property NSString *content;
 @property NSString *fieldImageName;
-@property UIImage *image;
 @property NSDictionary *images;
 
 @end
