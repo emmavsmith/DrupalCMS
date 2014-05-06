@@ -115,7 +115,7 @@
 
  - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
  {
-     if ([segue.identifier isEqualToString:@"ViewListItemDetail"]) {
+     if ([segue.identifier isEqualToString:@"ViewListItemDetailSegue"]) {
          
          DetailViewController *detailViewController = [segue destinationViewController];
          detailViewController.node = self.nodeObjects[[self.tableView indexPathForSelectedRow].row];

@@ -31,7 +31,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="nodeTitleLabel" destination="fSa-Lb-pmZ" id="GgN-C8-1Qs"/>
-                                    <segue destination="7G7-2e-WrM" kind="push" identifier="ViewListItemDetail" id="mCY-VX-TBb"/>
+                                    <segue destination="7G7-2e-WrM" kind="push" identifier="ViewListItemDetailSegue" id="mCY-VX-TBb"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -159,6 +159,7 @@
                                 <connections>
                                     <outlet property="staffImage" destination="HH5-do-Sbj" id="C7J-Sw-hE7"/>
                                     <outlet property="staffNameLabel" destination="yrX-kz-uNi" id="Leh-qt-Ea9"/>
+                                    <segue destination="7G7-2e-WrM" kind="push" identifier="ViewCollectionItemDetailSegue" id="Ifd-0p-eJ8"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -238,4 +239,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="mCY-VX-TBb"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -77,8 +77,9 @@
     
     Node *node = [self.nodeObjects objectAtIndex:indexPath.row];
     cell.staffNameLabel.text = node.title;
+    //TODO: will this always be field_image_profile?
+    cell.staffImage.image = [node.images objectForKey:@"field_image_profile"];
     return cell;
-    //return nil;
 }
 
 #pragma mark - Nodequeues nodes
@@ -105,15 +106,18 @@
     [self.collectionView reloadData];
 }
 
-/*
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"ViewCollectionItemDetailSegue"]) {
+        
+        NSArray *indexPaths = [self.collectionView indexPathsForSelectedItems];
+        DetailViewController *detailViewController = segue.destinationViewController;
+        NSIndexPath *indexPath = [indexPaths objectAtIndex:0];
+        detailViewController.node = [self.nodeObjects objectAtIndex:indexPath.row];
+        [self.collectionView deselectItemAtIndexPath:indexPath animated:NO];
+    }
 }
-*/
 
 @end
