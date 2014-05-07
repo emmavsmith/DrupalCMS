@@ -70,7 +70,6 @@
     return [self.nodeObjects count];
 }
 
-// The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     StaffCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"StaffCollectionViewCell" forIndexPath:indexPath];

@@ -124,6 +124,7 @@
          
          DetailViewController *detailViewController = [segue destinationViewController];
          detailViewController.node = self.nodeObjects[[self.tableView indexPathForSelectedRow].row];
+         [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:NO];
      }
  }
 
