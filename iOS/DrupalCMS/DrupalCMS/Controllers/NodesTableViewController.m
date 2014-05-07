@@ -39,7 +39,7 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         
-        self.nodequeueID = [NSNumber numberWithInteger: NODEQUEUE_TEST_1];
+        self.nodequeueID = [NSNumber numberWithInteger: NODEQUEUE_TABLE];
     }
     return self;
 }

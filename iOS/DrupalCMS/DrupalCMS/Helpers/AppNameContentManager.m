@@ -8,8 +8,8 @@
 
 #import "AppNameContentManager.h"
 
-NSInteger const NODEQUEUE_TEST_1 = 1;
-NSInteger const NODEQUEUE_GLOSSARY = 2;
+NSInteger const NODEQUEUE_LOCATION = 1;
+NSInteger const NODEQUEUE_TABLE = 2;
 NSInteger const NODEQUEUE_STAFF = 3;
 
 @implementation AppNameContentManager {
@@ -22,7 +22,7 @@ NSInteger const NODEQUEUE_STAFF = 3;
     self = [super initWithURL: @"http://cmstest.digitallabsmmu.com/contentpackagerjson/"];
     if (self){
         
-        nodequeueIDs = @[[NSNumber numberWithInteger: NODEQUEUE_TEST_1], [NSNumber numberWithInteger: NODEQUEUE_GLOSSARY], [NSNumber numberWithInteger: NODEQUEUE_STAFF]];
+        nodequeueIDs = @[[NSNumber numberWithInteger: NODEQUEUE_TABLE], [NSNumber numberWithInteger: NODEQUEUE_LOCATION], [NSNumber numberWithInteger: NODEQUEUE_STAFF]];
     }
     return self;
 }

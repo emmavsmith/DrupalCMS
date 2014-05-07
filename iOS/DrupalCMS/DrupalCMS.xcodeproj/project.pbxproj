@@ -11,7 +11,7 @@
 		B5195A6A1907BEFA001F2111 /* NodesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5195A691907BEFA001F2111 /* NodesTableViewController.m */; };
 		B5195A6D1907C5D5001F2111 /* NodesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B5195A6C1907C5D5001F2111 /* NodesTableViewCell.m */; };
 		B583E1F019090D9100B87480 /* ContentManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B583E1EF19090D9100B87480 /* ContentManager.m */; };
-		B5964A71190FF4F4006BDE6D /* content_nqid_1.zip in Resources */ = {isa = PBXBuildFile; fileRef = B5964A70190FF4F4006BDE6D /* content_nqid_1.zip */; };
+		B5964A71190FF4F4006BDE6D /* content_nqid_2.zip in Resources */ = {isa = PBXBuildFile; fileRef = B5964A70190FF4F4006BDE6D /* content_nqid_2.zip */; };
 		B5AA799D18FD654800BB9542 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5AA799C18FD654800BB9542 /* Foundation.framework */; };
 		B5AA799F18FD654800BB9542 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5AA799E18FD654800BB9542 /* CoreGraphics.framework */; };
 		B5AA79A118FD654800BB9542 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5AA79A018FD654800BB9542 /* UIKit.framework */; };
@@ -57,7 +57,7 @@
 		B5195A6C1907C5D5001F2111 /* NodesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NodesTableViewCell.m; sourceTree = "<group>"; };
 		B583E1EE19090D9100B87480 /* ContentManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentManager.h; sourceTree = "<group>"; };
 		B583E1EF19090D9100B87480 /* ContentManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentManager.m; sourceTree = "<group>"; };
-		B5964A70190FF4F4006BDE6D /* content_nqid_1.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = content_nqid_1.zip; sourceTree = "<group>"; };
+		B5964A70190FF4F4006BDE6D /* content_nqid_2.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = content_nqid_2.zip; sourceTree = "<group>"; };
 		B5AA799918FD654800BB9542 /* DrupalCMS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrupalCMS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5AA799C18FD654800BB9542 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B5AA799E18FD654800BB9542 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -140,7 +140,7 @@
 		B5AA799018FD654800BB9542 = {
 			isa = PBXGroup;
 			children = (
-				B5964A70190FF4F4006BDE6D /* content_nqid_1.zip */,
+				B5964A70190FF4F4006BDE6D /* content_nqid_2.zip */,
 				B5AA79A218FD654800BB9542 /* DrupalCMS */,
 				B5AA79C418FD654800BB9542 /* DrupalCMSTests */,
 				B5AA799B18FD654800BB9542 /* Frameworks */,
@@ -339,7 +339,7 @@
 			files = (
 				B5AA79B318FD654800BB9542 /* Main_iPad.storyboard in Resources */,
 				B5AA79B818FD654800BB9542 /* Images.xcassets in Resources */,
-				B5964A71190FF4F4006BDE6D /* content_nqid_1.zip in Resources */,
+				B5964A71190FF4F4006BDE6D /* content_nqid_2.zip in Resources */,
 				B5AA79B018FD654800BB9542 /* Main_iPhone.storyboard in Resources */,
 				B5AA79A718FD654800BB9542 /* InfoPlist.strings in Resources */,
 			);

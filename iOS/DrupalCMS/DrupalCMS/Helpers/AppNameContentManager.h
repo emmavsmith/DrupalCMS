@@ -9,8 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "ContentManager.h"
 
-extern NSInteger const NODEQUEUE_TEST_1;
-extern NSInteger const NODEQUEUE_GLOSSARY;
+extern NSInteger const NODEQUEUE_LOCATION;
+extern NSInteger const NODEQUEUE_TABLE;
 extern NSInteger const NODEQUEUE_STAFF;
 
 @interface AppNameContentManager : ContentManager
