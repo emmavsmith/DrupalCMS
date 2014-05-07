@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "Node.h"
-#import "NodeDetailView.h"
+#import "DetailView.h"
 
 @interface DetailViewController : UIViewController
 
 @property Node *node;
-@property IBOutlet NodeDetailView *nodeDetailView;
+@property IBOutlet DetailView *nodeDetailView;
 
 @end

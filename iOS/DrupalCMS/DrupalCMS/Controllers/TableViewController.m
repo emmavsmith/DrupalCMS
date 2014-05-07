@@ -1,27 +1,27 @@
 //
-//  NodesTableViewController.m
+//  TableViewController.m
 //  DrupalCMS
 //
 //  Created by Emma Smith on 23/04/2014.
 //  Copyright (c) 2014 mmu. All rights reserved.
 //
 
-#import "NodesTableViewController.h"
+#import "TableViewController.h"
 #import "NodeDataProvider.h"
-#import "NodesTableViewCell.h"
+#import "TableViewCell.h"
 #import "Node.h"
 #import "ContentManager.h"
 #import "AppNameContentManager.h"
 #import "DetailViewController.h"
 
-@interface NodesTableViewController ()
+@interface TableViewController ()
 
 @property (nonatomic)  NSMutableArray *nodeObjects;
 @property NSNumber *nodequeueID;
 
 @end
 
-@implementation NodesTableViewController
+@implementation TableViewController
 
 /*
  * Lazy instantiation of nodeObjects
@@ -85,7 +85,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NodesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NodesTableViewCell"];
+    TableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NodesTableViewCell"];
     
     Node *node = [self.nodeObjects objectAtIndex:indexPath.row];
     cell.nodeTitleLabel.text = node.title;

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NodeDetailView : UIView
+@interface DetailView : UIView
 
 @property (weak, nonatomic) IBOutlet UILabel *nodeTitleLabel;
 @property (weak, nonatomic) IBOutlet UITextView *nodeContentTextView;

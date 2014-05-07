@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 mmu. All rights reserved.
 //
 
-#import "NodesTableViewCell.h"
+#import "TableViewCell.h"
 
-@implementation NodesTableViewCell
+@implementation TableViewCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

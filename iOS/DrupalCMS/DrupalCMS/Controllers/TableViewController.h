@@ -1,5 +1,5 @@
 //
-//  NodesTableViewCell.h
+//  TableViewController.h
 //  DrupalCMS
 //
 //  Created by Emma Smith on 23/04/2014.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NodesTableViewCell : UITableViewCell
-
-@property (weak, nonatomic) IBOutlet UILabel *nodeTitleLabel;
+@interface TableViewController : UITableViewController 
 
 @end

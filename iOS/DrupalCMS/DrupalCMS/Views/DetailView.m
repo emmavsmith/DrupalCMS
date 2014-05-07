@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 mmu. All rights reserved.
 //
 
-#import "NodeDetailView.h"
+#import "DetailView.h"
 
-@implementation NodeDetailView
+@implementation DetailView
 
 - (id)initWithFrame:(CGRect)frame
 {

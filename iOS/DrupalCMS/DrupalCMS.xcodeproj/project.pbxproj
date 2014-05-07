@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		06347A378B104902BD549A7D /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC8318A5B1E428E8A4EDC51 /* libPods.a */; };
-		B5195A6A1907BEFA001F2111 /* NodesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5195A691907BEFA001F2111 /* NodesTableViewController.m */; };
-		B5195A6D1907C5D5001F2111 /* NodesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B5195A6C1907C5D5001F2111 /* NodesTableViewCell.m */; };
+		B5195A6A1907BEFA001F2111 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5195A691907BEFA001F2111 /* TableViewController.m */; };
+		B5195A6D1907C5D5001F2111 /* TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B5195A6C1907C5D5001F2111 /* TableViewCell.m */; };
 		B583E1F019090D9100B87480 /* ContentManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B583E1EF19090D9100B87480 /* ContentManager.m */; };
 		B5964A71190FF4F4006BDE6D /* content_nqid_2.zip in Resources */ = {isa = PBXBuildFile; fileRef = B5964A70190FF4F4006BDE6D /* content_nqid_2.zip */; };
 		B5AA799D18FD654800BB9542 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5AA799C18FD654800BB9542 /* Foundation.framework */; };
@@ -29,7 +29,7 @@
 		B5B0AFC31918F3EF003A7F8F /* StaffCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B0AFC21918F3EF003A7F8F /* StaffCollectionViewController.m */; };
 		B5B0AFC61918FF36003A7F8F /* StaffCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B0AFC51918FF36003A7F8F /* StaffCollectionViewCell.m */; };
 		B5C1D05519066D9B00D723F1 /* NodeDataProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C1D05419066D9B00D723F1 /* NodeDataProvider.m */; };
-		B5DD6D281912574F00D39A08 /* NodeDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DD6D271912574F00D39A08 /* NodeDetailView.m */; };
+		B5DD6D281912574F00D39A08 /* DetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DD6D271912574F00D39A08 /* DetailView.m */; };
 		B5E0739519000DB90059B746 /* Node.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E0739419000DB90059B746 /* Node.m */; };
 		B5E32E0F191242CB00D56A37 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E32E0E191242CB00D56A37 /* MapViewController.m */; };
 		B5E32E12191242DE00D56A37 /* LocationNode.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E32E11191242DE00D56A37 /* LocationNode.m */; };
@@ -51,10 +51,10 @@
 
 /* Begin PBXFileReference section */
 		2342EDD38DCB49F5B0F7562E /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
-		B5195A681907BEFA001F2111 /* NodesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodesTableViewController.h; sourceTree = "<group>"; };
-		B5195A691907BEFA001F2111 /* NodesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NodesTableViewController.m; sourceTree = "<group>"; };
-		B5195A6B1907C5D5001F2111 /* NodesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodesTableViewCell.h; sourceTree = "<group>"; };
-		B5195A6C1907C5D5001F2111 /* NodesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NodesTableViewCell.m; sourceTree = "<group>"; };
+		B5195A681907BEFA001F2111 /* TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
+		B5195A691907BEFA001F2111 /* TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
+		B5195A6B1907C5D5001F2111 /* TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewCell.h; sourceTree = "<group>"; };
+		B5195A6C1907C5D5001F2111 /* TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewCell.m; sourceTree = "<group>"; };
 		B583E1EE19090D9100B87480 /* ContentManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentManager.h; sourceTree = "<group>"; };
 		B583E1EF19090D9100B87480 /* ContentManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentManager.m; sourceTree = "<group>"; };
 		B5964A70190FF4F4006BDE6D /* content_nqid_2.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = content_nqid_2.zip; sourceTree = "<group>"; };
@@ -82,8 +82,8 @@
 		B5B0AFC51918FF36003A7F8F /* StaffCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StaffCollectionViewCell.m; sourceTree = "<group>"; };
 		B5C1D05319066D9B00D723F1 /* NodeDataProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeDataProvider.h; sourceTree = "<group>"; };
 		B5C1D05419066D9B00D723F1 /* NodeDataProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NodeDataProvider.m; sourceTree = "<group>"; };
-		B5DD6D261912574F00D39A08 /* NodeDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeDetailView.h; sourceTree = "<group>"; };
-		B5DD6D271912574F00D39A08 /* NodeDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NodeDetailView.m; sourceTree = "<group>"; };
+		B5DD6D261912574F00D39A08 /* DetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailView.h; sourceTree = "<group>"; };
+		B5DD6D271912574F00D39A08 /* DetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailView.m; sourceTree = "<group>"; };
 		B5E0739319000DB90059B746 /* Node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Node.h; sourceTree = "<group>"; };
 		B5E0739419000DB90059B746 /* Node.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Node.m; sourceTree = "<group>"; };
 		B5E32E0D191242CB00D56A37 /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
@@ -236,8 +236,8 @@
 			children = (
 				B5E32E0D191242CB00D56A37 /* MapViewController.h */,
 				B5E32E0E191242CB00D56A37 /* MapViewController.m */,
-				B5195A681907BEFA001F2111 /* NodesTableViewController.h */,
-				B5195A691907BEFA001F2111 /* NodesTableViewController.m */,
+				B5195A681907BEFA001F2111 /* TableViewController.h */,
+				B5195A691907BEFA001F2111 /* TableViewController.m */,
 				B5E32E13191246A100D56A37 /* DetailViewController.h */,
 				B5E32E14191246A100D56A37 /* DetailViewController.m */,
 				B5B0AFC11918F3EF003A7F8F /* StaffCollectionViewController.h */,
@@ -249,10 +249,10 @@
 		B5E0739219000D8F0059B746 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				B5195A6B1907C5D5001F2111 /* NodesTableViewCell.h */,
-				B5195A6C1907C5D5001F2111 /* NodesTableViewCell.m */,
-				B5DD6D261912574F00D39A08 /* NodeDetailView.h */,
-				B5DD6D271912574F00D39A08 /* NodeDetailView.m */,
+				B5195A6B1907C5D5001F2111 /* TableViewCell.h */,
+				B5195A6C1907C5D5001F2111 /* TableViewCell.m */,
+				B5DD6D261912574F00D39A08 /* DetailView.h */,
+				B5DD6D271912574F00D39A08 /* DetailView.m */,
 				B5B0AFC41918FF36003A7F8F /* StaffCollectionViewCell.h */,
 				B5B0AFC51918FF36003A7F8F /* StaffCollectionViewCell.m */,
 			);
@@ -393,7 +393,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B5195A6A1907BEFA001F2111 /* NodesTableViewController.m in Sources */,
+				B5195A6A1907BEFA001F2111 /* TableViewController.m in Sources */,
 				B5B0AFC31918F3EF003A7F8F /* StaffCollectionViewController.m in Sources */,
 				B5AA79AD18FD654800BB9542 /* AppDelegate.m in Sources */,
 				B5E32E12191242DE00D56A37 /* LocationNode.m in Sources */,
@@ -405,8 +405,8 @@
 				B5B0AFC61918FF36003A7F8F /* StaffCollectionViewCell.m in Sources */,
 				B5C1D05519066D9B00D723F1 /* NodeDataProvider.m in Sources */,
 				B5E0739519000DB90059B746 /* Node.m in Sources */,
-				B5195A6D1907C5D5001F2111 /* NodesTableViewCell.m in Sources */,
-				B5DD6D281912574F00D39A08 /* NodeDetailView.m in Sources */,
+				B5195A6D1907C5D5001F2111 /* TableViewCell.m in Sources */,
+				B5DD6D281912574F00D39A08 /* DetailView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

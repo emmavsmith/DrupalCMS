@@ -4,16 +4,16 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
-        <!--Nodes Table View Controller - List-->
+        <!--Table View Controller - List-->
         <scene sceneID="MUJ-aL-crU">
             <objects>
-                <tableViewController id="MEG-Ec-x4g" customClass="NodesTableViewController" sceneMemberID="viewController">
+                <tableViewController id="MEG-Ec-x4g" customClass="TableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="fHt-DB-yc8">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="NodesTableViewCell" id="hwj-zB-6bi" customClass="NodesTableViewCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="NodesTableViewCell" id="hwj-zB-6bi" customClass="TableViewCell">
                                 <rect key="frame" x="0.0" y="86" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hwj-zB-6bi" id="BNq-at-I9o">
@@ -54,7 +54,7 @@
                         <viewControllerLayoutGuide type="top" id="w9F-Tg-N8Y"/>
                         <viewControllerLayoutGuide type="bottom" id="xnk-Ue-5u3"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="98i-KE-HhG" customClass="NodeDetailView">
+                    <view key="view" contentMode="scaleToFill" id="98i-KE-HhG" customClass="DetailView">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
