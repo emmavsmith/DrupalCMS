@@ -105,12 +105,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GBO-rH-Hdh">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GBO-rH-Hdh">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="GBO-rH-Hdh" firstAttribute="top" secondItem="xTc-Bm-Ab9" secondAttribute="top" id="YQB-7N-e7w"/>
+                            <constraint firstAttribute="trailing" secondItem="GBO-rH-Hdh" secondAttribute="trailing" id="gg9-Cw-AMx"/>
+                            <constraint firstItem="GBO-rH-Hdh" firstAttribute="leading" secondItem="xTc-Bm-Ab9" secondAttribute="leading" id="kEj-vB-vmG"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" id="GV5-zu-yVW"/>
                     <connections>
