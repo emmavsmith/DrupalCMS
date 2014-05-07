@@ -1,6 +1,5 @@
 <?php 
 
-
 /**
  * Implement hook_menu
  */
@@ -28,7 +27,6 @@ function content_packager_menu () {
     return $items;
 }
 
-
 /*
  * Implements hook_permission
  */
@@ -43,104 +41,122 @@ function content_packager_permission() {
 	);
 }
 
-
 /**
  * Display a list of queues with an update link for each nodequeue
  */
 function list_nodequeues() {
 
-	$output = '';
-	
-	// Fetch all of the queues.
-	$queues = nodequeue_load_queues(nodequeue_get_all_qids(25));
-	
-	foreach ($queues as $queue) {
-		if (!nodequeue_queue_access($queue)) {
-		  unset($queues[$queue->qid]);
-		}
-	}
-	
-	if (empty($queues)) {
-		return $output . t('No nodequeues exist.');
-	}
-	
-	$header = array(
-		array('data' => t('Title'), 'field' => 'title', 'sort' => 'asc'),
-		array('data' => t('Max nodes'), 'field' => 'size'),
-		array('data' => t('Subqueues'), 'field' => 'subqueues'),
-		array('data' => t('Update content')), //no sort
-	);
-	$table_sort = tablesort_init($header);
-	
-	$qids = array();
-	$sort_primary = array();
-	$sort_secondary = array();
-	$sort_direction_regular = array('asc' => SORT_ASC, 'desc' => SORT_DESC);
-	$sort_direction_reverse = array('asc' => SORT_DESC, 'desc' => SORT_ASC);
-	foreach ($queues as $queue) {
-		// If a queue has only one subqueue, store the qid so we can display
-		// the number of nodes in the subqueue.
-		if ($queue->subqueues == 1) {
-		  $qids[] = $queue->qid;
-		}
-		$sort_secondary[] = drupal_strtolower($queue->title);
-		switch ($table_sort['sql']) {
-		  case 'title':
-		  default:
-		    $sort_primary[] = drupal_strtolower($queue->title);
-		    $sort_direction = $sort_direction_regular;
-		    break;
-		  case 'size':
-		    $sort_primary[] = $queue->size;
-		    $sort_direction = $sort_direction_reverse;
-		    break;
-		  case 'subqueues':
-		    $sort_primary[] = $queue->subqueues;
-		    $sort_direction = $sort_direction_regular;
-		    break;
-		}
-	}
-	
-	$subqueues = nodequeue_load_subqueues_by_queue($qids);
-	// Relate all the subqueues we loaded back to our queues.
-	foreach ($subqueues as $subqueue) {
-		if (nodequeue_api_subqueue_access($subqueue, NULL, $queues[$subqueue->qid])) {
-		  $queues[$subqueue->qid]->subqueue = $subqueue;
-		}
-	}
-	
-	if (!empty($table_sort)) {
-		if (strtolower($table_sort['sort']) == 'desc') {
-		  array_multisort($sort_primary, $sort_direction['desc'], $sort_secondary, $queues); // Re-indexes array keys; key no longer equals qid.
-		}
-		else {
-		  array_multisort($sort_primary, $sort_direction['asc'], $sort_secondary, $queues); // Re-indexes array keys; key no longer equals qid.
-		}
-	}
-	
-	$rows = array();
-	foreach ($queues as $queue) {
-		$sub_text = $queue->subqueues;
-		
-		// If this queue has only one subqueue.
-		if ($sub_text == 1) {
-		  $sub_text .= " (" . nodequeue_subqueue_size_text($queue->size, $queue->subqueue->count) . ")";
-		}
-		
-		$rows[] = array(
-		  array('class' => array('nodequeue-title'), 'data' => check_plain($queue->title)),
-		  array('class' => array('nodequeue-max-nodes'), 'data' => $queue->size == 0 ? t('Infinite') : $queue->size),
-		  array('class' => array('nodequeue-subqueues'), 'data' => $sub_text),
-		  array('class' => array('nodequeue-update'), 'data' => l('Update', 'content/packager/'.$queue->qid)),
-		);
-	}
-	
-	$output .= theme('table', array('header' => $header, 'rows' => $rows));
-	$output .= theme('pager', array('tags' => NULL));
-	
-	return $output;
-}
+  $output = '';
 
+  // Fetch all of the queues.
+  $queues = nodequeue_load_queues(nodequeue_get_all_qids(25));
+
+  foreach ($queues as $queue) {
+    if (!nodequeue_queue_access($queue)) {
+      unset($queues[$queue->qid]);
+    }
+  }
+
+  if (empty($queues)) {
+    return $output . t('No nodequeues exist.');
+  }
+
+  $header = array(
+  	array('data' => t('ID'),'field' => 'id', 'sort' => 'asc'),
+    array('data' => t('Title'), 'field' => 'title'),
+    array('data' => t('Max nodes'), 'field' => 'size'),
+    array('data' => t('Subqueues'), 'field' => 'subqueues'),
+    array('data' => t('Operation')),
+	array('data' => t('Update content')),
+  );
+  $table_sort = tablesort_init($header);
+
+  $qids = array();
+  $sort_primary = array();
+  $sort_secondary = array();
+  $sort_direction_regular = array('asc' => SORT_ASC, 'desc' => SORT_DESC);
+  $sort_direction_reverse = array('asc' => SORT_DESC, 'desc' => SORT_ASC);
+  foreach ($queues as $queue) {
+    // If a queue has only one subqueue, store the qid so we can display
+    // the number of nodes in the subqueue.
+    if ($queue->subqueues == 1) {
+      $qids[] = $queue->qid;
+    }
+    $sort_secondary[] = drupal_strtolower($queue->title);
+    switch ($table_sort['sql']) {
+      case 'id':
+      default:
+        $sort_primary[] = drupal_strtolower($queue->qid);
+        $sort_direction = $sort_direction_regular;
+        break;
+      case 'title':
+        $sort_primary[] = $queue->title;
+        $sort_direction = $sort_direction_regular;
+        break;
+      case 'size':
+        $sort_primary[] = $queue->size;
+        $sort_direction = $sort_direction_reverse;
+        break;
+      case 'subqueues':
+        $sort_primary[] = $queue->subqueues;
+        $sort_direction = $sort_direction_regular;
+        break;
+    }
+  }
+
+  $subqueues = nodequeue_load_subqueues_by_queue($qids);
+  // Relate all the subqueues we loaded back to our queues.
+  foreach ($subqueues as $subqueue) {
+    if (nodequeue_api_subqueue_access($subqueue, NULL, $queues[$subqueue->qid])) {
+      $queues[$subqueue->qid]->subqueue = $subqueue;
+    }
+  }
+
+  if (!empty($table_sort)) {
+    if (strtolower($table_sort['sort']) == 'desc') {
+      array_multisort($sort_primary, $sort_direction['desc'], $sort_secondary, $queues); // Re-indexes array keys; key no longer equals qid.
+    }
+    else {
+      array_multisort($sort_primary, $sort_direction['asc'], $sort_secondary, $queues); // Re-indexes array keys; key no longer equals qid.
+    }
+  }
+
+  $rows = array();
+  foreach ($queues as $queue) {
+    $operations = array();
+    $sub_text = $queue->subqueues;
+
+    // If this queue has only one subqueue.
+    if ($sub_text == 1) {
+      $sub_text .= " (" . nodequeue_subqueue_size_text($queue->size, $queue->subqueue->count) . ")";
+      $operations[] = l(t('View'), "admin/structure/nodequeue/$queue->qid/view/" . $queue->subqueue->sqid);
+    }
+    else {
+      $operations[] = l(t('View'), "admin/structure/nodequeue/$queue->qid/view");
+    }
+
+		/*
+    if (user_access('administer nodequeue')) {
+      $operations[] = l(t('Edit'), "admin/structure/nodequeue/$queue->qid/edit");
+      $operations[] = l(t('Delete'), "admin/structure/nodequeue/$queue->qid/delete");
+    }
+    */
+
+    $rows[] = array(
+    	array('class' => array('nodequeue-id'), 'data' => check_plain($queue->qid)),
+      array('class' => array('nodequeue-title'), 'data' => check_plain($queue->title)),
+      array('class' => array('nodequeue-max-nodes'), 'data' => $queue->size == 0 ? t('Infinite') : $queue->size),
+      array('class' => array('nodequeue-subqueues'), 'data' => $sub_text),
+      array('class' => array('nodequeue-operation'), 'data' => implode(' | ', $operations)),
+	  array('class' => array('nodequeue-update'), 'data' => l('Update', 'content/packager/'.$queue->qid)),
+    );
+  }
+
+  $output .= theme('table', array('header' => $header, 'rows' => $rows));
+  $output .= theme('pager', array('tags' => NULL));
+
+  return $output;
+}
 
 /*
  * Update the specified nodequeue's content by exporting it to a zip file containing a JSON file and images
@@ -207,7 +223,6 @@ function update_nodequeue_content($queue_id = 0) {
 	drupal_goto('content');
 }
 
-
 /*
  *	Either inserts or updates a row in the database for a particular nodequeue id
  */
@@ -225,7 +240,6 @@ function enter_db_details($nodequeue_id, $archive_uri){
 	}
 }
 
-
 /*
  *	Inserts a new row into the content packager database table
  */
@@ -239,7 +253,6 @@ function insert_database_row($nodequeue_id, $version, $file_path){
 	  ))
 	  ->execute();
 }
-
 
 /*
  *	Updates a database row for a particular nodequeue id
@@ -255,7 +268,6 @@ function update_database_row($nodequeue_id, $version, $file_path){
   ->execute();
 }
 
-
 /*
  *	Checks if there is already a database entry for a particular nodequeue id
  */
@@ -269,7 +281,6 @@ function nodequeue_exists_in_database($nodequeue_id) {
 	return false;
 }
 
-
 /*
  *	Gets the version number of a particular nodequeue id
  */
@@ -282,7 +293,6 @@ function get_version($nodequeue_id){
 	}
 	return $version;
 }
-
 
 /*
  * Gets the version number and file path for a particular nodequeue id
@@ -300,7 +310,6 @@ function get_version_path($nodequeue_id){
 	return $db_row;
 }
 
-
 /*
  * Select a row fromm the db using the nodequeue id
  */
@@ -311,7 +320,6 @@ function select_db_row($nodequeue_id){
 	));
 	return $result;
 }
-
 
 ?>
 
