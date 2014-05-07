@@ -57,6 +57,11 @@
                                                object:nil];
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+
+    NSLog(@"View will appear in table view controller");
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

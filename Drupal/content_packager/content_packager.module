@@ -55,20 +55,20 @@ function list_nodequeues() {
 	$queues = nodequeue_load_queues(nodequeue_get_all_qids(25));
 	
 	foreach ($queues as $queue) {
-	if (!nodequeue_queue_access($queue)) {
-	  unset($queues[$queue->qid]);
-	}
+		if (!nodequeue_queue_access($queue)) {
+		  unset($queues[$queue->qid]);
+		}
 	}
 	
 	if (empty($queues)) {
-	return $output . t('No nodequeues exist.');
+		return $output . t('No nodequeues exist.');
 	}
 	
 	$header = array(
-	array('data' => t('Title'), 'field' => 'title', 'sort' => 'asc'),
-	array('data' => t('Max nodes'), 'field' => 'size'),
-	array('data' => t('Subqueues'), 'field' => 'subqueues'),
-	array('data' => t('Update content')), //no sort
+		array('data' => t('Title'), 'field' => 'title', 'sort' => 'asc'),
+		array('data' => t('Max nodes'), 'field' => 'size'),
+		array('data' => t('Subqueues'), 'field' => 'subqueues'),
+		array('data' => t('Update content')), //no sort
 	);
 	$table_sort = tablesort_init($header);
 	
