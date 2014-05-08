@@ -12,6 +12,7 @@
 extern NSInteger const NODEQUEUE_LOCATION;
 extern NSInteger const NODEQUEUE_TABLE;
 extern NSInteger const NODEQUEUE_STAFF;
+extern NSInteger const NODEQUEUE_PAGE_TABLE;
 
 @interface AppNameContentManager : ContentManager
 
