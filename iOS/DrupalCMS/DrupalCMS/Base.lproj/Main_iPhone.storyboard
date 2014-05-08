@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
-        <!--Table View Controller - List-->
+        <!--Table View Controller - Table-->
         <scene sceneID="MUJ-aL-crU">
             <objects>
                 <tableViewController id="MEG-Ec-x4g" customClass="TableViewController" sceneMemberID="viewController">
@@ -40,7 +40,7 @@
                             <outlet property="delegate" destination="MEG-Ec-x4g" id="6Iv-Lm-kJE"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="List" id="OXj-vt-eXr"/>
+                    <navigationItem key="navigationItem" title="Table" id="OXj-vt-eXr"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZXD-lm-Nku" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -200,11 +200,11 @@
             </objects>
             <point key="canvasLocation" x="-751" y="-693"/>
         </scene>
-        <!--Navigation Controller - List-->
+        <!--Navigation Controller - Table-->
         <scene sceneID="UO9-fi-jui">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="nap-Zy-mCn" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="List" id="69m-hL-pvN"/>
+                    <tabBarItem key="tabBarItem" title="Table" id="69m-hL-pvN"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="P0q-dq-mjF">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

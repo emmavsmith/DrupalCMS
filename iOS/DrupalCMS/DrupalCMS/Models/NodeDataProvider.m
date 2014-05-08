@@ -29,22 +29,6 @@
     return nodesArray;
 }
 
-+(NSArray *)locationNodesWithNodequeueId:(NSNumber *)nodequeueid
-{
-    NSLog(@"Parsing JSON array for Locations for nodequeueid: %@", nodequeueid);
-    NSMutableArray *nodesArray = [[NSMutableArray alloc] init];
-    NSArray *nodesFromJSON = [self extractJSON:nodequeueid];
-    
-    for(NSDictionary *item in nodesFromJSON) {
-        
-        if ([item[@"type"] isEqualToString:@"location"]) {
-            LocationNode *node = [[LocationNode alloc] initWithDictionary:item];
-            [nodesArray addObject:node];
-        }
-    }
-    return nodesArray;
-}
-
 +(Node *)createNodeWithDictionary:(NSDictionary *)dictionary withNodequeueId:(NSNumber *) nodequeueid
 {
     Node *node = [[Node alloc] init];
@@ -80,6 +64,46 @@
         }
     }
     return [NSDictionary dictionaryWithDictionary: images];
+}
+
+#pragma mark - Location Nodes
+
++(NSArray *)locationNodesWithNodequeueId:(NSNumber *)nodequeueid
+{
+    NSLog(@"Parsing JSON array for Locations for nodequeueid: %@", nodequeueid);
+    NSMutableArray *nodesArray = [[NSMutableArray alloc] init];
+    NSArray *nodesFromJSON = [self extractJSON:nodequeueid];
+    
+    for(NSDictionary *item in nodesFromJSON) {
+        
+        if ([item[@"type"] isEqualToString:@"location"]) {
+            
+            LocationNode *locationNode = [NodeDataProvider createLocationNodeWithDictionary:item withNodequeueId:nodequeueid];
+            [nodesArray addObject:locationNode];
+        }
+    }
+    return nodesArray;
+}
+
++(LocationNode *)createLocationNodeWithDictionary:(NSDictionary *)dictionary withNodequeueId:(NSNumber *) nodequeueid
+{
+    LocationNode *locationNode = [[LocationNode alloc] init];
+    locationNode.title = dictionary[@"title"];
+    
+    //TODO: keeping this array check in here for now as this was crashing before sometimes as it switches between accessing a dictionary and accessing an array, depending on whether the field_subtitle is empty
+    if(![dictionary[@"field_subtitle"] isKindOfClass:[NSArray class]]) {
+    
+        locationNode.subtitle = dictionary[@"field_subtitle"][@"und"][0][@"value"];
+    }
+        
+    locationNode.content = dictionary[@"body"][@"und"][0][@"value"];
+    //TODO: do not need to check type as already done where this method is called from??
+    if([dictionary[@"type"] isEqualToString:@"location"]) {
+        NSString *latitude = dictionary[@"field_geo_coordinate"][@"und"][0][@"lat"];
+        NSString *longitude = dictionary[@"field_geo_coordinate"][@"und"][0][@"lng"];
+        locationNode.coordinate = CLLocationCoordinate2DMake([latitude doubleValue], [longitude doubleValue]);
+    }
+    return locationNode;
 }
 
 #pragma mark - JSON
