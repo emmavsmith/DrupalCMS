@@ -97,12 +97,9 @@
     }
         
     locationNode.content = dictionary[@"body"][@"und"][0][@"value"];
-    //TODO: do not need to check type as already done where this method is called from??
-    if([dictionary[@"type"] isEqualToString:@"location"]) {
-        NSString *latitude = dictionary[@"field_geo_coordinate"][@"und"][0][@"lat"];
-        NSString *longitude = dictionary[@"field_geo_coordinate"][@"und"][0][@"lng"];
-        locationNode.coordinate = CLLocationCoordinate2DMake([latitude doubleValue], [longitude doubleValue]);
-    }
+    NSString *latitude = dictionary[@"field_geo_coordinate"][@"und"][0][@"lat"];
+    NSString *longitude = dictionary[@"field_geo_coordinate"][@"und"][0][@"lng"];
+    locationNode.coordinate = CLLocationCoordinate2DMake([latitude doubleValue], [longitude doubleValue]);
     return locationNode;
 }
 
