@@ -3,3 +3,4 @@ description = Package content from nodequeues
 dependencies [ ] = nodequeue {2.x}
 core = 7.x
 package = Content Packager
+version = "1.0"
