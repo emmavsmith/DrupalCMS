@@ -9,8 +9,6 @@
 #import "ContentManager.h"
 #import "AFNetworking.h"
 #import "ZipArchive.h"
-#import "TableViewController.h"
-#import "NodeDataProvider.h"
 
 NSString * const ContentUpdateDidCompleteNotification = @"ContentUpdateDidCompleteNotification";
 

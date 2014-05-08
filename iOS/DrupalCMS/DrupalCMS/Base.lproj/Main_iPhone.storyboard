@@ -40,7 +40,9 @@
                             <outlet property="delegate" destination="MEG-Ec-x4g" id="6Iv-Lm-kJE"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Table" id="OXj-vt-eXr"/>
+                    <navigationItem key="navigationItem" title="Table" id="OXj-vt-eXr">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="MnS-fq-u7M"/>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZXD-lm-Nku" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -105,13 +107,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GBO-rH-Hdh">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GBO-rH-Hdh">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="GBO-rH-Hdh" secondAttribute="bottom" id="MXW-V2-Zu4"/>
                             <constraint firstItem="GBO-rH-Hdh" firstAttribute="top" secondItem="xTc-Bm-Ab9" secondAttribute="top" id="YQB-7N-e7w"/>
                             <constraint firstAttribute="trailing" secondItem="GBO-rH-Hdh" secondAttribute="trailing" id="gg9-Cw-AMx"/>
                             <constraint firstItem="GBO-rH-Hdh" firstAttribute="leading" secondItem="xTc-Bm-Ab9" secondAttribute="leading" id="kEj-vB-vmG"/>
@@ -173,7 +176,9 @@
                             <outlet property="delegate" destination="6Ox-El-aaO" id="Bez-8c-zDE"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="Collection" id="SCU-oG-aSB"/>
+                    <navigationItem key="navigationItem" title="Collection" id="SCU-oG-aSB">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="SIt-NT-OAO"/>
+                    </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wsj-SD-mZ5" userLabel="First Responder" sceneMemberID="firstResponder"/>

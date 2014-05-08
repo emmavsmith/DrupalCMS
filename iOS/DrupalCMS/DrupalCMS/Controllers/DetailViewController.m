@@ -7,7 +7,6 @@
 //
 
 #import "DetailViewController.h"
-#import "DetailView.h"
 
 @interface DetailViewController ()
 
