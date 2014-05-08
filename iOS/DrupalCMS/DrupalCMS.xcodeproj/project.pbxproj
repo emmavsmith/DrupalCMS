@@ -13,6 +13,7 @@
 		B56DCDF8191BC522005004D9 /* PageTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B56DCDF7191BC522005004D9 /* PageTableViewController.m */; };
 		B56DCDFB191BC95D005004D9 /* PageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B56DCDFA191BC95D005004D9 /* PageViewController.m */; };
 		B56DCDFE191BD769005004D9 /* PageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B56DCDFD191BD769005004D9 /* PageDetailViewController.m */; };
+		B56DCE01191BDB14005004D9 /* DetailWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = B56DCE00191BDB14005004D9 /* DetailWebView.m */; };
 		B583E1F019090D9100B87480 /* ContentManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B583E1EF19090D9100B87480 /* ContentManager.m */; };
 		B5964A71190FF4F4006BDE6D /* content_nqid_2.zip in Resources */ = {isa = PBXBuildFile; fileRef = B5964A70190FF4F4006BDE6D /* content_nqid_2.zip */; };
 		B5AA799D18FD654800BB9542 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5AA799C18FD654800BB9542 /* Foundation.framework */; };
@@ -64,6 +65,8 @@
 		B56DCDFA191BC95D005004D9 /* PageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageViewController.m; sourceTree = "<group>"; };
 		B56DCDFC191BD769005004D9 /* PageDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageDetailViewController.h; sourceTree = "<group>"; };
 		B56DCDFD191BD769005004D9 /* PageDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageDetailViewController.m; sourceTree = "<group>"; };
+		B56DCDFF191BDB14005004D9 /* DetailWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailWebView.h; sourceTree = "<group>"; };
+		B56DCE00191BDB14005004D9 /* DetailWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailWebView.m; sourceTree = "<group>"; };
 		B583E1EE19090D9100B87480 /* ContentManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentManager.h; sourceTree = "<group>"; };
 		B583E1EF19090D9100B87480 /* ContentManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentManager.m; sourceTree = "<group>"; };
 		B5964A70190FF4F4006BDE6D /* content_nqid_2.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = content_nqid_2.zip; sourceTree = "<group>"; };
@@ -270,6 +273,8 @@
 				B5DD6D271912574F00D39A08 /* DetailView.m */,
 				B5B0AFC41918FF36003A7F8F /* StaffCollectionViewCell.h */,
 				B5B0AFC51918FF36003A7F8F /* StaffCollectionViewCell.m */,
+				B56DCDFF191BDB14005004D9 /* DetailWebView.h */,
+				B56DCE00191BDB14005004D9 /* DetailWebView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -424,6 +429,7 @@
 				B5E0739519000DB90059B746 /* Node.m in Sources */,
 				B56DCDF8191BC522005004D9 /* PageTableViewController.m in Sources */,
 				B5195A6D1907C5D5001F2111 /* TableViewCell.m in Sources */,
+				B56DCE01191BDB14005004D9 /* DetailWebView.m in Sources */,
 				B5DD6D281912574F00D39A08 /* DetailView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
