@@ -68,6 +68,9 @@
     
     // set the mapView to display the region
     [_mapView setRegion:viewRegion animated:YES];
+    
+    AppNameContentManager *appNameContentManager = [[AppNameContentManager alloc] init];
+    [appNameContentManager checkForUpdateWithNodequeueID:self.nodequeueID];
 }
 
 #pragma mark - Nodequeues nodes

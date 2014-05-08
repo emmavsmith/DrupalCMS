@@ -10,7 +10,6 @@
 #import "NodeDataProvider.h"
 #import "StaffCollectionViewCell.h"
 #import "Node.h"
-#import "ContentManager.h"
 #import "AppNameContentManager.h"
 #import "DetailViewController.h"
 
@@ -55,6 +54,12 @@
                                              selector:@selector(updateContent:)
                                                  name:ContentUpdateDidCompleteNotification
                                                object:nil];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    
+    AppNameContentManager *appNameContentManager = [[AppNameContentManager alloc] init];
+    [appNameContentManager checkForUpdateWithNodequeueID:self.nodequeueID];
 }
 
 - (void)didReceiveMemoryWarning

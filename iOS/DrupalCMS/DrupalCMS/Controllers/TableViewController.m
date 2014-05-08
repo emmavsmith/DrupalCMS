@@ -10,7 +10,6 @@
 #import "NodeDataProvider.h"
 #import "TableViewCell.h"
 #import "Node.h"
-#import "ContentManager.h"
 #import "AppNameContentManager.h"
 #import "DetailViewController.h"
 
@@ -58,8 +57,9 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-
-    NSLog(@"View will appear in table view controller");
+    
+    AppNameContentManager *appNameContentManager = [[AppNameContentManager alloc] init];
+    [appNameContentManager checkForUpdateWithNodequeueID:self.nodequeueID];
 }
 
 - (void)didReceiveMemoryWarning
