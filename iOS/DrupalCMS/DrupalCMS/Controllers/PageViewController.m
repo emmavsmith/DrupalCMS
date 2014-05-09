@@ -10,6 +10,7 @@
 #import "PageDetailViewController.h"
 #import "NodeDataProvider.h"
 #import "AppNameContentManager.h"
+#import "Node.h"
 
 @interface PageViewController ()
 
@@ -31,7 +32,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    //inititalise nodes array
     self.nodes = [NodeDataProvider nodesWithNodequeueId:[NSNumber numberWithInteger: (NODEQUEUE_PAGE_TABLE)]];
     
     // load initial page
@@ -40,10 +40,7 @@
     [self setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
     
     self.dataSource = self;
-    
-    // Stops title jiggling when NavBar animates out
     self.automaticallyAdjustsScrollViewInsets = NO;
-    
     self.edgesForExtendedLayout = UIRectEdgeBottom;
 }
 
@@ -62,11 +59,10 @@
     // Create a new view controller and pass suitable data.
     PageDetailViewController *pageDetailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SB_PageDetailViewController"];
     Node *node = [self.nodes objectAtIndex:index];
-    
     pageDetailViewController.titleText = node.title;
     pageDetailViewController.pageIndex = index;
+    NSLog(@"index: %lu", (unsigned long)index);
     pageDetailViewController.contentText = node.content;
-    
     return pageDetailViewController;
 }
 
@@ -98,16 +94,5 @@
     }
     return [self viewControllerAtIndex:index];
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

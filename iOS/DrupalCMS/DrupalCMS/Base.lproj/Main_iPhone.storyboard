@@ -288,11 +288,11 @@
             </objects>
             <point key="canvasLocation" x="217" y="-1410"/>
         </scene>
-        <!--Page View Controller-->
+        <!--Page View Controller - Page Detail-->
         <scene sceneID="Cga-CV-h0o">
             <objects>
                 <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="V2P-zp-HC1" customClass="PageViewController" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="kxi-1c-RMJ"/>
+                    <navigationItem key="navigationItem" title="Page Detail" id="kxi-1c-RMJ"/>
                 </pageViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fge-bm-cHd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -311,12 +311,12 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kh6-Z2-Jf1">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="57" width="320" height="511"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </webView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qmi-yb-u3T">
-                                <rect key="frame" x="20" y="46" width="280" height="29"/>
+                                <rect key="frame" x="20" y="20" width="280" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>

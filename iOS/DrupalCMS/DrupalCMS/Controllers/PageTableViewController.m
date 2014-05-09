@@ -124,7 +124,7 @@
     if ([segue.identifier isEqualToString:@"ViewListItemPageViewSegue"]) {
         
         PageViewController *pageViewController = [segue destinationViewController];
-        pageViewController.node = self.nodeObjects[[self.tableView indexPathForSelectedRow].row];
+        pageViewController.pageIndex = [self.tableView indexPathForSelectedRow].row;
         [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:NO];
     }
 }
