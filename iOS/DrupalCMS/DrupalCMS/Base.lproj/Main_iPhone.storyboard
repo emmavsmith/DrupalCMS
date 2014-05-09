@@ -291,7 +291,7 @@
         <!--Page View Controller-->
         <scene sceneID="Cga-CV-h0o">
             <objects>
-                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="V2P-zp-HC1" customClass="PageViewController" sceneMemberID="viewController">
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="V2P-zp-HC1" customClass="PageViewController" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="kxi-1c-RMJ"/>
                 </pageViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fge-bm-cHd" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -301,7 +301,7 @@
         <!--Page Detail View Controller-->
         <scene sceneID="wse-8T-hxA">
             <objects>
-                <viewController id="vqh-4c-iPW" customClass="PageDetailViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SB_PageDetailViewController" id="vqh-4c-iPW" customClass="PageDetailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="41L-p6-TZu"/>
                         <viewControllerLayoutGuide type="bottom" id="rHd-HE-rQS"/>
@@ -310,14 +310,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kh6-Z2-Jf1" customClass="DetailWebView">
+                            <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kh6-Z2-Jf1">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </webView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qmi-yb-u3T">
+                                <rect key="frame" x="20" y="46" width="280" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="titleLabel" destination="qmi-yb-u3T" id="hiE-vI-ehn"/>
+                        <outlet property="webView" destination="kh6-Z2-Jf1" id="UUs-a4-tLU"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g2X-lg-2sk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

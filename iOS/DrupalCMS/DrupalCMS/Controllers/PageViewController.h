@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "Node.h"
 
-@interface PageViewController : UIPageViewController
+@interface PageViewController : UIPageViewController <UIPageViewControllerDataSource>
 
 @property Node *node;
+@property (nonatomic, strong) NSArray *nodes;
+@property NSUInteger pageIndex;
 
 @end
