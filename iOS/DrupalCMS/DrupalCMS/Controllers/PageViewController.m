@@ -61,7 +61,6 @@
     Node *node = [self.nodes objectAtIndex:index];
     pageDetailViewController.titleText = node.title;
     pageDetailViewController.pageIndex = index;
-    NSLog(@"index: %lu", (unsigned long)index);
     pageDetailViewController.contentText = node.content;
     return pageDetailViewController;
 }
