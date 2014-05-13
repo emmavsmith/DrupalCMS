@@ -46,7 +46,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZXD-lm-Nku" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="217" y="-693"/>
+            <point key="canvasLocation" x="193" y="-677"/>
         </scene>
         <!--Detail View Controller - Detail-->
         <scene sceneID="jcO-te-zms">
@@ -57,7 +57,7 @@
                         <viewControllerLayoutGuide type="bottom" id="xnk-Ue-5u3"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="98i-KE-HhG" customClass="DetailView">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4MH-HN-NVj">
@@ -360,6 +360,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Ifd-0p-eJ8"/>
+        <segue reference="mCY-VX-TBb"/>
     </inferredMetricsTieBreakers>
 </document>

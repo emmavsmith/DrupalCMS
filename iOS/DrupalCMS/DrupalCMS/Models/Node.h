@@ -11,9 +11,7 @@
 @interface Node : NSObject
 
 @property NSString *title;
-@property NSString *type;
 @property NSString *content;
-@property NSString *fieldImageName;
 @property NSDictionary *images;
 
 @end
