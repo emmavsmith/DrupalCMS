@@ -132,6 +132,7 @@ NSString * const ContentUpdateDidCompleteNotification = @"ContentUpdateDidComple
 -(BOOL)downloadZipFromURL:(NSString *)downloadUrl withNodequeueID: (NSNumber *)nodequeueID
 {
     NSURL *url = [NSURL URLWithString:downloadUrl];
+    //TODO: spotted that this needs changing to be asynchronous
     NSData *data = [[NSData alloc] initWithContentsOfURL: url];
     NSString *downloadZipFolderFilePath = [[ContentManager downloadPathForNodequeueId:nodequeueID] stringByAppendingPathExtension:@"zip"];
     return [data writeToFile:downloadZipFolderFilePath atomically:YES];
