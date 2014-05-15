@@ -28,8 +28,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.titleLabel.text = self.titleText;
-    [self.webView loadHTMLString:self.contentText baseURL:nil];
+    self.titleLabel.text = self.node.title;
+    [self.webView loadHTMLString:self.node.content baseURL:nil];
 }
 
 - (void)didReceiveMemoryWarning

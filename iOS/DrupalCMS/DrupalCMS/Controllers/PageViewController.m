@@ -58,10 +58,8 @@
     
     // Create a new view controller and pass suitable data.
     PageDetailViewController *pageDetailViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SB_PageDetailViewController"];
-    Node *node = [self.nodes objectAtIndex:index];
-    pageDetailViewController.titleText = node.title;
+    pageDetailViewController.node = [self.nodes objectAtIndex:index];
     pageDetailViewController.pageIndex = index;
-    pageDetailViewController.contentText = node.content;
     return pageDetailViewController;
 }
 

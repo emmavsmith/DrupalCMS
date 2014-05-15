@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Node.h"
 
 @interface PageDetailViewController : UIViewController
 
@@ -14,8 +15,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 
-@property NSString *titleText;
-@property NSString *contentText;
+//@property NSString *titleText;
+//@property NSString *contentText;
+@property Node *node;
 @property NSInteger pageIndex;
 
 @end
