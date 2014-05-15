@@ -71,22 +71,8 @@ NSString * const ContentUpdateDidCompleteNotification = @"ContentUpdateDidComple
             
             NSString *downloadUrl = [responseObject valueForKey:@"file_path"];
             
-            //check content update before amending the version number in user defaults
-            if ([self downloadZipFromURL:downloadUrl withNodequeueID:nodequeueID]){
-                
-                if([self installContentFromZipFileWithNodequeueID:nodequeueID]) {
-                
-                    [self saveToUserDefaultsWithVersion: newVersion WithNodequeueID:nodequeueID];
-                
-                    //post a notification and pass the nodequeueID
-                    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:nodequeueID, @"nodequeueID", nil];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:ContentUpdateDidCompleteNotification object:self userInfo:userInfo];
-                    
-                    NSLog(@"Content updated successfully for nodequeueid: %@", nodequeueID);
-                } else {
-                    NSLog(@"Content update failed for nodequeueid: %@", nodequeueID);
-                }
-            }
+            [self downloadZipFromURL:downloadUrl withNodequeueID:nodequeueID withNewVersion:newVersion];
+
         } else {
             NSLog(@"Current version is latest version. No new content for nodequeueid: %@.", nodequeueID);
         }
@@ -129,13 +115,34 @@ NSString * const ContentUpdateDidCompleteNotification = @"ContentUpdateDidComple
 /*
  * Downloads a zip file from a particular URL
  */
--(BOOL)downloadZipFromURL:(NSString *)downloadUrl withNodequeueID: (NSNumber *)nodequeueID
+-(void)downloadZipFromURL:(NSString *)downloadUrl withNodequeueID: (NSNumber *)nodequeueID withNewVersion: (NSNumber *)newVersion
 {
     NSURL *url = [NSURL URLWithString:downloadUrl];
-    //TODO: spotted that this needs changing to be asynchronous
-    NSData *data = [[NSData alloc] initWithContentsOfURL: url];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     NSString *downloadZipFolderFilePath = [[ContentManager downloadPathForNodequeueId:nodequeueID] stringByAppendingPathExtension:@"zip"];
-    return [data writeToFile:downloadZipFolderFilePath atomically:YES];
+    [operation setOutputStream:[NSOutputStream outputStreamToFileAtPath:downloadZipFolderFilePath append:NO]];
+    
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        if([self installContentFromZipFileWithNodequeueID:nodequeueID]) {
+            
+            [self saveToUserDefaultsWithVersion: newVersion WithNodequeueID:nodequeueID];
+            
+            //post a notification and pass the nodequeueID
+            NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:nodequeueID, @"nodequeueID", nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:ContentUpdateDidCompleteNotification object:self userInfo:userInfo];
+            
+            NSLog(@"Content updated successfully for nodequeueid: %@", nodequeueID);
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        NSLog(@"Download Error: %@", [error description]);
+    }];
+    
+    [operation start];
 }
 
 -(BOOL) installContentFromZipFileWithNodequeueID:(NSNumber *)nodequeueID
